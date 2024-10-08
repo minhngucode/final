@@ -8,5 +8,5 @@
  * @author
  */
 public class test {
-    
+    int id;
 }
