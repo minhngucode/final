@@ -9,5 +9,5 @@
  */
 public class test {
     int id;
-    String id;
+    String cc;
 }
