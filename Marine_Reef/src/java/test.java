@@ -9,4 +9,5 @@
  */
 public class test {
     int id;
+    String id;
 }
