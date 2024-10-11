@@ -1,15 +1,517 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
-<html>
+<html lang="en">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <title>
+            2D Aquatic
+        </title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+        <style>
+            body {
+                font-family: 'Roboto', sans-serif;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            header {
+                background-color: #000;
+                color: #fff;
+                padding: 10px 0;
+            }
+            header .container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            header .logo img {
+                height: 50px;
+            }
+            header nav ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+            }
+            header nav ul li {
+                display: inline;
+            }
+            header nav ul li a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: 700;
+            }
+            header .contact-info {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            header .contact-info i {
+                color: #ffcc00;
+            }
+            .hero {
+                position: relative;
+                background: url('https://placehold.co/1920x600') no-repeat center center/cover;
+                height: 600px;
+                color: #fff;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .hero h1 {
+                font-size: 3rem;
+                margin: 0;
+            }
+            .hero ul {
+                list-style: none;
+                padding: 0;
+            }
+            .hero ul li {
+                margin: 10px 0;
+            }
+            .hero .btn {
+                background-color: #ffcc00;
+                color: #000;
+                padding: 10px 20px;
+                text-decoration: none;
+                font-weight: 700;
+                margin-top: 20px;
+            }
+            .section {
+                padding: 40px 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .section h2 {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .products, .recommended, .services, .knowledge-share {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: center;
+            }
+            .product, .recommended-item, .service, .knowledge-item {
+                background-color: #fff;
+                border: 1px solid #ddd;
+                padding: 20px;
+                text-align: center;
+                flex: 1 1 calc(25% - 40px);
+                box-sizing: border-box;
+            }
+            .product img, .recommended-item img, .knowledge-item img {
+                max-width: 100%;
+                height: auto;
+            }
+            .product h3, .recommended-item h3, .service h3, .knowledge-item h3 {
+                font-size: 1.2rem;
+                margin: 10px 0;
+            }
+            .product p, .recommended-item p, .service p, .knowledge-item p {
+                font-size: 1rem;
+                color: #666;
+            }
+            .footer {
+                background-color: #f8f8f8;
+                padding: 40px 20px;
+                text-align: center;
+            }
+            .footer .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .footer .logo img {
+                height: 100px;
+            }
+            .footer .links, .footer .contact, .footer .social {
+                margin: 20px 0;
+            }
+            .footer .links ul, .footer .contact ul, .footer .social ul {
+                list-style: none;
+                padding: 0;
+            }
+            .footer .links ul li, .footer .contact ul li, .footer .social ul li {
+                margin: 10px 0;
+            }
+            .footer .links ul li a, .footer .contact ul li a, .footer .social ul li a {
+                color: #000;
+                text-decoration: none;
+            }
+            .footer .social ul li a i {
+                font-size: 1.5rem;
+            }
+            .footer .copyright {
+                margin-top: 20px;
+                font-size: 0.9rem;
+                color: #666;
+            }
+        </style>
     </head>
     <body>
-        <div>TODO write content</div>
+        <header>
+            <div class="container">
+                <div class="logo">
+                    <img alt="2D Aquatic Logo" height="50" src="https://storage.googleapis.com/a1aa/image/NZVOrPxNJnIABBDMzZryEd3wufqJqSbF0haV8RErFVSPr3yJA.jpg" width="100"/>
+                </div>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                GIỚI THIỆU
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                XÂY DỰNG BỂ CÁ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                SẢN PHẨM
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                DỊCH VỤ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                CHIA SẺ KIẾN THỨC
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                LIÊN HỆ
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="contact-info">
+                    <i class="fas fa-envelope">
+                    </i>
+                    <span>
+                        2daquatic@gmail.com
+                    </span>
+                    <i class="fas fa-phone">
+                    </i>
+                    <span>
+                        0917729116
+                    </span>
+                </div>
+            </div>
+        </header>
+        <div class="hero">
+            <h1>
+                XÂY DỰNG CẤU HÌNH BỂ CÁ
+            </h1>
+            <ul>
+                <li>
+                    Hàng trăm mẫu Layout lựa chọn
+                </li>
+                <li>
+                    Chọn các món đồ thiết kế
+                </li>
+                <li>
+                    Giảm giá khủng khi đăng ký online
+                </li>
+            </ul>
+            <a class="btn" href="#">
+                XEM TIẾP
+            </a>
+        </div>
+        <div class="section">
+            <h2>
+                GIỚI THIỆU
+            </h2>
+            <p>
+                2D Aquatic là đội ngũ tư vấn thiết kế bể cá chuyên nghiệp với niềm đam mê cá cảnh biển. Chúng tôi cung cấp các sản phẩm và dịch vụ tốt nhất cho khách hàng.
+            </p>
+            <p>
+                Các sản phẩm bể cá cảnh biển, bể san hô, mang đậm dấu ấn của tự nhiên. Với những trải nghiệm quý giá nhiều năm trong nghề chơi cá cảnh, chúng tôi tự hào khi có thể cung cấp cho khách hàng những sản phẩm chất lượng nhất.
+            </p>
+            <p>
+                2D Aquatic chuyên cung cấp các dịch vụ setup bể cá, thiết kế layout cho bể cá cảnh theo yêu cầu và giá cả hợp lý.
+            </p>
+        </div>
+        <div class="section">
+            <h2>
+                SẢN PHẨM
+            </h2>
+            <div class="products">
+                <div class="product">
+                    <img alt="Vật Liệu Lọc" height="200" src="https://storage.googleapis.com/a1aa/image/zb0pzXrRzaIOMVQoY3HqkYkRl0VfiPQUyB3od6rDiqqPr3yJA.jpg" width="200"/>
+                    <h3>
+                        Vật Liệu Lọc
+                    </h3>
+                </div>
+                <div class="product">
+                    <img alt="Đèn Cá - San Hô" height="200" src="https://storage.googleapis.com/a1aa/image/6ka3TGJyfAxySK02pguH8PH7ijb2ghUjDSk4lepAxROuWvlTA.jpg" width="200"/>
+                    <h3>
+                        Đèn Cá - San Hô
+                    </h3>
+                </div>
+                <div class="product">
+                    <img alt="Cá" height="200" src="https://storage.googleapis.com/a1aa/image/1gr8gi4i7yKjGxusJnenxMgWFLBukitOxO28LojQkbekWvlTA.jpg" width="200"/>
+                    <h3>
+                        Cá
+                    </h3>
+                </div>
+                <div class="product">
+                    <img alt="San Hô" height="200" src="https://storage.googleapis.com/a1aa/image/uj5ZKahHWZp4FZ3Nj1bNAdunntD9ZfnWfj6nRmNVcXf7seWOB.jpg" width="200"/>
+                    <h3>
+                        San Hô
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>
+                KHUYẾN DÙNG
+            </h2>
+            <div class="recommended">
+                <div class="recommended-item">
+                    <img alt="Khúc xạ kế đo độ mặn" height="200" src="https://storage.googleapis.com/a1aa/image/GJVA5sqo3VqpDZ9YfWANrqmxnuLcAgam1hWiTn6xaW4Qr3yJA.jpg" width="200"/>
+                    <h3>
+                        Khúc xạ kế đo độ mặn
+                    </h3>
+                    <p>
+                        ATAGO PAL-SALT
+                    </p>
+                    <a href="#">
+                        Mời liên hệ
+                    </a>
+                </div>
+                <div class="recommended-item">
+                    <img alt="Máy tạo sóng cho hồ cá" height="200" src="https://storage.googleapis.com/a1aa/image/e526BwsZQdU3NivXDxb7Rmk5uY9ljek2Mr8fTAYKBkHfa9WOB.jpg" width="200"/>
+                    <h3>
+                        Máy tạo sóng cho hồ cá
+                    </h3>
+                    <p>
+                        REEFWAVE 45 - REDSEA
+                    </p>
+                    <a href="#">
+                        Mời liên hệ
+                    </a>
+                </div>
+                <div class="recommended-item">
+                    <img alt="Bơm liều lượng hồ cá biển" height="200" src="https://storage.googleapis.com/a1aa/image/Ehzr1Ir3KYbyLdoohjFaijlLSb28CC0DjLw1VjQscBcr1b5E.jpg" width="200"/>
+                    <h3>
+                        Bơm liều lượng hồ cá biển
+                    </h3>
+                    <p>
+                        REEFDOSE 2 - REDSEA
+                    </p>
+                    <a href="#">
+                        Mời liên hệ
+                    </a>
+                </div>
+                <div class="recommended-item">
+                    <img alt="Bộ đo nồng độ NO2 hồ cá" height="200" src="https://storage.googleapis.com/a1aa/image/S4VLxKJp5wp8F98G48SK38nfvGAz9Y8vWJypClfFaaJbWvlTA.jpg" width="200"/>
+                    <h3>
+                        Bộ đo nồng độ NO2 hồ cá
+                    </h3>
+                    <p>
+                        Test Salifert Nitrite
+                    </p>
+                    <a href="#">
+                        Mời liên hệ
+                    </a>
+                </div>
+                <div class="recommended-item">
+                    <img alt="Bộ đo nồng độ Canxi Salifert" height="200" src="https://storage.googleapis.com/a1aa/image/fbynXe0Ze9KVRpyAxYyffnoX4dlc47HzTfVgz038OEbQp1b5E.jpg" width="200"/>
+                    <h3>
+                        Bộ đo nồng độ Canxi Salifert
+                    </h3>
+                    <p>
+                        Calcium Test
+                    </p>
+                    <a href="#">
+                        Mời liên hệ
+                    </a>
+                </div>
+                <div class="recommended-item">
+                    <img alt="Bộ đo KH/Alk - Salifert" height="200" src="https://storage.googleapis.com/a1aa/image/zOZp7kbubz6jOJZoRAJ8unHlfJa6fzgdmAzJ1Pz2tw1iWvlTA.jpg" width="200"/>
+                    <h3>
+                        Bộ đo KH/Alk - Salifert
+                    </h3>
+                    <p>
+                        KH/Alk Test
+                    </p>
+                    <a href="#">
+                        Mời liên hệ
+                    </a>
+                </div>
+                <div class="recommended-item">
+                    <img alt="Skimmer BM Curve B10" height="200" src="https://storage.googleapis.com/a1aa/image/eiVbXiMHAdTEZCmufkGUNZe2jTGH3oS0olfobY7C1xfep1b5E.jpg" width="200"/>
+                    <h3>
+                        Skimmer BM Curve B10
+                    </h3>
+                    <p>
+                        Máy tách bọt Bubble Magus
+                    </p>
+                    <a href="#">
+                        Mời liên hệ
+                    </a>
+                </div>
+                <div class="recommended-item">
+                    <img alt="Máy tách bọt Protein Skimmer" height="200" src="https://storage.googleapis.com/a1aa/image/PBD056QuseQhJSaB48JURWXu2m1iMdK6LKatek5lGiHpWvlTA.jpg" width="200"/>
+                    <h3>
+                        Máy tách bọt Protein Skimmer
+                    </h3>
+                    <p>
+                        Mantis Tornado 500
+                    </p>
+                    <a href="#">
+                        Mời liên hệ
+                    </a>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <a class="btn" href="#">
+                    Xem thêm
+                </a>
+            </div>
+        </div>
+        <div class="section">
+            <h2>
+                DỊCH VỤ
+            </h2>
+            <div class="services">
+                <div class="service">
+                    <h3>
+                        Chăm sóc - Bảo trì
+                    </h3>
+                    <p>
+                        2DAquatic cung cấp dịch vụ chăm sóc, bảo trì bể cá cảnh biển, san hô tại nhà.
+                    </p>
+                </div>
+                <div class="service">
+                    <h3>
+                        Thiết kế layout
+                    </h3>
+                    <p>
+                        Có đội ngũ layout bể cá cảnh biển, bể san hô với kỹ năng và công cụ chuyên nghiệp.
+                    </p>
+                </div>
+                <div class="service">
+                    <h3>
+                        Setup trọn gói
+                    </h3>
+                    <p>
+                        2DAquatic cung cấp dịch vụ setup trọn gói, khách hàng chỉ việc đưa ra yêu cầu, mọi việc sẽ được chúng tôi lo liệu.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>
+                CHIA SẺ KIẾN THỨC
+            </h2>
+            <div class="knowledge-share">
+                <div class="knowledge-item">
+                    <img alt="Các thông số nước dành cho bể cá nước mặn" height="200" src="https://storage.googleapis.com/a1aa/image/9Mw8faQnCRQFGqB23a4Ex2h6X4YuFrsyBPzhfRq6ZxeUteWOB.jpg" width="200"/>
+                    <h3>
+                        Các thông số nước dành cho bể cá nước mặn
+                    </h3>
+                    <p>
+                        11/04/2023 - Chia sẻ kiến thức
+                    </p>
+                </div>
+                <div class="knowledge-item">
+                    <img alt="Hải quỳ là gì? Hải quỳ sinh sản, dinh dưỡng, di chuyển thế nào?" height="200" src="https://storage.googleapis.com/a1aa/image/Cv54KdlsvG65I1GYMmenjbYN6qyfUzdMYCBsvS4eBrjWteWOB.jpg" width="200"/>
+                    <h3>
+                        Hải quỳ là gì? Hải quỳ sinh sản, dinh dưỡng, di chuyển thế nào?
+                    </h3>
+                    <p>
+                        11/04/2023 - Chia sẻ kiến thức
+                    </p>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <div class="logo">
+                    <img alt="2D Aquatic Logo" height="100" src="https://storage.googleapis.com/a1aa/image/NZVOrPxNJnIABBDMzZryEd3wufqJqSbF0haV8RErFVSPr3yJA.jpg" width="200"/>
+                </div>
+                <div class="links">
+                    <h3>
+                        LIÊN KẾT
+                    </h3>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                Trang chủ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Giới thiệu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Xây dựng bể cá
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Sản phẩm
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Dịch vụ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Chia sẻ kiến thức
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="contact">
+                    <h3>
+                        LIÊN HỆ
+                    </h3>
+                    <ul>
+                        <li>
+                            2D Aquatic
+                        </li>
+                        <li>
+                            Địa chỉ: 105 Dương Văn Bé, Vĩnh Tuy, Hai Bà Trưng, Hà Nội
+                        </li>
+                        <li>
+                            Điện thoại: 0917 729 116
+                        </li>
+                        <li>
+                            Email: 2daquatic@gmail.com
+                        </li>
+                    </ul>
+                </div>
+                <div class="social">
+                    <h3>
+                        CHÚNG TÔI TRÊN FACEBOOK
+                    </h3>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <i class="fab fa-facebook">
+                                </i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="copyright">
+                    © 2023 Copyright by 2daquatic.com. All rights reserved. Thiết kế bởi Bác Việt
+                </div>
+            </div>
+        </footer>
     </body>
 </html>
