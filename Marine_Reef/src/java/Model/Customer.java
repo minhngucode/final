@@ -9,39 +9,37 @@ package Model;
  * @author
  */
 public class Customer {
-    private String cusID;      // ID của khách hàng
-    private String cusName;    // Tên khách hàng
-    private String phone;      // Số điện thoại
-    private String email;      // Địa chỉ email
-    private String address;    // Địa chỉ
+    private String customerID;
+    private String customerName;
+    private String phone;
+    private String email;
+    private String address;
 
-    // Constructor
-    public Customer(String cusID, String cusName, String phone, String email, String address) {
-        this.cusID = cusID;
-        this.cusName = cusName;
+    public Customer(String customerID, String customerName, String phone, String email, String address) {
+        this.customerID = customerID;
+        this.customerName = customerName;
         this.phone = phone;
         this.email = email;
         this.address = address;
-    }   
+    }
 
     public Customer() {
     }
-    
-    // Getters and Setters
-    public String getCusID() {
-        return cusID;
+
+    public String getCustomerID() {
+        return customerID;
     }
 
-    public void setCusID(String cusID) {
-        this.cusID = cusID;
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
     }
 
-    public String getCusName() {
-        return cusName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCusName(String cusName) {
-        this.cusName = cusName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getPhone() {
@@ -68,4 +66,3 @@ public class Customer {
         this.address = address;
     }
 }
-

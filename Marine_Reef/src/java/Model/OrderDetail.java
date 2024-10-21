@@ -9,25 +9,20 @@ package Model;
  * @author
  */
 public class OrderDetail {
-    private String orderDetailID;  // Mã chi tiết đơn hàng
-    private String orderID;        // Mã đơn hàng
-    private String productID;      // Mã sản phẩm
-    private int quantity;          // Số lượng sản phẩm
-    private String discountCode;   // Mã giảm giá
+   private String orderDetailID;
+    private String orderID;
+    private String productID;
+    private int quantity;
+    private double unitPrice;
 
-    // Constructor
-    public OrderDetail(String orderDetailID, String orderID, String productID, int quantity, String discountCode) {
+    public OrderDetail(String orderDetailID, String orderID, String productID, int quantity, double unitPrice) {
         this.orderDetailID = orderDetailID;
         this.orderID = orderID;
         this.productID = productID;
         this.quantity = quantity;
-        this.discountCode = discountCode;
+        this.unitPrice = unitPrice;
     }
 
-    public OrderDetail() {
-    }
-    
-    // Getters and Setters
     public String getOrderDetailID() {
         return orderDetailID;
     }
@@ -60,12 +55,13 @@ public class OrderDetail {
         this.quantity = quantity;
     }
 
-    public String getDiscountCode() {
-        return discountCode;
+    public double getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setDiscountCode(String discountCode) {
-        this.discountCode = discountCode;
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
     }
+    
 }
 

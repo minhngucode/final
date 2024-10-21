@@ -9,24 +9,25 @@ package Model;
  * @author
  */
 public class User {
-    private String userName;   // Tên người dùng
-    private String password;   // Mật khẩu
-    private String cusID;      // Mã khách hàng
+   private String username;
+    private String password;
+    private String customerID;
 
-    // Constructor
-    public User(String userName, String password, String cusID) {
-        this.userName = userName;
+    public User(String username, String password, String customerID) {
+        this.username = username;
         this.password = password;
-        this.cusID = cusID;
+        this.customerID = customerID;
     }
 
-    // Getters and Setters
-    public String getUserName() {
-        return userName;
+    public User() {
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -37,12 +38,13 @@ public class User {
         this.password = password;
     }
 
-    public String getCusID() {
-        return cusID;
+    public String getCustomerID() {
+        return customerID;
     }
 
-    public void setCusID(String cusID) {
-        this.cusID = cusID;
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
     }
+    
 }
 

@@ -45,19 +45,21 @@ public class DBConnect {
         ResultSet resultSet = statement.executeQuery(sql);
         
         arrProduct.clear();
-        String name,id, type, color, description;
+        String productID,name,id, type, color, description, imageURL,categoryID ;
         double price, costPrice;
         int quantity;
         while (resultSet.next()){
-            name= resultSet.getString("name");
-            id= resultSet.getString("id");
-            type= resultSet.getString("type");
-            color= resultSet.getString("color");
-            description= resultSet.getString("description");
-            price = resultSet.getDouble("price");
-            costPrice = resultSet.getDouble("costPrice");
-            quantity = resultSet.getInt("quantity");
-            arrProduct.add(new Product(name, id, type, color, description, price, costPrice, quantity));
+            productID= resultSet.getString("ProductID");
+            name= resultSet.getString("Name");
+            type= resultSet.getString("Type");
+            description= resultSet.getString("Description");
+            price = resultSet.getDouble("Price");
+            costPrice = resultSet.getDouble("CostPrice");
+            quantity = resultSet.getInt("Quantity");
+            imageURL= resultSet.getString("ImageURL");
+            categoryID= resultSet.getString("CategoryID");
+
+            arrProduct.add(new Product(productID, name,type, description, price, costPrice,quantity,  imageURL, categoryID));
         }
         }
         catch (Exception e){

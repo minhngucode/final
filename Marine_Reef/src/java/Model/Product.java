@@ -9,46 +9,42 @@ package Model;
  * @author
  */
 public class Product {
-    private String name;        // Tên sản phẩm
-    private String id;          // ID sản phẩm
-    private String type;        // Loài: Skimmer, SPS, LPS, Soft, Pump, Filter, Light, Tank
-    private String color;       // Màu sắc: Full color
-    private String description; // Mô tả sản phẩm
-    private double price;       // Giá bán: VNĐ
-    private double costPrice;   // Giá nhập: VNĐ
-    private int quantity;       // Số lượng: Unit/Frag
+   private String productID;
+    private String name;
+    private String type;
+    private String description;
+    private double price;
+    private double costprice;
+    private int quantityInStock;
+    private String imageURL;
+    private String categoryID;
 
-    // Constructor
-    public Product(String name, String id, String type, String color, String description, double price, double costPrice, int quantity) {
+    public Product(String productID, String name,String type, String description, double price, double costprice, int quantityInStock, String imageURL, String categoryID) {
+        this.productID = productID;
+        this.type=type;
         this.name = name;
-        this.id = id;
-        this.type = type;
-        this.color = color;
         this.description = description;
         this.price = price;
-        this.costPrice = costPrice;
-        this.quantity = quantity;
+        this.costprice = costprice;
+        this.quantityInStock = quantityInStock;
+        this.imageURL = imageURL;
+        this.categoryID = categoryID;
     }
 
-    public Product() {
+    public String getProductID() {
+        return productID;
     }
-    
 
-    // Getters and Setters
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getType() {
@@ -58,15 +54,7 @@ public class Product {
     public void setType(String type) {
         this.type = type;
     }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
+    
     public String getDescription() {
         return description;
     }
@@ -83,25 +71,29 @@ public class Product {
         this.price = price;
     }
 
-    public double getCostPrice() {
-        return costPrice;
+    public int getQuantityInStock() {
+        return quantityInStock;
     }
 
-    public void setCostPrice(double costPrice) {
-        this.costPrice = costPrice;
+    public void setQuantityInStock(int quantityInStock) {
+        this.quantityInStock = quantityInStock;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" + "name=" + name + ", id=" + id + ", type=" + type + ", color=" + color + ", description=" + description + ", price=" + price + ", costPrice=" + costPrice + ", quantity=" + quantity + '}';
+    public String getCategoryID() {
+        return categoryID;
     }
+
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
+    }
+    
     
 }
