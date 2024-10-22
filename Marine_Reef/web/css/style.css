@@ -140,18 +140,6 @@ body {
                 font-size: 0.9rem;
                 color: #666;
             }   
-.login-button {
-    font-size: 12px; /* Điều chỉnh kích thước chữ */
-    background-color: white; /* Màu nền trắng */
-    color: black; /* Màu chữ */
-    padding: 5px 10px; /* Padding cho nút */
-    border-radius: 5px; /* Bo góc */
-    text-decoration: none; /* Bỏ gạch chân */
-}
-
-.login-button:hover {
-    background-color: #f0f0f0; /* Màu nền khi hover */
-}
 nav ul {
     font-size: 12px; /* Đặt kích thước chữ cho toàn bộ thanh nav */
 }

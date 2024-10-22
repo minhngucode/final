@@ -6,12 +6,12 @@ package Controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 
 /**
  *
@@ -36,7 +36,7 @@ public class Control extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Control</title>");            
+            out.println("<title>Servlet Control</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet con căc at " + request.getContextPath() + "</h1>");
@@ -57,11 +57,27 @@ public class Control extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                System.out.println("Nhay vao get");
-            String lg=request.getParameter("lg");
-            System.out.println("LG="+lg);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.forward(request, response);     
+        Cookie[] cookies = request.getCookies();
+        String name = null;
+        String passcode = null;
+        boolean isLogedIn = false;
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("_noname")) {
+                    name = c.getValue();
+                }
+                if (c.getName().equals("_nopass")) {
+                    passcode = c.getValue();
+                }
+            }
+        }
+        if (name != null && passcode != null) {
+            if (LoginServlet.checkLogin(name, passcode)) {
+                request.setAttribute("lg", "true");
+            }
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**
@@ -75,8 +91,20 @@ public class Control extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Nhay vao post");
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        switch (action) {
+            case "logout" -> {
+                Cookie c1 = new Cookie("_noname", null);
+                c1.setMaxAge(0); // Xóa cookie
+                Cookie c2 = new Cookie("_nopass", null);
+                c2.setMaxAge(0); //
+                response.addCookie(c1);
+                response.addCookie(c2);
+                response.sendRedirect("Control");
+            }
+
+        }
+
     }
 
     /**

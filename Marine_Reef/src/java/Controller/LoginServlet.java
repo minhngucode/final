@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * @author
  */
 public class LoginServlet extends HttpServlet {
-    DBConnect DAO=new DBConnect();
+    static DBConnect DAO=new DBConnect();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private boolean checkLogin(String name, String pass){
+    public static boolean checkLogin(String name, String pass){
         ArrayList<User> arr = DAO.getUser(DAO.getConnection());
         for (User u:arr)
             if (u.getUsername().equals(name) && u.getPassword().equals(pass))

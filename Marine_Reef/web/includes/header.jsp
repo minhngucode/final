@@ -18,9 +18,16 @@
                 <li><a href="#">DỊCH VỤ</a></li>
                 <li><a href="#">CHIA SẺ KIẾN THỨC</a></li>
                 <li><a href="#">LIÊN HỆ</a></li>
-                <% String lg = (String) request.getAttribute("lg");
+                    <% String lg = (String) request.getAttribute("lg");
                     if (lg == null) {%>
-                <li style="font-size: 12px; text-decoration: none; background-color: aqua; padding: 5px 10px; border-radius: 5px;"><a href="LoginServlet" class="login-button">LOGIN</a></li>
+                <li style="font-size: 12px; text-decoration: none; background-color: aqua; padding: 5px 10px; border-radius: 5px;"><a href="LoginServlet">LOGIN</a></li>
+                    <%} else {%>
+                <li>Xin chào </li>
+                <li style="font-size: 12px; text-decoration: none; background-color: aqua; padding: 5px 10px; border-radius: 5px;">
+                    <form action="Control?action=logout" method="POST" style="display: inline;">
+                        <button type="submit" class="login-button" style="border: none; background: none; padding: 0; color: inherit; cursor: pointer;">Logout</button>
+                    </form>
+                </li>
                 <%}%>
             </ul>
         </nav>
