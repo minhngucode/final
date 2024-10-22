@@ -15,7 +15,10 @@ import java.util.ArrayList;
  * @author
  */
 public class DBConnect {
+
     private static ArrayList<Product> arrProduct = new ArrayList<>();
+    private static ArrayList<User> arrUser = new ArrayList<>();
+
     public static Connection getConnection() {
         Connection con = null;
         String dbUser = "sa";
@@ -23,10 +26,10 @@ public class DBConnect {
         String port = "1433";
         String IP = "127.0.0.1";
         String ServerName = "minipele";
-        String DBName = "MarineStore";
+        String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
-        String dbURL = "jdbc:sqlserver://minipele;databaseName=MarineStore;encrypt=false;trustServerCertificate=false;loginTimeout=30";
+        String dbURL = "jdbc:sqlserver://minipele;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
 
         try {
             Class.forName(driverClass);
@@ -37,38 +40,59 @@ public class DBConnect {
         }
         return con;
     }
-    public static ArrayList<Product> getProduct(Connection con){
-        try{
-        String sql = "SELECT * FROM Product";
-        
-        Statement statement = con.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        
-        arrProduct.clear();
-        String productID,name,id, type, color, description, imageURL,categoryID ;
-        double price, costPrice;
-        int quantity;
-        while (resultSet.next()){
-            productID= resultSet.getString("ProductID");
-            name= resultSet.getString("Name");
-            type= resultSet.getString("Type");
-            description= resultSet.getString("Description");
-            price = resultSet.getDouble("Price");
-            costPrice = resultSet.getDouble("CostPrice");
-            quantity = resultSet.getInt("Quantity");
-            imageURL= resultSet.getString("ImageURL");
-            categoryID= resultSet.getString("CategoryID");
 
-            arrProduct.add(new Product(productID, name,type, description, price, costPrice,quantity,  imageURL, categoryID));
+    public static ArrayList<User> getUser(Connection con) {
+        try {
+            String sql = "SELECT * FROM [User]";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            String name, pass, id;
+            arrUser.clear();
+            while (resultSet.next()) {
+                name = resultSet.getString("Username");
+                pass = resultSet.getString("Password");
+                id = resultSet.getString("CustomerID");
+                arrUser.add(new User(name,pass,id));
+            }
+        } catch (Exception e) {
+            System.out.println("Loi get User");
+            e.printStackTrace();
         }
-        }
-        catch (Exception e){
+        return arrUser;
+    }
+
+    public static ArrayList<Product> getProduct(Connection con) {
+        try {
+            String sql = "SELECT * FROM Product";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            arrProduct.clear();
+            String productID, name, id, type, color, description, imageURL, categoryID;
+            double price, costPrice;
+            int quantity;
+            while (resultSet.next()) {
+                productID = resultSet.getString("ProductID");
+                name = resultSet.getString("Name");
+                type = resultSet.getString("Type");
+                description = resultSet.getString("Description");
+                price = resultSet.getDouble("Price");
+                costPrice = resultSet.getDouble("CostPrice");
+                quantity = resultSet.getInt("Quantity");
+                imageURL = resultSet.getString("ImageURL");
+                categoryID = resultSet.getString("CategoryID");
+
+                arrProduct.add(new Product(productID, name, type, description, price, costPrice, quantity, imageURL, categoryID));
+            }
+        } catch (Exception e) {
             System.out.println("Error");
         }
         return arrProduct;
     }
+
     public static void main(String[] args) {
         Connection con = getConnection();
         System.out.println(getProduct(con));
     }
+    
 }

@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="hero">
-    <h1>XÂY DỰNG CẤU HÌNH BỂ CÁ</h1>
+    <h1>XÂY DỰNG CẤU HÌNH BỂ SAN HÔ</h1>
     <ul>
         <li>Hàng trăm mẫu Layout lựa chọn</li>
         <li>Chọn các món đồ thiết kế</li>

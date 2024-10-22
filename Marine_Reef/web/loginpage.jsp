@@ -1,3 +1,9 @@
+<%-- 
+    Document   : loginpage
+    Created on : 22 Oct 2024, 20:30:33
+    Author     : 
+--%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
     <head>
@@ -10,13 +16,13 @@
         <link rel="stylesheet" href="./css/bootstrap.css">
         <link rel="icon" type="image/png" href="./images/logo/favicon.png">
 
+
     </head>
     <body>
         <jsp:include page="includes/header.jsp"/>
-        <jsp:include page="includes/hero.jsp"/>
-        <jsp:include page="includes/products.jsp"/>
-        <jsp:include page="includes/services.jsp"/>
-        <jsp:include page="includes/knowledge.jsp"/>
+        <jsp:include page="includes/loginform.jsp"/>
+
         <jsp:include page="includes/footer.jsp"/>
-    </body>
+
+</body>
 </html>

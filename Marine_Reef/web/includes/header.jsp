@@ -8,23 +8,27 @@
 <header>
     <div class="container">
         <div class="logo">
-            <img alt="2D Aquatic Logo" height="50" src="https://storage.googleapis.com/a1aa/image/NZVOrPxNJnIABBDMzZryEd3wufqJqSbF0haV8RErFVSPr3yJA.jpg" width="100"/>
+            <img alt="Marine and Reef Logo" height="50" src="./images/logo/logo.jpg" width="100"/>
         </div>
-        <nav>
+        <nav style="font-size: 12px; padding-top: 20px">
             <ul>
                 <li><a href="#">GIỚI THIỆU</a></li>
-                <li><a href="#">XÂY DỰNG BỂ CÁ</a></li>
+                <li><a href="#">XÂY DỰNG BỂ</a></li>
                 <li><a href="#">SẢN PHẨM</a></li>
                 <li><a href="#">DỊCH VỤ</a></li>
                 <li><a href="#">CHIA SẺ KIẾN THỨC</a></li>
                 <li><a href="#">LIÊN HỆ</a></li>
+                <% String lg = (String) request.getAttribute("lg");
+                    if (lg == null) {%>
+                <li style="font-size: 12px; text-decoration: none; background-color: aqua; padding: 5px 10px; border-radius: 5px;"><a href="LoginServlet" class="login-button">LOGIN</a></li>
+                <%}%>
             </ul>
         </nav>
         <div class="contact-info">
             <i class="fas fa-envelope"></i>
-            <span>2daquatic@gmail.com</span>
+            <span>anonymous@fpt.edu.vn</span>
             <i class="fas fa-phone"></i>
-            <span>0917729116</span>
+            <span>0345 6789 JQK</span>
         </div>
     </div>
 </header>

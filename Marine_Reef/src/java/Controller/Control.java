@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,7 +39,7 @@ public class Control extends HttpServlet {
             out.println("<title>Servlet Control</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Control at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet con căc at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,7 +57,11 @@ public class Control extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                System.out.println("Nhay vao get");
+            String lg=request.getParameter("lg");
+            System.out.println("LG="+lg);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);     
     }
 
     /**
@@ -70,6 +75,7 @@ public class Control extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("Nhay vao post");
         processRequest(request, response);
     }
 
