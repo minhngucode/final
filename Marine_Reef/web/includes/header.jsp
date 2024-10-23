@@ -20,10 +20,14 @@
                 <li><a href="#">DỊCH VỤ</a></li>
                 <li><a href="chiasekienthuc.jsp">CHIA SẺ KIẾN THỨC</a></li>
                 <li><a href="#">LIÊN HỆ</a></li>
-                    <% String lg = (String) request.getAttribute("lg");
+                    <% 
+                        ServletContext context = application;
+            String lg = (String) context.getAttribute("lg");
                     if (lg == null) {%>
                 <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;"><a href="LoginServlet">LOGIN</a></li>
-                    <%} else {%>
+                <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;"><a href="Signup">SIGNUP</a></li>
+
+                <%} else {%>
                 <li>Xin chào </li>
                 <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;">
                     <form action="Control?action=logout" method="POST" style="display: inline;">

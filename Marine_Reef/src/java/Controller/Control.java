@@ -5,6 +5,7 @@
 package Controller;
 
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -73,8 +74,9 @@ public class Control extends HttpServlet {
         }
         if (name != null && passcode != null) {
             if (LoginServlet.checkLogin(name, passcode)) {
-                request.setAttribute("lg", "true");
-            }
+                ServletContext context = getServletContext();
+        // Đặt danh sách sách vào context attribute
+                context.setAttribute("lg", "true");            }
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
@@ -94,6 +96,8 @@ public class Control extends HttpServlet {
         String action = request.getParameter("action");
         switch (action) {
             case "logout" -> {
+                ServletContext context = getServletContext();
+                    context.removeAttribute("lg");
                 Cookie c1 = new Cookie("_noname", null);
                 c1.setMaxAge(0); // Xóa cookie
                 Cookie c2 = new Cookie("_nopass", null);
