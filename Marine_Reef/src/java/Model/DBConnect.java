@@ -113,23 +113,24 @@ public class DBConnect {
 
     public static boolean addCartDetail(Product p, String username, int quantity, Connection con) {
         try {
-            String selectMaxCartSql = "SELECT MAX(CAST(CartDetailID AS INT)) AS maxID FROM CartDetail";
+          
             String cartID = getCartID(username, con);
             // Lấy customerID cao nhất
-            String newCartId = "1"; // Mặc định là 1 nếu bảng rỗng
-            PreparedStatement cartstmt = con.prepareStatement(selectMaxCartSql);
-            ResultSet rs1 = cartstmt.executeQuery();
-            if (rs1.next()) {
-                newCartId = String.valueOf(rs1.getInt("maxID") + 1); // Tính toán customerID mới
-            }
+          
             System.out.println("Da den day");
-            String cartSql = "INSERT INTO CartDetail (CartDetailID, CartID, ProductID, Quantity) VALUES (?, ?, ?, ?)";
+            String cartSql = "MERGE INTO CartDetail AS target " +
+                         "USING (VALUES (?, ?, ?)) AS source (CartID, ProductID, Quantity) " +
+                         "ON (target.CartID = source.CartID AND target.ProductID = source.ProductID) " +
+                         "WHEN MATCHED THEN " +
+                         "UPDATE SET target.Quantity = target.Quantity + source.Quantity " +
+                         "WHEN NOT MATCHED THEN " +
+                         "INSERT (CartID, ProductID, Quantity) " +
+                         "VALUES (source.CartID, source.ProductID, source.Quantity);";
+            
             PreparedStatement stmt = con.prepareStatement(cartSql);
-            stmt.setString(1, newCartId);
-            stmt.setString(2, cartID);
-            stmt.setString(3, p.getProductID());
-            stmt.setInt(4, quantity);
-            System.out.println("newCartId:"+newCartId+"cartID:"+cartID+"p.getProductID():"+p.getProductID()+"quantity:"+quantity);
+            stmt.setString(1, cartID);
+            stmt.setString(2, p.getProductID());
+            stmt.setInt(3, quantity);
             System.out.println(stmt);
             stmt.executeUpdate();
             return true;
@@ -177,14 +178,13 @@ public class DBConnect {
             PreparedStatement stmt = con.prepareStatement(detailsql);
             stmt.setString(1, cartID);
             ResultSet rs = stmt.executeQuery();
-            String productID, cartDetailID;
+            String productID;
 
             int quantity;
             while (rs.next()) {
-                cartDetailID = rs.getString("CartDetailID");
                 productID = rs.getString("ProductID");
                 quantity = rs.getInt("Quantity");
-                arrCart.add(new CartDetail(cartDetailID, cartID, productID, quantity));
+                arrCart.add(new CartDetail(cartID, productID, quantity));
             }
         } catch (Exception e) {
             System.out.println("Loi roi");

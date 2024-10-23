@@ -101,6 +101,7 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         Cookie[] cookies = request.getCookies();
         int count = 0;
         String username = "";
@@ -116,7 +117,10 @@ public class CartServlet extends HttpServlet {
                 }
             }
         }
+
         if (count == 2) {
+                                                    System.out.println("wtf");
+
             String productID = request.getParameter("productID");
             String name = request.getParameter("name");
             String type = request.getParameter("type");

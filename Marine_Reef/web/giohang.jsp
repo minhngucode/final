@@ -49,12 +49,7 @@
             <td><%= cartDetail.getQuantity() %></td>
             <td><%= product.getPrice() %></td>
             <td><%= productTotal %></td>
-            <td>
-                <form action="DeleteFromCartServlet" method="post" style="display:inline;">
-                    <input type="hidden" name="cartDetailID" value="<%= cartDetail.getCartDetailID() %>">
-                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                </form>
-            </td>
+            
         </tr>
         
         <%

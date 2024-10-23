@@ -9,25 +9,17 @@ package Model;
  * @author
  */
 public class CartDetail {
-     private String cartDetailID;
     private String cartID;
     private String productID;
     private int quantity;
 
-    public CartDetail(String cartDetailID, String cartID, String productID, int quantity) {
-        this.cartDetailID = cartDetailID;
+    public CartDetail( String cartID, String productID, int quantity) {
         this.cartID = cartID;
         this.productID = productID;
         this.quantity = quantity;
     }
 
-    public String getCartDetailID() {
-        return cartDetailID;
-    }
-
-    public void setCartDetailID(String cartDetailID) {
-        this.cartDetailID = cartDetailID;
-    }
+   
 
     public String getCartID() {
         return cartID;
