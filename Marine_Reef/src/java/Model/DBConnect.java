@@ -60,8 +60,8 @@ public class DBConnect {
             PreparedStatement insertStmt = con.prepareStatement(insertSql);
             insertStmt.setString(1, newCustomerId);
             insertStmt.setString(2, " ");
-            insertStmt.setString(3, " ");
-            insertStmt.setString(4, " ");
+            insertStmt.setString(3, phone);
+            insertStmt.setString(4, email);
             insertStmt.setString(5, " ");
             insertStmt.executeUpdate();
             String sql = "INSERT INTO [User] (Username, Password, CustomerID) VALUES (?, ?, ?)";
