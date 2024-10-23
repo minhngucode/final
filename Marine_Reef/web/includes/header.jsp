@@ -16,7 +16,7 @@
             <ul>
                 <li><a href="gioithieu.jsp">GIỚI THIỆU</a></li>
                 <li><a href="#">XÂY DỰNG BỂ</a></li>
-                <li><a href="#">SẢN PHẨM</a></li>
+                <li><a href="ProductList">SẢN PHẨM</a></li>
                 <li><a href="#">DỊCH VỤ</a></li>
                 <li><a href="chiasekienthuc.jsp">CHIA SẺ KIẾN THỨC</a></li>
                 <li><a href="#">LIÊN HỆ</a></li>

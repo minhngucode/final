@@ -4,6 +4,7 @@
  */
 package Model;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -69,12 +70,7 @@ public class DBConnect {
             pstmt.setString(1, name);
             pstmt.setString(2, pass);
             pstmt.setString(3, newCustomerId );
-                        System.out.println("name"+name+"pass"+pass+"id"+newCustomerId);
-
-                                    System.out.println("Da toi day");
-
             pstmt.executeUpdate();
-                                    System.out.println("Da toi day");
 
             return true;
         } catch (Exception e) {
@@ -109,23 +105,24 @@ public class DBConnect {
             String sql = "SELECT * FROM Product";
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-
+            System.out.println(resultSet);
             arrProduct.clear();
-            String productID, name, id, type, color, description, categoryID;
-            double price, costPrice;
+            String productID, name, type, description, categoryID;
+            BigDecimal price, costPrice;
             int quantity;
             while (resultSet.next()) {
                 productID = resultSet.getString("ProductID");
                 name = resultSet.getString("Name");
-                type = resultSet.getString("Type");
                 description = resultSet.getString("Description");
-                price = resultSet.getDouble("Price");
-                costPrice = resultSet.getDouble("CostPrice");
-                quantity = resultSet.getInt("Quantity");
+                price = resultSet.getBigDecimal("Price");
+                quantity = resultSet.getInt("QuantityInStock");
                 categoryID = resultSet.getString("CategoryID");
+               costPrice = resultSet.getBigDecimal("CostPrice");
+                type = resultSet.getString("Type");
                 arrProduct.add(new Product(productID, name, type, description, price, costPrice, quantity, categoryID));
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error");
         }
         return arrProduct;
