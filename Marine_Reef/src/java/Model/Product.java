@@ -16,10 +16,9 @@ public class Product {
     private double price;
     private double costprice;
     private int quantityInStock;
-    private String imageURL;
     private String categoryID;
 
-    public Product(String productID, String name,String type, String description, double price, double costprice, int quantityInStock, String imageURL, String categoryID) {
+    public Product(String productID, String name,String type, String description, double price, double costprice, int quantityInStock, String categoryID) {
         this.productID = productID;
         this.type=type;
         this.name = name;
@@ -27,7 +26,6 @@ public class Product {
         this.price = price;
         this.costprice = costprice;
         this.quantityInStock = quantityInStock;
-        this.imageURL = imageURL;
         this.categoryID = categoryID;
     }
 
@@ -77,14 +75,6 @@ public class Product {
 
     public void setQuantityInStock(int quantityInStock) {
         this.quantityInStock = quantityInStock;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
     }
 
     public String getCategoryID() {
