@@ -153,3 +153,74 @@ nav ul li a {
 nav ul li a:hover {
     color: #007bff; /* Thay đổi màu chữ khi hover */
 }
+/*gioi thieu*/
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-title {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.about-subtitle {
+    font-size: 1.8rem;
+    color: #007bff;
+    margin-top: 30px;
+}
+
+.about-text {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about-list {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.about-list li {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+/*chia se kien thuc*/
+.about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 40px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-title {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.about-subtitle {
+    font-size: 1.8rem;
+    color: #007bff;
+    margin-top: 30px;
+}
+
+.about-text {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
