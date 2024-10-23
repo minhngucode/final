@@ -6,11 +6,11 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header>
-    <div class="container">
-        <div class="logo">
+    <div class="container  justify-content" >
+        <div class="logo" >
             <img alt="Marine and Reef Logo" height="50" src="./images/logo/logo.jpg" width="100"/>
         </div>
-        <nav style="font-size: 12px; padding-top: 20px">
+        <nav style=" padding-top: 20px; margin-right: 15%">
             <ul>
                 <li><a href="#">GIỚI THIỆU</a></li>
                 <li><a href="#">XÂY DỰNG BỂ</a></li>
@@ -31,11 +31,5 @@
                 <%}%>
             </ul>
         </nav>
-        <div class="contact-info">
-            <i class="fas fa-envelope"></i>
-            <span>anonymous@fpt.edu.vn</span>
-            <i class="fas fa-phone"></i>
-            <span>0345 6789 JQK</span>
-        </div>
-    </div>
+ </div>
 </header>
