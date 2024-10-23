@@ -22,10 +22,10 @@ public class DBConnect {
     public static Connection getConnection() {
         Connection con = null;
         String dbUser = "sa";
-        String dbPassword = "admin";
+        String dbPassword = "minh280504";
         String port = "1433";
         String IP = "127.0.0.1";
-        String ServerName = "minipele";
+        String ServerName = "MINHDC";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
@@ -68,7 +68,7 @@ public class DBConnect {
             ResultSet resultSet = statement.executeQuery(sql);
 
             arrProduct.clear();
-            String productID, name, id, type, color, description, imageURL, categoryID;
+            String productID, name, id, type, color, description, categoryID;
             double price, costPrice;
             int quantity;
             while (resultSet.next()) {
@@ -79,10 +79,8 @@ public class DBConnect {
                 price = resultSet.getDouble("Price");
                 costPrice = resultSet.getDouble("CostPrice");
                 quantity = resultSet.getInt("Quantity");
-                imageURL = resultSet.getString("ImageURL");
                 categoryID = resultSet.getString("CategoryID");
-
-                arrProduct.add(new Product(productID, name, type, description, price, costPrice, quantity, imageURL, categoryID));
+                arrProduct.add(new Product(productID, name, type, description, price, costPrice, quantity, categoryID));
             }
         } catch (Exception e) {
             System.out.println("Error");
