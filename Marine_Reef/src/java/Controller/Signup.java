@@ -4,12 +4,17 @@
  */
 package Controller;
 
+import static Controller.LoginServlet.encryptPassword;
+import Model.DBConnect;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -17,7 +22,7 @@ import java.io.PrintWriter;
  * @author
  */
 public class Signup extends HttpServlet {
-
+    private DBConnect DAO= new DBConnect();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -27,23 +32,33 @@ public class Signup extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Signup</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Signup at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+    public static String encryptPassword(String password) {
+        try {
+            // Tạo một đối tượng MessageDigest với thuật toán SHA-256
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+            // Chuyển mật khẩu sang byte và thực hiện mã hóa
+            byte[] hashedBytes = md.digest(password.getBytes());
+
+            // Chuyển byte sang chuỗi hexa
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashedBytes) {
+                sb.append(String.format("%02x", b));
+            }
+
+            // Trả về chuỗi hexa đã mã hóa
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
-
+    private boolean signtodb(String name, String pass, String email, String phone){
+        
+        if (DAO.signupUser(name, encryptPassword(pass), email, phone, DAO.getConnection())) 
+            return true;
+        else
+            return false;
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -56,8 +71,26 @@ public class Signup extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Cookie[] cookies = request.getCookies();
+        int count = 0;
+        if (cookies!=null){
+            for (Cookie c: cookies){
+                if (c.getName().equals("_noname"))
+                {
+                     count++;
+                    }
+                if (c.getName().equals("_nopass"))
+                {
+                     count++;
+                }
+            }
+        }
+        if (count==2)         
+            response.sendRedirect("Control");
+        else
+        response.sendRedirect("signuppage.jsp");
     }
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -70,7 +103,25 @@ public class Signup extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = (String) request.getParameter("username");
+         String pass = (String)request.getParameter("password");
+         String mail = (String)request.getParameter("email");
+         String phone = (String)request.getParameter("phone");
+         if (signtodb(name, pass, mail, phone)) 
+         {
+             Cookie cname=new Cookie("_noname",name);
+           Cookie cpass=new Cookie("_nopass",encryptPassword(pass));    
+           cname.setMaxAge(60*30);
+           cpass.setMaxAge(60*30);
+           response.addCookie(cname);
+           response.addCookie(cpass);
+             response.sendRedirect("Control");
+         }
+         else
+         {
+             System.out.println("vo duoc con cac a");
+             doGet(request, response);
+         }
     }
 
     /**

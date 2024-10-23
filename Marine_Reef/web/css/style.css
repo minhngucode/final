@@ -43,7 +43,7 @@ body {
             }
             .hero {
                 position: relative;
-                background: url('https://placehold.co/1920x600') no-repeat center center/cover;
+                background: url("./images/logo/logo.jpg") no-repeat center center/cover;
                 height: 600px;
                 color: #fff;
                 text-align: center;

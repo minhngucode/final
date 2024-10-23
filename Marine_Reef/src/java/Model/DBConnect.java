@@ -4,6 +4,7 @@
  */
 package Model;
 
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -41,6 +42,48 @@ public class DBConnect {
         return con;
     }
 
+    public static boolean signupUser(String name, String pass, String email, String phone, Connection con) {
+        try {
+            
+
+            String selectMaxIdSql = "SELECT MAX(CAST(customerID AS INT)) AS maxID FROM Customer";
+            String insertSql = "INSERT INTO Customer (CustomerID, CustomerName, Phone, Email, Address) VALUES (?, ?, ?, ?, ?)";
+
+            // Lấy customerID cao nhất
+            String newCustomerId="null"; // Mặc định là 1 nếu bảng rỗng
+            PreparedStatement selectStmt = con.prepareStatement(selectMaxIdSql);
+            ResultSet rs = selectStmt.executeQuery();
+            if (rs.next()) {
+                newCustomerId = String.valueOf(rs.getInt("maxID") + 1) ; // Tính toán customerID mới
+            }
+            // Chèn khách hàng mới
+            PreparedStatement insertStmt = con.prepareStatement(insertSql);
+            insertStmt.setString(1, newCustomerId);
+            insertStmt.setString(2, " ");
+            insertStmt.setString(3, " ");
+            insertStmt.setString(4, " ");
+            insertStmt.setString(5, " ");
+            insertStmt.executeUpdate();
+            String sql = "INSERT INTO [User] (Username, Password, CustomerID) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, pass);
+            pstmt.setString(3, newCustomerId );
+                        System.out.println("name"+name+"pass"+pass+"id"+newCustomerId);
+
+                                    System.out.println("Da toi day");
+
+            pstmt.executeUpdate();
+                                    System.out.println("Da toi day");
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        }
+    }
+
     public static ArrayList<User> getUser(Connection con) {
         try {
             String sql = "SELECT * FROM [User]";
@@ -52,7 +95,7 @@ public class DBConnect {
                 name = resultSet.getString("Username");
                 pass = resultSet.getString("Password");
                 id = resultSet.getString("CustomerID");
-                arrUser.add(new User(name,pass,id));
+                arrUser.add(new User(name, pass, id));
             }
         } catch (Exception e) {
             System.out.println("Loi get User");
@@ -94,5 +137,5 @@ public class DBConnect {
         Connection con = getConnection();
         System.out.println(getProduct(con));
     }
-    
+
 }
