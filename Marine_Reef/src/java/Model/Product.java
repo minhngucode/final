@@ -86,6 +86,14 @@ public class Product {
     public void setCategoryID(String categoryID) {
         this.categoryID = categoryID;
     }
+
+    public BigDecimal getCostprice() {
+        return costprice;
+    }
+
+    public void setCostprice(BigDecimal costprice) {
+        this.costprice = costprice;
+    }
     
     
 }

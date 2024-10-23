@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -77,7 +78,24 @@ public class ProductList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String productID = request.getParameter("productID");
+    String name = request.getParameter("name");
+    String type = request.getParameter("type");
+    String description = request.getParameter("description");
+    BigDecimal price = new BigDecimal(request.getParameter("price"));
+    BigDecimal costprice = new BigDecimal(request.getParameter("costprice"));
+    int quantityInStock = Integer.parseInt(request.getParameter("quantityInStock"));
+    String categoryID = request.getParameter("categoryID");
+
+    // Tạo đối tượng Product
+    Product product = new Product(productID, name, type, description, price, costprice, quantityInStock, categoryID);
+
+    // Lưu đối tượng Product vào request để hiển thị thông tin chi tiết
+    request.setAttribute("product", product);
+    
+    // Chuyển hướng đến trang hiển thị chi tiết sản phẩm
+    RequestDispatcher dispatcher = request.getRequestDispatcher("detailproduct.jsp");
+    dispatcher.forward(request, response);
     }
 
     /**
