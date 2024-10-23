@@ -1,13 +1,15 @@
-package Controller;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package Controller;
+
+import Model.CartDetail;
 import Model.DBConnect;
 import Model.Product;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,8 +22,8 @@ import java.util.ArrayList;
  *
  * @author
  */
-public class ProductList extends HttpServlet {
-
+public class CartServlet extends HttpServlet {
+    ArrayList<CartDetail> arrCartDetail = new ArrayList<>();
     private DBConnect DAO = new DBConnect();
 
     /**
@@ -41,10 +43,10 @@ public class ProductList extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductList</title>");
+            out.println("<title>Servlet CartServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ProductList at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CartServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,10 +64,30 @@ public class ProductList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Product> arr = DAO.getProduct(DAO.getConnection());
-        request.setAttribute("productList", arr);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("sanpham.jsp");
+        
+        Cookie[] cookies = request.getCookies();
+        int count = 0;
+        String username = "";
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("_noname")) {
+                    username = c.getValue();
+                    System.out.println("username="+username);
+                    count++;
+                }
+                if (c.getName().equals("_nopass")) {
+                    count++;
+                }
+            }
+        }
+        if (count == 2) {
+            arrCartDetail = DAO.getCart(username, DAO.getConnection());
+             request.setAttribute("cartDetails", arrCartDetail);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("giohang.jsp");
         dispatcher.forward(request, response);
+        }
+        else
+            response.sendRedirect("LoginServlet");
     }
 
     /**
@@ -79,24 +101,36 @@ public class ProductList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String productID = request.getParameter("productID");
-        String name = request.getParameter("name");
-        String type = request.getParameter("type");
-        String description = request.getParameter("description");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
-        BigDecimal costprice = new BigDecimal(request.getParameter("costprice"));
-        int quantityInStock = Integer.parseInt(request.getParameter("quantityInStock"));
-        String categoryID = request.getParameter("categoryID");
+        Cookie[] cookies = request.getCookies();
+        int count = 0;
+        String username = "";
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("_noname")) {
+                    username = c.getValue();
+                    System.out.println("username="+username);
+                    count++;
+                }
+                if (c.getName().equals("_nopass")) {
+                    count++;
+                }
+            }
+        }
+        if (count == 2) {
+            String productID = request.getParameter("productID");
+            String name = request.getParameter("name");
+            String type = request.getParameter("type");
+            String description = request.getParameter("description");
+            BigDecimal price = new BigDecimal(request.getParameter("price"));
+            BigDecimal costprice = new BigDecimal(request.getParameter("costprice"));
+            int quantityInStock = Integer.parseInt(request.getParameter("quantityInStock"));
+            String categoryID = request.getParameter("categoryID");
 
-        // Tạo đối tượng Product
-        Product product = new Product(productID, name, type, description, price, costprice, quantityInStock, categoryID);
-
-        // Lưu đối tượng Product vào request để hiển thị thông tin chi tiết
-        request.setAttribute("product", product);
-
-        // Chuyển hướng đến trang hiển thị chi tiết sản phẩm
-        RequestDispatcher dispatcher = request.getRequestDispatcher("detailproduct.jsp");
-        dispatcher.forward(request, response);
+            // Tạo đối tượng Product
+            Product product = new Product(productID, name, type, description, price, costprice, quantityInStock, categoryID);
+            DAO.addCartDetail(product, username, 1, DAO.getConnection());
+            doGet(request, response);
+        }
     }
 
     /**

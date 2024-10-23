@@ -20,6 +20,7 @@ public class DBConnect {
 
     private static ArrayList<Product> arrProduct = new ArrayList<>();
     private static ArrayList<User> arrUser = new ArrayList<>();
+    private static ArrayList<CartDetail> arrCart = new ArrayList<>();
 
     public static Connection getConnection() {
         Connection con = null;
@@ -45,17 +46,16 @@ public class DBConnect {
 
     public static boolean signupUser(String name, String pass, String email, String phone, Connection con) {
         try {
-            
 
             String selectMaxIdSql = "SELECT MAX(CAST(customerID AS INT)) AS maxID FROM Customer";
             String insertSql = "INSERT INTO Customer (CustomerID, CustomerName, Phone, Email, Address) VALUES (?, ?, ?, ?, ?)";
 
             // Lấy customerID cao nhất
-            String newCustomerId="null"; // Mặc định là 1 nếu bảng rỗng
+            String newCustomerId = "1"; // Mặc định là 1 nếu bảng rỗng
             PreparedStatement selectStmt = con.prepareStatement(selectMaxIdSql);
             ResultSet rs = selectStmt.executeQuery();
             if (rs.next()) {
-                newCustomerId = String.valueOf(rs.getInt("maxID") + 1) ; // Tính toán customerID mới
+                newCustomerId = String.valueOf(rs.getInt("maxID") + 1); // Tính toán customerID mới
             }
             // Chèn khách hàng mới
             PreparedStatement insertStmt = con.prepareStatement(insertSql);
@@ -69,15 +69,128 @@ public class DBConnect {
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, pass);
-            pstmt.setString(3, newCustomerId );
+            pstmt.setString(3, newCustomerId);
             pstmt.executeUpdate();
 
+            String selectMaxCartSql = "SELECT MAX(CAST(CartID AS INT)) AS maxID FROM Cart";
+            String cartSql = "INSERT INTO Cart (CartID, CustomerID) VALUES (?, ?)";
+
+            // Lấy customerID cao nhất
+            String newCartId = "1"; // Mặc định là 1 nếu bảng rỗng
+            PreparedStatement cartstmt = con.prepareStatement(selectMaxCartSql);
+            ResultSet rs1 = cartstmt.executeQuery();
+            if (rs1.next()) {
+                newCartId = String.valueOf(rs1.getInt("maxID") + 1); // Tính toán customerID mới
+            }
+            // Chèn khách hàng mới
+            PreparedStatement insertCartStmt = con.prepareStatement(cartSql);
+            insertCartStmt.setString(1, newCartId);
+            insertCartStmt.setString(2, newCustomerId);
+            insertCartStmt.executeUpdate();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-
         }
+    }
+
+    public static String getCustomerID(String username, Connection con) {
+        String customerID = null;
+        try {
+            String sql = "SELECT CustomerID FROM [User] WHERE Username = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                customerID = resultSet.getString("CustomerID");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Xử lý lỗi nếu có
+        }
+        return customerID;
+    }
+
+    public static boolean addCartDetail(Product p, String username, int quantity, Connection con) {
+        try {
+            String selectMaxCartSql = "SELECT MAX(CAST(CartDetailID AS INT)) AS maxID FROM CartDetail";
+            String cartID = getCartID(username, con);
+            // Lấy customerID cao nhất
+            String newCartId = "1"; // Mặc định là 1 nếu bảng rỗng
+            PreparedStatement cartstmt = con.prepareStatement(selectMaxCartSql);
+            ResultSet rs1 = cartstmt.executeQuery();
+            if (rs1.next()) {
+                newCartId = String.valueOf(rs1.getInt("maxID") + 1); // Tính toán customerID mới
+            }
+            System.out.println("Da den day");
+            String cartSql = "INSERT INTO CartDetail (CartDetailID, CartID, ProductID, Quantity) VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = con.prepareStatement(cartSql);
+            stmt.setString(1, newCartId);
+            stmt.setString(2, cartID);
+            stmt.setString(3, p.getProductID());
+            stmt.setInt(4, quantity);
+            System.out.println("newCartId:"+newCartId+"cartID:"+cartID+"p.getProductID():"+p.getProductID()+"quantity:"+quantity);
+            System.out.println(stmt);
+            stmt.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Loi add cartdetail");
+        }
+        return false;
+    }
+
+    public static String getCartID(String username, Connection con) {
+        String cartID = "";
+        try {
+            String cusID = getCustomerID(username, con);
+                        System.out.println("CusID:"+cusID);
+
+            String sql = "SELECT CartID FROM Cart WHERE CustomerID = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, cusID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                cartID = resultSet.getString("CartID");
+            }
+        } catch (Exception e) {
+            System.out.println("Loi get cartID");
+            e.printStackTrace();
+        }
+        System.out.println("Con cac:"+cartID);
+        return cartID;
+    }
+
+    public static ArrayList<CartDetail> getCart(String username, Connection con) {
+        try {
+            arrCart.clear();
+            String cusID = getCustomerID(username, con);
+            String cartID = "";
+            String sql = "SELECT CartID FROM Cart WHERE CustomerID = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, cusID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                cartID = resultSet.getString("CartID");
+            }
+            String detailsql = "SELECT * FROM CartDetail WHERE CartID = ?";
+            PreparedStatement stmt = con.prepareStatement(detailsql);
+            stmt.setString(1, cartID);
+            ResultSet rs = stmt.executeQuery();
+            String productID, cartDetailID;
+
+            int quantity;
+            while (rs.next()) {
+                cartDetailID = rs.getString("CartDetailID");
+                productID = rs.getString("ProductID");
+                quantity = rs.getInt("Quantity");
+                arrCart.add(new CartDetail(cartDetailID, cartID, productID, quantity));
+            }
+        } catch (Exception e) {
+            System.out.println("Loi roi");
+            e.printStackTrace();
+        }
+        return arrCart;
     }
 
     public static ArrayList<User> getUser(Connection con) {
@@ -117,7 +230,7 @@ public class DBConnect {
                 price = resultSet.getBigDecimal("Price");
                 quantity = resultSet.getInt("QuantityInStock");
                 categoryID = resultSet.getString("CategoryID");
-               costPrice = resultSet.getBigDecimal("CostPrice");
+                costPrice = resultSet.getBigDecimal("CostPrice");
                 type = resultSet.getString("Type");
                 arrProduct.add(new Product(productID, name, type, description, price, costPrice, quantity, categoryID));
             }
@@ -127,10 +240,33 @@ public class DBConnect {
         }
         return arrProduct;
     }
+    public static Product getProductbyID(String id, Connection con){
+        try {
+            String sql = "SELECT * FROM Product WHERE ProductID = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            String productID, name, type, description, categoryID;
+            BigDecimal price, costPrice;
+            int quantity;
+            if (rs.next()) {
+                productID = rs.getString("ProductID");
+                name = rs.getString("Name");
+                description = rs.getString("Description");
+                price = rs.getBigDecimal("Price");
+                quantity = rs.getInt("QuantityInStock");
+                categoryID = rs.getString("CategoryID");
+                costPrice = rs.getBigDecimal("CostPrice");
+                type = rs.getString("Type");
+                return new Product(productID, name, type, description, price, costPrice, quantity, categoryID);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error lay product");
+        }
+        return null;
 
-    public static void main(String[] args) {
-        Connection con = getConnection();
-        System.out.println(getProduct(con));
     }
+
 
 }

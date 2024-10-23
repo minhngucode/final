@@ -55,7 +55,9 @@ public class Signup extends HttpServlet {
     private boolean signtodb(String name, String pass, String email, String phone){
         
         if (DAO.signupUser(name, encryptPassword(pass), email, phone, DAO.getConnection())) 
+        {
             return true;
+        }
         else
             return false;
     }
