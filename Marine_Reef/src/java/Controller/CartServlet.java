@@ -143,7 +143,8 @@ public class CartServlet extends HttpServlet {
                 // Trả về kết quả JSON
                 response.setContentType("application/json");
                 PrintWriter out = response.getWriter();
-                out.print("{\"success\": true, \"newQuantity\": " + newQuantity + ", \"totalPrice\": " + totalPrice + "}");
+                    Product product = DAO.getProductbyID(productID, DAO.getConnection());
+                out.print("{\"success\": true, \"newQuantity\": " + newQuantity + ", \"totalPrice\": " + totalPrice + ", \"productTotal\": " + product.getPrice().multiply(new BigDecimal(newQuantity))+ "}" );
                 out.flush();
             }
                 case "remove"->{
