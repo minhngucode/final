@@ -95,8 +95,7 @@
                             <input type="hidden" name="costprice" value="<%= product.getCostprice() %>">
                             <input type="hidden" name="quantityInStock" value="<%= product.getQuantityInStock() %>">
                             <input type="hidden" name="categoryID" value="<%= product.getCategoryID() %>">
-                            
-                            <button type="submit" class="btn btn-primary text-decoration-none" style="width: 100%; text-align: left;">Thêm vào giỏ</button>
+                            <button type="submit"  name="action" value="addtocart" class="btn btn-primary text-decoration-none" style="width: 100%; text-align: center;">Thêm vào giỏ</button>
                         </form>
                         </div>
                     </div>

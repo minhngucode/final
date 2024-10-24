@@ -1,76 +1,102 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" import="java.util.ArrayList" import="Model.Product" import="java.math.BigDecimal"%>
 <%@ page import="Model.CartDetail" %>
 <%@ page import="Model.DBConnect" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.text.NumberFormat" %>
 <jsp:include page="includes/begintag.jsp"/>
 <jsp:include page="includes/header.jsp"/>
+<%
+    // Định dạng giá tiền theo VNĐ
+    Locale localeVN = new Locale("vi", "VN");
+    NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
+
+    // Sử dụng currencyVN.format(...) để định dạng giá
+%>
 <%
     // Giả sử bạn đã có một ArrayList các đối tượng CartDetail
     DBConnect DAO = new DBConnect();
     ArrayList<CartDetail> cartDetails = (ArrayList<CartDetail>) request.getAttribute("cartDetails");
     BigDecimal totalPrice = BigDecimal.ZERO; // Biến lưu tổng giá trị giỏ hàng
-    
+
     if (cartDetails != null && !cartDetails.isEmpty()) {
 %>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Your Shopping Cart</h2>
+    <h2 class="text-center mb-4 xeon-blue p-3 rounded">Your Shopping Cart</h2>
     <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th>Product Image</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
+        <thead class="xeon-blue">
+        <tr>
+            <th>Select</th>
+            <th>Product Image</th>
+            <th>Product Name</th>
+            <th class="text-center">Quantity</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Total</th>
+            <th class="text-center">Action</th>
+        </tr>
         </thead>
         <tbody>
         <%
             for (CartDetail cartDetail : cartDetails) {
                 // Lấy sản phẩm từ productID trong cartDetail
                 Product product = DAO.getProductbyID(cartDetail.getProductID(), DAO.getConnection());
-                
+
                 // Tính tổng giá của sản phẩm
                 BigDecimal productTotal = product.getPrice().multiply(new BigDecimal(cartDetail.getQuantity()));
-                
+
                 // Cộng vào tổng giá của giỏ hàng
                 totalPrice = totalPrice.add(productTotal);
-                
+
                 // Đường dẫn tới hình ảnh sản phẩm
                 String imagePath = "images/coral-image/" + product.getProductID() + ".jpg";
         %>
-        
+
         <tr>
             <td>
-                <img src="<%= imagePath %>" alt="Product Image" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                <input type="checkbox" class="selectProduct" value="<%= cartDetail.getProductID() %>" data-cartid="<%= cartDetail.getCartID() %>" />
+            </td>
+            <td>
+                <img src="<%= imagePath %>" alt="Product Image" class="img-fluid rounded" style="max-width: 100px; max-height: 100px;">
             </td>
             <td><%= product.getName() %></td>
-            <td><%= cartDetail.getQuantity() %></td>
-            <td><%= product.getPrice() %></td>
-            <td><%= productTotal %></td>
-            
+            <td class="text-center">
+                <button class="btn btn-sm btn-xeon mr-1" onclick="updateQuantity('<%= cartDetail.getCartID() %>', '<%= cartDetail.getProductID() %>', -1)">-</button>
+                <span class="mx-2" id="quantity_<%= cartDetail.getProductID() %>"><%= cartDetail.getQuantity() %></span>
+                <button class="btn btn-sm btn-xeon ml-1" onclick="updateQuantity('<%= cartDetail.getCartID() %>', '<%= cartDetail.getProductID() %>', 1)">+</button>
+                <input type="hidden" id="hidden_quantity_<%= cartDetail.getProductID() %>" value="<%= cartDetail.getQuantity() %>" />
+            </td>
+            <td class="text-center"><%= currencyVN.format(product.getPrice()) %></td>
+            <td class="text-center"><%= currencyVN.format(productTotal) %></td>
+            <td class="text-center">
+                <form action="CartServlet" method="post">
+                    <input type="hidden" name="action" value="remove" />
+                    <input type="hidden" name="cartID" value="<%= cartDetail.getCartID() %>" />
+                    <input type="hidden" name="productID" value="<%= cartDetail.getProductID() %>" />
+                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                </form>
+            </td>
         </tr>
-        
+
+
         <%
             } // Kết thúc vòng lặp
         %>
-        
-        <tr>
+
+        <tr class="xeon-blue">
             <td colspan="4" class="text-right"><strong>Total Price:</strong></td>
-            <td colspan="2"><strong><%= totalPrice %></strong></td>
+            <td colspan="2" class="text-center"><strong id="totalPrice"><%= currencyVN.format(totalPrice) %></strong></td>
         </tr>
         </tbody>
     </table>
 
     <div class="text-right">
-        <a href="checkout.jsp" class="btn btn-success">Proceed to Checkout</a>
-        <a href="products.jsp" class="btn btn-primary">Continue Shopping</a>
+        <button type="button" class="btn btn-xeon btn-lg" onclick="submitSelectedProducts()">Proceed to Payment</button>
+        <a href="products.jsp" class="btn btn-outline-xeon btn-lg">Continue Shopping</a>
     </div>
 </div>
 
 <%
-    } else {
+} else {
 %>
 <div class="container mt-5">
     <p class="alert alert-warning text-center">Your cart is empty.</p>
@@ -80,4 +106,77 @@
 %>
 
 <jsp:include page="includes/footer.jsp"/>
-<jsp:include page="includes/endtag.jsp"/> 
+<script>
+    function submitSelectedProducts() {
+        // Lấy danh sách checkbox đã chọn
+        const selectedProducts = document.querySelectorAll('.selectProduct:checked');
+        if (selectedProducts.length === 0) {
+            alert('Please select at least one product.');
+            return;
+        }
+
+        // Tạo form ẩn
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'PaymentServlet';
+
+        // Thêm các productID, cartID và số lượng đã chọn vào form
+        selectedProducts.forEach(function(product) {
+            const productID = product.value;
+            const cartID = product.getAttribute('data-cartid');
+            const quantity = document.getElementById('hidden_quantity_' + productID).value;
+
+            // Thêm productID
+            const inputProductID = document.createElement('input');
+            inputProductID.type = 'hidden';
+            inputProductID.name = 'selectedProduct';
+            inputProductID.value = productID;
+            form.appendChild(inputProductID);
+
+            // Thêm cartID
+            const inputCartID = document.createElement('input');
+            inputCartID.type = 'hidden';
+            inputCartID.name = 'selectedCartID';
+            inputCartID.value = cartID;
+            form.appendChild(inputCartID);
+
+            // Thêm số lượng
+            const inputQuantity = document.createElement('input');
+            inputQuantity.type = 'hidden';
+            inputQuantity.name = 'selectedQuantity';
+            inputQuantity.value = quantity;
+            form.appendChild(inputQuantity);
+        });
+
+        // Thêm form vào body và submit
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function formatVND(amount) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    }
+
+    function updateQuantity(cartID, productID, delta) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "CartServlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        // Xử lý khi server trả về kết quả
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // Cập nhật lại số lượng và giá
+                    document.getElementById('quantity_' + productID).innerText = response.newQuantity;
+                    document.getElementById('hidden_quantity_' + productID).value = response.newQuantity;
+                    document.getElementById('totalPrice').innerText = response.totalPrice;
+                }
+            }
+        };
+
+        // Gửi yêu cầu đến servlet với cartID, productID và delta (tăng/giảm)
+        xhr.send("action=updateQuantity&cartID=" + cartID + "&productID=" + productID + "&delta=" + delta);
+    }
+</script>
+<jsp:include page="includes/endtag.jsp"/>

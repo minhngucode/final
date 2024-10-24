@@ -31,7 +31,6 @@ public class DBConnect {
         String ServerName = "minipele";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-
         String dbURL = "jdbc:sqlserver://minipele;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
 
         try {
@@ -39,6 +38,7 @@ public class DBConnect {
             //DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
             con = (Connection) DriverManager.getConnection(dbURL, dbUser, dbPassword);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Error: " + e);
         }
         return con;
@@ -240,6 +240,7 @@ public class DBConnect {
         }
         return arrProduct;
     }
+    
     public static Product getProductbyID(String id, Connection con){
         try {
             String sql = "SELECT * FROM Product WHERE ProductID = ?";
@@ -267,6 +268,60 @@ public class DBConnect {
         return null;
 
     }
+    
+public void updateQuantityCartDetail(String cartID, String productID, int quantity, Connection con) {
+    try{
+        String query = "UPDATE CartDetail SET Quantity = ? WHERE CartID = ? AND ProductID = ?";
+             PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, quantity);
+            ps.setString(2, cartID);
+            ps.setString(3, productID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Loi update cartdetail");
+            e.printStackTrace();
+        }
+    }
 
-
+    // Phương thức xóa cartDetail
+    public void deleteCartDetail(String cartID, String productID, Connection con) {
+        try{
+        String query = "DELETE FROM CartDetail WHERE CartID = ? AND ProductID = ?";
+             PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, cartID);
+            ps.setString(2, productID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Loi xoa cartdetail");
+            e.printStackTrace();
+        }
+    }
+    
+    public CartDetail getCartDetail(String cartID, String productID, Connection conn) {
+    CartDetail cartDetail = null;
+     try {
+    String query = "SELECT * FROM CartDetail WHERE CartID = ? AND ProductID = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, cartID);
+        ps.setString(2, productID);
+        ResultSet rs = ps.executeQuery();
+        
+        if (rs.next()) {
+            // Giả sử CartDetail có các thuộc tính là cartID, productID, quantity
+            String cID = rs.getString("CartID");
+            String pID = rs.getString("ProductID");
+            int quantity = rs.getInt("Quantity");
+            // Tạo đối tượng CartDetail và trả về
+            cartDetail = new CartDetail(cID, pID, quantity);
+        }
+        
+        rs.close();
+        ps.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    
+    return cartDetail;
 }
+}
+

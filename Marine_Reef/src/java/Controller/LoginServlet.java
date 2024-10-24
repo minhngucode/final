@@ -6,14 +6,12 @@ package Controller;
 
 import Model.DBConnect;
 import Model.User;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -120,10 +118,10 @@ public class LoginServlet extends HttpServlet {
         String pass=request.getParameter("password");
         if (checkLogin(name,encryptPassword(pass)))
         {
-            System.out.println("DOne");
             String lg="ok";
             Cookie cname=new Cookie("_noname",name);
-           Cookie cpass=new Cookie("_nopass",encryptPassword(pass));    
+           Cookie cpass=new Cookie("_nopass",encryptPassword(pass));
+
            cname.setMaxAge(60*30);
            cpass.setMaxAge(60*30);
            response.addCookie(cname);

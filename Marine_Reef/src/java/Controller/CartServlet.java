@@ -7,7 +7,7 @@ package Controller;
 import Model.CartDetail;
 import Model.DBConnect;
 import Model.Product;
-import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -35,21 +35,18 @@ public class CartServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void upCartDetail(HttpServletRequest request, HttpServletResponse response, int change)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CartServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CartServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String cartID = request.getParameter("cartID");
+        String productID = request.getParameter("productID");
+        int quantity = Integer.parseInt(request.getParameter("quantity"))+change;
+        DAO.updateQuantityCartDetail(cartID, productID, quantity, DAO.getConnection());
+    }
+    protected void delCartDetail(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String cartID = request.getParameter("cartID");
+        String productID = request.getParameter("productID");
+        DAO.deleteCartDetail(cartID, productID, DAO.getConnection());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -119,9 +116,43 @@ public class CartServlet extends HttpServlet {
         }
 
         if (count == 2) {
-                                                    System.out.println("wtf");
+            String action = request.getParameter("action");
+            switch (action){
+                case "updateQuantity" -> {
+                String cartID = request.getParameter("cartID");
+                String productID = request.getParameter("productID");
+                int delta = Integer.parseInt(request.getParameter("delta"));
+                
+                CartDetail cartDetail = DAO.getCartDetail(cartID, productID, DAO.getConnection());
+                int newQuantity = cartDetail.getQuantity() + delta;
+                
+                if (newQuantity > 0) {
+                    DAO.updateQuantityCartDetail(cartID, productID, newQuantity, DAO.getConnection());
+                } else {
+                    DAO.deleteCartDetail(cartID, productID, DAO.getConnection());
+                }
+                
+                // Tính toán lại tổng giá giỏ hàng
+                ArrayList<CartDetail> cartDetails = DAO.getCart(username, DAO.getConnection());
+                BigDecimal totalPrice = BigDecimal.ZERO;
+                for (CartDetail detail : cartDetails) {
+                    Product product = DAO.getProductbyID(detail.getProductID(), DAO.getConnection());
+                    totalPrice = totalPrice.add(product.getPrice().multiply(new BigDecimal(detail.getQuantity())));
+                }
 
-            String productID = request.getParameter("productID");
+                // Trả về kết quả JSON
+                response.setContentType("application/json");
+                PrintWriter out = response.getWriter();
+                out.print("{\"success\": true, \"newQuantity\": " + newQuantity + ", \"totalPrice\": " + totalPrice + "}");
+                out.flush();
+            }
+                case "remove"->{
+                    delCartDetail(request, response);
+                   doGet(request, response);
+
+                }
+                case "addtocart" ->{
+              String productID = request.getParameter("productID");
             String name = request.getParameter("name");
             String type = request.getParameter("type");
             String description = request.getParameter("description");
@@ -134,7 +165,13 @@ public class CartServlet extends HttpServlet {
             Product product = new Product(productID, name, type, description, price, costprice, quantityInStock, categoryID);
             DAO.addCartDetail(product, username, 1, DAO.getConnection());
             doGet(request, response);
+                }
+            }
+            
         }
+        else 
+                        response.sendRedirect("LoginServlet");
+
     }
 
     /**

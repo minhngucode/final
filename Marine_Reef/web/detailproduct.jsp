@@ -27,7 +27,17 @@
             <p><strong>Giá:</strong> <%= product.getPrice() %> VNĐ</p>
             <p><strong>Tồn kho:</strong> <%= product.getQuantityInStock() %></p>
             <div class="mt-4">
-                <a href="addToCart.jsp?productId=<%= product.getProductID() %>" class="btn btn-primary">Thêm vào giỏ</a>
+                <form action="CartServlet" method="post">
+                            <input type="hidden" name="productID" value="<%= product.getProductID() %>">
+                            <input type="hidden" name="name" value="<%= product.getName() %>">
+                            <input type="hidden" name="type" value="<%= product.getType() %>">
+                            <input type="hidden" name="description" value="<%= product.getDescription() %>">
+                            <input type="hidden" name="price" value="<%= product.getPrice() %>">
+                            <input type="hidden" name="costprice" value="<%= product.getCostprice() %>">
+                            <input type="hidden" name="quantityInStock" value="<%= product.getQuantityInStock() %>">
+                            <input type="hidden" name="categoryID" value="<%= product.getCategoryID() %>">
+                            
+                            <button type="submit"  name="action" value="addtocart" class="btn btn-primary text-decoration-none" style="width: 26%; text-align: center;">Thêm vào giỏ</button>
                 <a href="ProductList" class="btn btn-secondary">Quay lại</a>
             </div>
         </div>
