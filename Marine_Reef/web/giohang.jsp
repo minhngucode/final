@@ -22,7 +22,7 @@
 %>
 
 <div class="container mt-5">
-    <h2 class="text-center mb-4 xeon-blue p-3 rounded">Your Shopping Cart</h2>
+    <h2 class="text-center mb-4 xeon-blue p-3 rounded">Giỏ hàng</h2>
     <table class="table table-bordered table-hover">
         <thead class="xeon-blue">
         <tr>
@@ -90,8 +90,8 @@
     </table>
 
     <div class="text-right">
-        <button type="button" class="btn btn-xeon btn-lg" onclick="submitSelectedProducts()">Proceed to Payment</button>
-        <a href="products.jsp" class="btn btn-outline-xeon btn-lg">Continue Shopping</a>
+        <button type="button" class="btn btn-xeon btn-lg" onclick="submitSelectedProducts()">Thanh toán</button>
+        <a href="products.jsp" class="btn btn-outline-xeon btn-lg">Tiếp tục mua hàng</a>
     </div>
 </div>
 
