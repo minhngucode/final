@@ -5,24 +5,58 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<style>
+    .section {
+    text-align: center;
+}
+
+.products {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    
+    
+    
+    border: 1px solid #ccc;
+    
+}
+
+.product img {
+    flex-grow: 1;
+}
+
+.product h3 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+    </style>
 <div class="section">
     <h2>SẢN PHẨM</h2>
     <div class="products">
         <div class="product">
-            <img alt="Vật Liệu Lọc" height="200" src="https://storage.googleapis.com/a1aa/image/zb0pzXrRzaIOMVQoY3HqkYkRl0VfiPQUyB3od6rDiqqPr3yJA.jpg" width="200"/>
-            <h3>Vật Liệu Lọc</h3>
+            <img alt="Máy Bơm" height="200" src="images/coral-image/PU001.jpg" width="200"/>
+            <h3>Máy Bơm</h3>
         </div>
         <div class="product">
-            <img alt="Đèn Cá - San Hô" height="200" src="https://storage.googleapis.com/a1aa/image/6ka3TGJyfAxySK02pguH8PH7ijb2ghUjDSk4lepAxROuWvlTA.jpg" width="200"/>
-            <h3>Đèn Cá - San Hô</h3>
+            <img alt="Đèn Cá" height="200" src="images/coral-image/L001.jpg" width="200"/>
+            <h3>Đèn Cá</h3>
         </div>
         <div class="product">
-            <img alt="Cá" height="200" src="https://storage.googleapis.com/a1aa/image/1gr8gi4i7yKjGxusJnenxMgWFLBukitOxO28LojQkbekWvlTA.jpg" width="200"/>
-            <h3>Cá</h3>
-        </div>
-        <div class="product">
-            <img alt="San Hô" height="200" src="https://storage.googleapis.com/a1aa/image/uj5ZKahHWZp4FZ3Nj1bNAdunntD9ZfnWfj6nRmNVcXf7seWOB.jpg" width="200"/>
+            <img alt="San Hô" height="200" src="images/coral-image/CR028.jpg" width="200"/>
             <h3>San Hô</h3>
+        </div>
+        <div class="product">
+            <img alt="Thức Ăn" height="200" src="images/coral-image/FD001.jpg" width="200"/>
+            <h3>Thức Ăn</h3>
         </div>
     </div>
 </div>
+
