@@ -96,7 +96,7 @@ Q.Ngũ Hành Sơn, TP.Đà Nẵng</p>
     </form>
 
     <h2 class="contact-subtitle">Bản Đồ</h2>
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d..." style="width:100%; height:400px;" frameborder="0" allowfullscreen></iframe>
+    <iframe src="images/coral-image/map.jpg" style="width:100%; height:400px;" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <jsp:include page="includes/footer.jsp"/>

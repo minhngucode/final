@@ -1,8 +1,11 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8" import="java.util.ArrayList" import="Model.Product" import="java.math.BigDecimal"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" import="java.util.ArrayList" import="Model.Product" import="java.math.BigDecimal" import="java.text.NumberFormat" %>
 <%
     ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("productList");
     ArrayList<String> productTypes = (ArrayList<String>) request.getAttribute("listtype");
 
+    // Tạo đối tượng NumberFormat để định dạng giá
+    NumberFormat numberFormat = NumberFormat.getInstance();
+    numberFormat.setGroupingUsed(true); // Bật chế độ nhóm
 %>
 <jsp:include page="includes/begintag.jsp"/>
 <jsp:include page="includes/header.jsp"/>
@@ -117,7 +120,6 @@
                     <div class="card-body d-flex flex-column" style="flex: 1 0 auto;"> <!-- Đảm bảo card body chiếm phần còn lại -->
                         <form action="ProductList" method="post">
                             <input type="hidden" name="action" value="detail">
-
                             <input type="hidden" name="productID" value="<%= product.getProductID() %>">
                             <input type="hidden" name="name" value="<%= product.getName() %>">
                             <input type="hidden" name="type" value="<%= product.getType() %>">
@@ -130,7 +132,7 @@
                             <button type="submit" class="btn btn-link text-decoration-none" style="width: 100%; text-align: left;"><%= product.getName() %></button>
                         </form>
                         <p class="card-text">Loại: <%= product.getType() %></p>
-                        <p class="card-text">Giá: <%= product.getPrice() %> VNĐ</p>
+                        <p class="card-text">Giá: <%= numberFormat.format(product.getPrice()) %> VNĐ</p> <!-- Định dạng giá -->
                         <p class="card-text">Tồn kho: <%= product.getQuantityInStock() %></p>
                         <div class="mt-auto text-center">
                         <form action="CartServlet" method="post">

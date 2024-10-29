@@ -19,10 +19,11 @@
         background-color: white;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         z-index: 1;
-        padding: 10px 0;
+        padding: 10px 0px 0px 0px;
         min-width: 200px;
         list-style: none;
         border-radius: 5px;
+        height: 175px;
     }
 
     .dropdown-menu li {
@@ -30,15 +31,17 @@
         line-height: 2.5;
     }
 
-    .dropdown-menu li a {
+    .dropdown-menu li p {
         color: black;
         text-decoration: none;
         display: block;
-        padding: 5px 10px;
+        padding: 0px 10px;
+        font-weight: bold; /* Làm cho chữ đậm hơn */
     }
 
-    .dropdown-menu li a:hover {
+    .dropdown-menu li p:hover {
         background-color: #f0f0f0;
+        color: #0689B7; /* Thay đổi màu chữ khi hover */
     }
 
     /* Hiển thị menu chính khi hover vào dropdown */
@@ -51,7 +54,7 @@
         position: relative;
     }
 
-    .submenu {
+    .submenu1 {
         display: none; /* Ẩn menu con */
         position: absolute;
         left: 100%; /* Đẩy menu con sang bên phải */
@@ -59,15 +62,42 @@
         background-color: white;
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         z-index: 1;
-        padding: 10px 0;
+        height: 189px;
+        padding: 10px 0px;
         min-width: 200px;
+        border-radius: 5px;
+    }
+    .submenu2 {
+        display: none; /* Ẩn menu con */
+        position: absolute;
+        left: 100%; /* Đẩy menu con sang bên phải */
+        top: 0; /* Căn lề trên với menu cha */
+        background-color: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        height: 143px;
+        padding: 10px 0px;
+        min-width: 200px;
+        border-radius: 5px;
     }
 
-    .dropdown-submenu:hover .submenu {
+    .dropdown-submenu:hover .submenu1{
+        display: block; /* Hiển thị menu con khi hover vào menu cha */
+    }
+    .dropdown-submenu:hover .submenu2{
         display: block; /* Hiển thị menu con khi hover vào menu cha */
     }
 
+    .submenu li p {
+        font-weight: bold; /* Làm cho chữ trong menu con đậm */
+        color: black; /* Màu chữ mặc định */
+    }
+
+    .submenu li p:hover {
+        color: #0689B7; /* Thay đổi màu chữ khi hover vào menu con */
+    }
 </style>
+
 <header>
     <div class="container  justify-content" >
         <div class="logo" >
@@ -83,26 +113,26 @@
                     <a href="ProductList">SẢN PHẨM</a>
                     <ul class="dropdown-menu">
                         <!-- San Hô -->
-                        <li>
+                        <li class="dropdown-submenu">
                             <form action="ProductList" method="post" style="display: inline;">
                                 <input type="hidden" name="action" value="filter">
                                 <input type="hidden" name="productType" value="Coral">
                                 <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
-                                    San Hô
+                                    <p>San Hô<p/>
                                 </button>
                             </form>
                         </li>
 
                         <!-- Thiết Bị -->
                         <li class="dropdown-submenu">
-                            <a href="#">Thiết Bị</a>
-                            <ul class="submenu">
+                            <p>Thiết Bị</p>
+                            <ul class="submenu1">
                                 <li>
                                     <form action="ProductList" method="post" style="display: inline;">
                                         <input type="hidden" name="action" value="filter">
                                         <input type="hidden" name="productType" value="Light">
                                         <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
-                                            Đèn
+                                            <p> Đèn </p>
                                         </button>
                                     </form>
                                 </li>
@@ -111,7 +141,7 @@
                                         <input type="hidden" name="action" value="filter">
                                         <input type="hidden" name="productType" value="Pump">
                                         <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
-                                            Máy Bơm
+                                            <p>Máy Bơm</p>
                                         </button>
                                     </form>
                                 </li>
@@ -120,7 +150,7 @@
                                         <input type="hidden" name="action" value="filter">
                                         <input type="hidden" name="productType" value="Skimmer">
                                         <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
-                                            Skimmer
+                                            <p>Skimmer</p>
                                         </button>
                                     </form>
                                 </li>
@@ -129,7 +159,7 @@
                                         <input type="hidden" name="action" value="filter">
                                         <input type="hidden" name="productType" value="Wave">
                                         <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
-                                            Máy Tạo Sóng
+                                            <p>Máy Tạo Sóng</p>
                                         </button>
                                     </form>
                                 </li>
@@ -138,14 +168,14 @@
 
                         <!-- Hóa Chất Bổ Sung -->
                         <li class="dropdown-submenu">
-                            <a href="#">Hóa Chất Bổ Sung</a>
-                            <ul class="submenu">
+                            <p>Hóa Chất Bổ Sung</p>
+                            <ul class="submenu2">
                                 <li>
                                     <form action="ProductList" method="post" style="display: inline;">
                                         <input type="hidden" name="action" value="filter">
                                         <input type="hidden" name="productType" value="Food">
                                         <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
-                                            Thức Ăn
+                                            <p>Thức Ăn</p>
                                         </button>
                                     </form>
                                 </li>
@@ -154,7 +184,7 @@
                                         <input type="hidden" name="action" value="filter">
                                         <input type="hidden" name="productType" value="Bacteria">
                                         <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
-                                            Vi Sinh
+                                            <p>Vi Sinh</p>
                                         </button>
                                     </form>
                                 </li>
@@ -163,7 +193,7 @@
                                         <input type="hidden" name="action" value="filter">
                                         <input type="hidden" name="productType" value="Salt">
                                         <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
-                                            Muối
+                                            <p>Muối</p>
                                         </button>
                                     </form>
                                 </li>
