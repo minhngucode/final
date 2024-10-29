@@ -101,7 +101,7 @@
     </table>
 
     <div class="text-right">
-        <button type="button" class="btn btn-cart text-decoration-none" onclick="submitSelectedProducts()">Proceed to Payment</button>
+        <button type="button" class="btn btn-cart text-decoration-none" onclick="submitSelectedProducts()">Payment</button>
         <a href="ProductList"><button type="button" class="btn btn-cart text-decoration-none">Continue Shopping</button></a>
     </div>
 </div>
