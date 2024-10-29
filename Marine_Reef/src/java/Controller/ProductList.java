@@ -44,7 +44,6 @@ public class ProductList extends HttpServlet {
 
             out.println("<html>");
 
-
             out.println("<head>");
             out.println("<title>Servlet ProductList</title>");
             out.println("</head>");
