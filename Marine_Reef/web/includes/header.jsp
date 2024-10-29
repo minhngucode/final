@@ -82,26 +82,96 @@
                 <li class="dropdown">
                     <a href="ProductList">SẢN PHẨM</a>
                     <ul class="dropdown-menu">
-                        <li><a href="ProductList?category=sanho">San Hô</a></li>
+                        <!-- San Hô -->
+                        <li>
+                            <form action="ProductList" method="post" style="display: inline;">
+                                <input type="hidden" name="action" value="filter">
+                                <input type="hidden" name="productType" value="Coral">
+                                <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
+                                    San Hô
+                                </button>
+                            </form>
+                        </li>
+
+                        <!-- Thiết Bị -->
                         <li class="dropdown-submenu">
                             <a href="#">Thiết Bị</a>
                             <ul class="submenu">
-                                <li><a href="ProductList?category=den">Đèn</a></li>
-                                <li><a href="ProductList?category=bom">Máy Bơm</a></li>
-                                <li><a href="ProductList?category=skimmer">Skimmer</a></li>
-                                <li><a href="ProductList?category=maytaosong">Máy Tạo Sóng</a></li>
+                                <li>
+                                    <form action="ProductList" method="post" style="display: inline;">
+                                        <input type="hidden" name="action" value="filter">
+                                        <input type="hidden" name="productType" value="Light">
+                                        <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
+                                            Đèn
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="ProductList" method="post" style="display: inline;">
+                                        <input type="hidden" name="action" value="filter">
+                                        <input type="hidden" name="productType" value="Pump">
+                                        <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
+                                            Máy Bơm
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="ProductList" method="post" style="display: inline;">
+                                        <input type="hidden" name="action" value="filter">
+                                        <input type="hidden" name="productType" value="Skimmer">
+                                        <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
+                                            Skimmer
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="ProductList" method="post" style="display: inline;">
+                                        <input type="hidden" name="action" value="filter">
+                                        <input type="hidden" name="productType" value="Wave">
+                                        <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
+                                            Máy Tạo Sóng
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
                         </li>
+
+                        <!-- Hóa Chất Bổ Sung -->
                         <li class="dropdown-submenu">
                             <a href="#">Hóa Chất Bổ Sung</a>
                             <ul class="submenu">
-                                <li><a href="ProductList?category=thucphambosung">Thức Ăn</a></li>
-                                <li><a href="ProductList?category=visinh">Vi Sinh</a></li>
-                                <li><a href="ProductList?category=muoi">Muối</a></li>
+                                <li>
+                                    <form action="ProductList" method="post" style="display: inline;">
+                                        <input type="hidden" name="action" value="filter">
+                                        <input type="hidden" name="productType" value="Food">
+                                        <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
+                                            Thức Ăn
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="ProductList" method="post" style="display: inline;">
+                                        <input type="hidden" name="action" value="filter">
+                                        <input type="hidden" name="productType" value="Bacteria">
+                                        <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
+                                            Vi Sinh
+                                        </button>
+                                    </form>
+                                </li>
+                                <li>
+                                    <form action="ProductList" method="post" style="display: inline;">
+                                        <input type="hidden" name="action" value="filter">
+                                        <input type="hidden" name="productType" value="Salt">
+                                        <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0; margin: 0;">
+                                            Muối
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
                         </li>
                     </ul>
                 </li>
+
 
 
                 <li><a href="dichvu.jsp">DỊCH VỤ</a></li>
@@ -109,7 +179,7 @@
                 <li><a href="lienhe.jsp">LIÊN HỆ</a></li>
                     <% 
                         ServletContext context = application;
-            String lg = (String) context.getAttribute("lg");
+                        String lg = (String) context.getAttribute("lg");
                     if (lg == null) {%>
                 <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;"><a href="LoginServlet">LOGIN</a></li>
                 <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;"><a href="Signup">SIGNUP</a></li>

@@ -1,7 +1,9 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" import="java.util.ArrayList" import="Model.Product" import="java.math.BigDecimal"%>
 <%
-    ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("productList"); 
-%> 
+    ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("productList");
+    ArrayList<String> productTypes = (ArrayList<String>) request.getAttribute("listtype");
+
+%>
 <jsp:include page="includes/begintag.jsp"/>
 <jsp:include page="includes/header.jsp"/>
 
@@ -43,6 +45,48 @@
         background: transparent; /* Nền trong suốt */
     }
 </style>
+<div class="container">
+    <h1 class="my-4">Lọc danh sách sản phẩm</h1>
+
+    <!-- Filter and Search Form -->
+    <form action="ProductList" method="post" class="mb-4">
+        <input type="hidden" name="action" value="filter">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="productType">Loại sản phẩm</label>
+                <select name="productType" id="productType" class="form-control">
+                    <option value="">Tất cả</option>
+                    <%
+                        if (productTypes != null) {
+                            for (String type : productTypes) {
+                    %>
+                    <option value="<%= type %>"><%= type %></option>
+                    <%
+                            }
+                        }
+                    %>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="searchName">Tên sản phẩm</label>
+                <input type="text" name="searchName" id="searchName" class="form-control" placeholder="Nhập tên sản phẩm">
+            </div>
+            <div class="col-md-3">
+                <label for="minPrice">Giá từ</label>
+                <input type="number" name="minPrice" id="minPrice" class="form-control" placeholder="VNĐ">
+            </div>
+            <div class="col-md-3">
+                <label for="maxPrice">Đến</label>
+                <input type="number" name="maxPrice" id="maxPrice" class="form-control" placeholder="VNĐ">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 <div class="container">
     <h1 class="my-4">Danh sách sản phẩm</h1>
@@ -54,6 +98,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card h-100" style="height: 300px;"> <!-- Đặt chiều cao tối đa cho card -->
                     <form action="ProductList" method="post">
+                        <input type="hidden" name="action" value="detail">
                         <input type="hidden" name="productID" value="<%= product.getProductID() %>">
                         <input type="hidden" name="name" value="<%= product.getName() %>">
                         <input type="hidden" name="type" value="<%= product.getType() %>">
@@ -71,6 +116,8 @@
                     </form>
                     <div class="card-body d-flex flex-column" style="flex: 1 0 auto;"> <!-- Đảm bảo card body chiếm phần còn lại -->
                         <form action="ProductList" method="post">
+                            <input type="hidden" name="action" value="detail">
+
                             <input type="hidden" name="productID" value="<%= product.getProductID() %>">
                             <input type="hidden" name="name" value="<%= product.getName() %>">
                             <input type="hidden" name="type" value="<%= product.getType() %>">
