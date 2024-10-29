@@ -25,13 +25,13 @@ public class DBConnect {
     public static Connection getConnection() {
         Connection con = null;
         String dbUser = "sa";
-        String dbPassword = "minh280504";
+        String dbPassword = "admin";
         String port = "1433";
         String IP = "127.0.0.1";
-        String ServerName = "MINHDC";
+        String ServerName = "minipele";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String dbURL = "jdbc:sqlserver://MINHDC;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
+        String dbURL = "jdbc:sqlserver://minipele;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
 
         try {
             Class.forName(driverClass);
@@ -323,5 +323,78 @@ public void updateQuantityCartDetail(String cartID, String productID, int quanti
     
     return cartDetail;
 }
+    public static ArrayList<String> getDistinctTypes(Connection con) {
+        ArrayList<String> types = new ArrayList<>();
+        String sql = "SELECT DISTINCT Type FROM Product";
+
+        try {
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                types.add(rs.getString("Type"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return types;
+    }
+    public ArrayList<Product> getFilteredProducts(String productType, String searchName, BigDecimal minPrice, BigDecimal maxPrice, Connection con) {
+        arrProduct.clear();
+        StringBuilder sql = new StringBuilder("SELECT * FROM Product WHERE 1=1");
+
+        // Điều kiện lọc
+        if (productType != null && !productType.isEmpty()) {
+            sql.append(" AND Type = ?");
+        }
+        if (searchName != null && !searchName.isEmpty()) {
+            sql.append(" AND Name LIKE ?");
+        }
+        if (minPrice != null) {
+            sql.append(" AND Price >= ?");
+        }
+        if (maxPrice != null) {
+            sql.append(" AND Price <= ?");
+        }
+        try{
+             PreparedStatement pstmt = con.prepareStatement(sql.toString());
+            int index = 1;
+
+            // Thêm giá trị vào các điều kiện lọc
+            if (productType != null && !productType.isEmpty()) {
+                pstmt.setString(index++, productType);
+            }
+            if (searchName != null && !searchName.isEmpty()) {
+                pstmt.setString(index++, "%" + searchName + "%");
+            }
+            if (minPrice != null) {
+                pstmt.setBigDecimal(index++, minPrice);
+            }
+            if (maxPrice != null) {
+                pstmt.setBigDecimal(index++, maxPrice);
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductID(rs.getString("ProductID"));
+                product.setName(rs.getString("Name"));
+                product.setType(rs.getString("Type"));
+                product.setDescription(rs.getString("Description"));
+                product.setPrice(rs.getBigDecimal("Price"));
+                product.setCostprice(rs.getBigDecimal("Costprice"));
+                product.setQuantityInStock(rs.getInt("QuantityInStock"));
+                product.setCategoryID(rs.getString("CategoryID"));
+                arrProduct.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return arrProduct;
+    }
+
+
 }
 

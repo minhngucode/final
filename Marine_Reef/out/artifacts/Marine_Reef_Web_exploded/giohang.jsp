@@ -5,6 +5,35 @@
 <%@ page import="java.text.NumberFormat" %>
 <jsp:include page="includes/begintag.jsp"/>
 <jsp:include page="includes/header.jsp"/>
+<style>
+    /* Phong cách cho nút "Proceed to Payment" và "Continue Shopping" */
+    .btn-cart {
+        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp cho nút */
+        background-color: #0689B7; /* Màu nền */
+        border: none; /* Bỏ viền */
+        color: white; /* Màu chữ */
+        border-radius: 5px; /* Đường viền mềm mại */
+        width: auto; /* Tự động điều chỉnh chiều rộng theo nội dung */
+        padding: 8px 16px; /* Điều chỉnh khoảng cách bên trong nút */
+        margin-right: 10px; /* Khoảng cách giữa các nút */
+        text-align: center; /* Căn giữa nội dung nút */
+        font-size: 14px; /* Kích thước chữ nhỏ hơn */
+    }
+
+    .btn-cart:hover {
+        color: white;
+        transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+        background: linear-gradient(90deg, #00FF7F, #00BFFF); /* Gradient xanh neon khi hover */
+        box-shadow: 0 0 10px #00FF7F, 0 0 20px #00BFFF; /* Viền sáng khi hover */
+    }
+
+    /* Căn hai nút sang bên trái */
+    .text-right {
+        text-align: left; /* Căn nội dung sang trái */
+        margin-left: 20px; /* Khoảng cách từ cạnh trái của khung */
+    }
+
+</style>
 <%
     // Định dạng giá tiền theo VNĐ
     Locale localeVN = new Locale("vi", "VN");
@@ -21,35 +50,35 @@
     if (cartDetails != null && !cartDetails.isEmpty()) {
 %>
 
-<div class="container mt-5">
+<div class="container mt-5" style="margin-bottom: 80px">
     <h2 class="text-center mb-4 xeon-blue p-3 rounded">Giỏ hàng</h2>
     <table class="table table-bordered table-hover">
         <thead class="xeon-blue">
-        <tr>
-            <th>Select</th>
-            <th>Product Image</th>
-            <th>Product Name</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Price</th>
-            <th class="text-center">Total</th>
-            <th class="text-center">Action</th>
-        </tr>
+            <tr>
+                <th>Select</th>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th class="text-center">Quantity</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Total</th>
+                <th class="text-center">Action</th>
+            </tr>
         </thead>
         <tbody>
-        <%
-            for (CartDetail cartDetail : cartDetails) {
-                // Lấy sản phẩm từ productID trong cartDetail
-                Product product = DAO.getProductbyID(cartDetail.getProductID(), DAO.getConnection());
+            <%
+                for (CartDetail cartDetail : cartDetails) {
+                    // Lấy sản phẩm từ productID trong cartDetail
+                    Product product = DAO.getProductbyID(cartDetail.getProductID(), DAO.getConnection());
 
-                // Tính tổng giá của sản phẩm
-                BigDecimal productTotal = product.getPrice().multiply(new BigDecimal(cartDetail.getQuantity()));
+                    // Tính tổng giá của sản phẩm
+                    BigDecimal productTotal = product.getPrice().multiply(new BigDecimal(cartDetail.getQuantity()));
 
-                // Cộng vào tổng giá của giỏ hàng
-                totalPrice = totalPrice.add(productTotal);
+                    // Cộng vào tổng giá của giỏ hàng
+                    totalPrice = totalPrice.add(productTotal);
 
-                // Đường dẫn tới hình ảnh sản phẩm
-                String imagePath = "images/coral-image/" + product.getProductID() + ".jpg";
-        %>
+                    // Đường dẫn tới hình ảnh sản phẩm
+                    String imagePath = "images/coral-image/" + product.getProductID() + ".jpg";
+            %>
 
         <tr>
             <td>
@@ -78,21 +107,22 @@
         </tr>
 
 
-        <%
-            } // Kết thúc vòng lặp
-        %>
+            <%
+                } // Kết thúc vòng lặp
+            %>
 
-        <tr class="xeon-blue">
-            <td colspan="4" class="text-right"><strong>Total Price:</strong></td>
-            <td colspan="2" class="text-center"><strong id="totalPrice"><%= currencyVN.format(totalPrice) %></strong></td>
-        </tr>
+            <tr class="xeon-blue">
+                <td colspan="4" class="text-right"><strong>Total Price:</strong></td>
+                <td colspan="2" class="text-center"><strong id="totalPrice"><%= currencyVN.format(totalPrice) %></strong></td>
+            </tr>
         </tbody>
     </table>
 
     <div class="text-right">
-        <button type="button" class="btn btn-xeon btn-lg" onclick="submitSelectedProducts()">Thanh toán</button>
-        <a href="products.jsp" class="btn btn-outline-xeon btn-lg">Tiếp tục mua hàng</a>
+        <button type="button" class="btn btn-cart text-decoration-none" onclick="submitSelectedProducts()">Proceed to Payment</button>
+        <a href="ProductList"><button type="button" class="btn btn-cart text-decoration-none">Continue Shopping</button></a>
     </div>
+
 </div>
 
 <%
@@ -121,7 +151,7 @@
         form.action = 'PaymentServlet';
 
         // Thêm các productID, cartID và số lượng đã chọn vào form
-        selectedProducts.forEach(function(product) {
+        selectedProducts.forEach(function (product) {
             const productID = product.value;
             const cartID = product.getAttribute('data-cartid');
             const quantity = document.getElementById('hidden_quantity_' + productID).value;
@@ -154,7 +184,7 @@
     }
 
     function formatVND(amount) {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(amount);
     }
 
     function updateQuantity(cartID, productID, delta) {
@@ -163,7 +193,7 @@
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
         // Xử lý khi server trả về kết quả
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 var response = JSON.parse(xhr.responseText);
                 if (response.success) {

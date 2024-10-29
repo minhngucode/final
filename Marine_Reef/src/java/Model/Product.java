@@ -31,6 +31,9 @@ public class Product {
         this.categoryID = categoryID;
     }
 
+    public Product() {
+    }
+
     public String getProductID() {
         return productID;
     }

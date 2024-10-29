@@ -8,7 +8,35 @@
 <%@ page import="Model.Product" %>
 <jsp:include page="includes/begintag.jsp"/>
 <jsp:include page="includes/header.jsp"/>
+<style>
+    /* Phong cách cho nút "Proceed to Payment" và "Continue Shopping" */
+    .btn-cart {
+        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp cho nút */
+        background-color: #0689B7; /* Màu nền */
+        border: none; /* Bỏ viền */
+        color: white; /* Màu chữ */
+        border-radius: 5px; /* Đường viền mềm mại */
+        width: auto; /* Tự động điều chỉnh chiều rộng theo nội dung */
+        padding: 8px 16px; /* Điều chỉnh khoảng cách bên trong nút */
+        margin-right: 10px; /* Khoảng cách giữa các nút */
+        text-align: center; /* Căn giữa nội dung nút */
+        font-size: 14px; /* Kích thước chữ nhỏ hơn */
+    }
 
+    .btn-cart:hover {
+        color: white;
+        transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
+        background: linear-gradient(90deg, #00FF7F, #00BFFF); /* Gradient xanh neon khi hover */
+        box-shadow: 0 0 10px #00FF7F, 0 0 20px #00BFFF; /* Viền sáng khi hover */
+    }
+
+    /* Căn hai nút sang bên trái */
+    .text-right {
+        text-align: left; /* Căn nội dung sang trái */
+        margin-left: 20px; /* Khoảng cách từ cạnh trái của khung */
+    }
+
+</style>
 <%
     // Định dạng giá tiền theo VNĐ
     Locale localeVN = new Locale("vi", "VN");
@@ -20,7 +48,7 @@
 
     if (cartDetails != null && !cartDetails.isEmpty()) {
 %>
-<div class="container mt-5">
+<div class="container mt-5" style="margin-bottom: 80px">
     <h2 class="text-center mb-4 xeon-blue p-3 rounded">Thanh toán</h2>
     <table class="table table-bordered table-hover">
         <thead class="xeon-blue">
@@ -73,8 +101,8 @@
     </table>
 
     <div class="text-right">
-        <button type="button" class="btn btn-xeon btn-lg" onclick="submitSelectedProducts()">Proceed to Payment</button>
-        <a href="products.jsp" class="btn btn-outline-xeon btn-lg">Continue Shopping</a>
+        <button type="button" class="btn btn-cart text-decoration-none" onclick="submitSelectedProducts()">Payment</button>
+        <a href="ProductList"><button type="button" class="btn btn-cart text-decoration-none">Continue Shopping</button></a>
     </div>
 </div>
 

@@ -21,9 +21,9 @@ import java.util.ArrayList;
  * @author
  */
 public class ProductList extends HttpServlet {
-
+    ArrayList<Product> arr = new ArrayList<>();
     private DBConnect DAO = new DBConnect();
-
+    ArrayList<String> listtype = new ArrayList<>();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -66,8 +66,10 @@ public class ProductList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Product> arr = DAO.getProduct(DAO.getConnection());
+        arr = DAO.getProduct(DAO.getConnection());
+        listtype = DAO.getDistinctTypes(DAO.getConnection());
         request.setAttribute("productList", arr);
+        request.setAttribute("listtype", listtype);
         RequestDispatcher dispatcher = request.getRequestDispatcher("sanpham.jsp");
         dispatcher.forward(request, response);
     }
@@ -83,26 +85,48 @@ public class ProductList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String productID = request.getParameter("productID");
-        String name = request.getParameter("name");
-        String type = request.getParameter("type");
-        String description = request.getParameter("description");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
-        BigDecimal costprice = new BigDecimal(request.getParameter("costprice"));
-        int quantityInStock = Integer.parseInt(request.getParameter("quantityInStock"));
-        String categoryID = request.getParameter("categoryID");
+        String action = request.getParameter("action");
+        System.out.println(action);
+        switch (action) {
+            case "detail" -> {
+                String productID = request.getParameter("productID");
+                String name = request.getParameter("name");
+                String type = request.getParameter("type");
+                String description = request.getParameter("description");
+                BigDecimal price = new BigDecimal(request.getParameter("price"));
+                BigDecimal costprice = new BigDecimal(request.getParameter("costprice"));
+                int quantityInStock = Integer.parseInt(request.getParameter("quantityInStock"));
+                String categoryID = request.getParameter("categoryID");
 
-        // Tạo đối tượng Product
-        Product product = new Product(productID, name, type, description, price, costprice, quantityInStock, categoryID);
+                // Tạo đối tượng Product
+                Product product = new Product(productID, name, type, description, price, costprice, quantityInStock, categoryID);
 
-        // Lưu đối tượng Product vào request để hiển thị thông tin chi tiết
-        request.setAttribute("product", product);
+                // Lưu đối tượng Product vào request để hiển thị thông tin chi tiết
+                request.setAttribute("product", product);
 
-        // Chuyển hướng đến trang hiển thị chi tiết sản phẩm
-        RequestDispatcher dispatcher = request.getRequestDispatcher("detailproduct.jsp");
-        dispatcher.forward(request, response);
+                // Chuyển hướng đến trang hiển thị chi tiết sản phẩm
+                RequestDispatcher dispatcher = request.getRequestDispatcher("detailproduct.jsp");
+                dispatcher.forward(request, response);
+            }
+
+            case "filter" -> {
+
+                String productType = request.getParameter("productType");
+                String searchName = request.getParameter("searchName");
+                BigDecimal minPrice = request.getParameter("minPrice") != null && !request.getParameter("minPrice").isEmpty() ? new BigDecimal(request.getParameter("minPrice")) : null;
+                BigDecimal maxPrice = request.getParameter("maxPrice") != null && !request.getParameter("maxPrice").isEmpty() ? new BigDecimal(request.getParameter("maxPrice")) : null;
+
+                arr = DAO.getFilteredProducts(productType, searchName, minPrice, maxPrice, DAO.getConnection());
+                listtype = DAO.getDistinctTypes(DAO.getConnection());
+
+                request.setAttribute("productList", arr);
+                request.setAttribute("listtype", listtype);
+                // Forward lại trang JSP để hiển thị
+                request.getRequestDispatcher("sanpham.jsp").forward(request, response);
+
+            }
+        }
     }
-
     /**
      * Returns a short description of the servlet.
      *
