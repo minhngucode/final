@@ -25,13 +25,13 @@ public class DBConnect {
     public static Connection getConnection() {
         Connection con = null;
         String dbUser = "sa";
-        String dbPassword = "minh280504";
+        String dbPassword = "admin";
         String port = "1433";
         String IP = "127.0.0.1";
-        String ServerName = "MINHDC";
+        String ServerName = "minipele";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String dbURL = "jdbc:sqlserver://MINHDC;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
+        String dbURL = "jdbc:sqlserver://minipele;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
 
         try {
             Class.forName(driverClass);
@@ -93,7 +93,23 @@ public class DBConnect {
             return false;
         }
     }
+    public static String getRole(String name){
+        String role = null;
+        String sql = "SELECT role FROM [User] WHERE Username = ?";
 
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, name); // Thiết lập giá trị cho tham số truy vấn
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    role = rs.getString("role"); // Lấy giá trị của cột role
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return role; // Trả v
+    }
     public static String getCustomerID(String username, Connection con) {
         String customerID = null;
         try {
@@ -269,7 +285,7 @@ public class DBConnect {
 
     }
     
-public void updateQuantityCartDetail(String cartID, String productID, int quantity, Connection con) {
+    public void updateQuantityCartDetail(String cartID, String productID, int quantity, Connection con) {
     try{
         String query = "UPDATE CartDetail SET Quantity = ? WHERE CartID = ? AND ProductID = ?";
              PreparedStatement ps = con.prepareStatement(query);
@@ -394,7 +410,98 @@ public void updateQuantityCartDetail(String cartID, String productID, int quanti
 
         return arrProduct;
     }
+    
+    public static void addProduct( String name, String description, 
+                           BigDecimal price, int quantity, String categoryID, 
+                           BigDecimal costPrice, String type) {
+        Connection connection = getConnection();
+        String sql = "INSERT INTO Product (ProductID, Name, Description, Price, QuantityInStock, CategoryID, CostPrice, Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Thiết lập các tham số cho truy vấn
+            preparedStatement.setString(1, generateProductID(connection, categoryID.replaceAll("[0-9]", "")));
 
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, description);
+            preparedStatement.setBigDecimal(4, price);
+            preparedStatement.setInt(5, quantity);
+            preparedStatement.setString(6, categoryID);
+            preparedStatement.setBigDecimal(7, costPrice);
+            preparedStatement.setString(8, type);
 
+            // Thực hiện truy vấn
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Sản phẩm đã được thêm thành công!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static String generateProductID(Connection connection, String categoryID) {
+         String newProductID = null;
+    String sql = "SELECT MAX(TRY_CAST(SUBSTRING(ProductID, LEN(?) + 1, LEN(ProductID)) AS INT)) AS maxID " +
+                 "FROM Product WHERE ProductID LIKE ?";
+
+    try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setString(1, categoryID);
+        preparedStatement.setString(2, categoryID + "%");
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            Integer maxID = resultSet.getInt("maxID");
+            if (maxID != null) {
+                // Thêm số 0 vào trước maxID để có độ dài ít nhất là 5 ký tự
+                String formattedMaxID = String.format("%03d", maxID + 1);
+                newProductID = categoryID + formattedMaxID; // Tạo ID mới
+            } else {
+                // Nếu chưa có sản phẩm nào trong danh mục, bắt đầu từ 00001
+                newProductID = categoryID + "00001"; 
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return newProductID;
+
+    }
+    public static ArrayList<String> getDistinctCategoryName(Connection con) {
+        ArrayList<String> CategoryName = new ArrayList<>();
+        String sql = "SELECT DISTINCT CategoryName FROM Category";
+
+        try {
+             PreparedStatement pstmt = con.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                CategoryName.add(rs.getString("CategoryName"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return CategoryName;
+    }
+    public static String getCategoryIDByName( String categoryName) {
+        Connection connection = getConnection();
+        String categoryID = null;
+        String sql = "SELECT categoryID FROM Category WHERE categoryName = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, categoryName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                categoryID = resultSet.getString("categoryID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return categoryID;
+    }
+    public static void main(String[] args) {
+        }
 }
 

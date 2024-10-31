@@ -11,6 +11,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -121,9 +122,14 @@ public class LoginServlet extends HttpServlet {
             String lg="ok";
             Cookie cname=new Cookie("_noname",name);
            Cookie cpass=new Cookie("_nopass",encryptPassword(pass));
-
+           HttpSession session = request.getSession();
+           
+            session.setAttribute("username", name);
+            session.setAttribute("role", DAO.getRole(name));
+            session.setMaxInactiveInterval(86400);
            cname.setMaxAge(60*30);
            cpass.setMaxAge(60*30);
+           
            response.addCookie(cname);
            response.addCookie(cpass);
            response.sendRedirect("Control?lg=true");

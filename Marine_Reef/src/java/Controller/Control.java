@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.DBConnect;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -19,7 +21,7 @@ import java.io.PrintWriter;
  * @author
  */
 public class Control extends HttpServlet {
-
+    DBConnect DAO = new DBConnect();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -76,7 +78,14 @@ public class Control extends HttpServlet {
             if (LoginServlet.checkLogin(name, passcode)) {
                 ServletContext context = getServletContext();
         // Đặt danh sách sách vào context attribute
-                context.setAttribute("lg", "true");            }
+                context.setAttribute("lg", "true");  
+                    HttpSession session = request.getSession();
+
+             session.setAttribute("username", name);
+            session.setAttribute("role", DAO.getRole(name));
+            session.setMaxInactiveInterval(86400);
+            }
+            
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
@@ -96,6 +105,9 @@ public class Control extends HttpServlet {
         String action = request.getParameter("action");
         switch (action) {
             case "logout" -> {
+                HttpSession session = request.getSession();
+                session.setMaxInactiveInterval(0);
+                session.invalidate();
                 ServletContext context = getServletContext();
                     context.removeAttribute("lg");
                 Cookie c1 = new Cookie("_noname", null);
