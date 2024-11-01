@@ -147,7 +147,7 @@
 
         // Tạo form ẩn
         const form = document.createElement('form');
-        form.method = 'POST';
+        form.method = 'GET';
         form.action = 'PaymentServlet';
 
         // Thêm các productID, cartID và số lượng đã chọn vào form

@@ -4,48 +4,51 @@
 <%@ page import="java.util.Locale" %>
 <%@ page import="Model.DBConnect" %>
 <%@ page import="Model.CartDetail" %>
+<%@ page import="Model.Customer" %>
+
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Model.Product" %>
 <jsp:include page="includes/begintag.jsp"/>
 <jsp:include page="includes/header.jsp"/>
-<style>
-    /* Phong cách cho nút "Proceed to Payment" và "Continue Shopping" */
-    .btn-cart {
-        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp cho nút */
-        background-color: #0689B7; /* Màu nền */
-        border: none; /* Bỏ viền */
-        color: white; /* Màu chữ */
-        border-radius: 5px; /* Đường viền mềm mại */
-        width: auto; /* Tự động điều chỉnh chiều rộng theo nội dung */
-        padding: 8px 16px; /* Điều chỉnh khoảng cách bên trong nút */
-        margin-right: 10px; /* Khoảng cách giữa các nút */
-        text-align: center; /* Căn giữa nội dung nút */
-        font-size: 14px; /* Kích thước chữ nhỏ hơn */
-    }
 
+<style>
+    /* Styles for Proceed to Payment and Continue Shopping buttons */
+    .btn-cart {
+        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        background-color: #0689B7;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        width: auto;
+        padding: 8px 16px;
+        margin-right: 10px;
+        text-align: center;
+        font-size: 14px;
+    }
     .btn-cart:hover {
         color: white;
-        transform: scale(1.1); /* Hiệu ứng phóng to khi hover */
-        background: linear-gradient(90deg, #00FF7F, #00BFFF); /* Gradient xanh neon khi hover */
-        box-shadow: 0 0 10px #00FF7F, 0 0 20px #00BFFF; /* Viền sáng khi hover */
+        transform: scale(1.1);
+        background: linear-gradient(90deg, #00FF7F, #00BFFF);
+        box-shadow: 0 0 10px #00FF7F, 0 0 20px #00BFFF;
     }
-
-    /* Căn hai nút sang bên trái */
     .text-right {
-        text-align: left; /* Căn nội dung sang trái */
-        margin-left: 20px; /* Khoảng cách từ cạnh trái của khung */
+        text-align: left;
+        margin-left: 20px;
     }
-
 </style>
+
 <%
-    // Định dạng giá tiền theo VNĐ
     Locale localeVN = new Locale("vi", "VN");
     NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
-    // Giả sử bạn đã có một ArrayList các đối tượng CartDetail
     DBConnect DAO = new DBConnect();
     ArrayList<CartDetail> cartDetails = (ArrayList<CartDetail>) request.getAttribute("selectedCartDetails");
-    BigDecimal totalPrice = BigDecimal.ZERO; // Biến lưu tổng giá trị giỏ hàng
+    BigDecimal totalPrice = BigDecimal.ZERO;
 
+    // Lấy thông tin địa chỉ và người dùng
+    String address =(String) request.getAttribute("address");
+    String name =(String) request.getAttribute("name");
+    String phone =(String) request.getAttribute("phone");
+    System.out.println(address+" ; "+name+" ; "+phone);
     if (cartDetails != null && !cartDetails.isEmpty()) {
 %>
 <div class="container mt-5" style="margin-bottom: 80px">
@@ -63,16 +66,9 @@
         <tbody>
         <%
             for (CartDetail cartDetail : cartDetails) {
-                // Lấy sản phẩm từ productID trong cartDetail
                 Product product = DAO.getProductbyID(cartDetail.getProductID(), DAO.getConnection());
-
-                // Tính tổng giá của sản phẩm
                 BigDecimal productTotal = product.getPrice().multiply(new BigDecimal(cartDetail.getQuantity()));
-
-                // Cộng vào tổng giá của giỏ hàng
                 totalPrice = totalPrice.add(productTotal);
-
-                // Đường dẫn tới hình ảnh sản phẩm
                 String imagePath = "images/coral-image/" + product.getProductID() + ".jpg";
         %>
 
@@ -88,9 +84,8 @@
             <td class="text-center"><%= currencyVN.format(productTotal) %></td>
         </tr>
 
-
         <%
-            } // Kết thúc vòng lặp
+            }
         %>
 
         <tr class="xeon-blue">
@@ -100,6 +95,26 @@
         </tbody>
     </table>
 
+    <!-- Shipping Address Display -->
+    <div class="container mt-5">
+        <h4 class="text-center mb-4 xeon-blue">Thông tin người nhận</h4>
+        <form id="shippingForm">
+            <div class="mb-3">
+                <label for="name" class="form-label">Tên</label>
+                <input type="text" class="form-control" id="name" name="name" value="<%= name != null ? name : "" %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Số điện thoại</label>
+                <input type="text" class="form-control" id="phone" name="phone" value="<%= phone != null ? phone : "" %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Địa chỉ giao hàng</label>
+                <input type="text" class="form-control" id="address" name="address" value="<%= address != null ? address : "" %>" required placeholder="Nhập địa chỉ giao hàng">
+            </div>
+        </form>
+    </div>
+
+    <!-- Buttons for Payment and Continue Shopping -->
     <div class="text-right">
         <button type="button" class="btn btn-cart text-decoration-none" onclick="submitSelectedProducts()">Payment</button>
         <a href="ProductList"><button type="button" class="btn btn-cart text-decoration-none">Continue Shopping</button></a>
@@ -107,10 +122,10 @@
 </div>
 
 <%
-} else {
+    } else {
 %>
 <div class="container mt-5">
-    <p class="alert alert-warning text-center">Your cart is empty.</p>
+    <p class="alert alert-warning text-center">Giỏ hàng của bạn đang trống.</p>
 </div>
 <%
     }

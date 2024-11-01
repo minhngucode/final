@@ -44,6 +44,10 @@
         <servlet-name>admin</servlet-name>
         <servlet-class>Controller.admin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserInfo</servlet-name>
+        <servlet-class>Controller.UserInfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -95,7 +99,12 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserInfo</servlet-name>
+        <url-pattern>/UserInfo</url-pattern>
+    </servlet-mapping>
     <session-config>
-    <session-timeout>120</session-timeout> <!-- Thời gian là 30 phút -->
-</session-config>
+        <session-timeout>120</session-timeout>
+        <!-- Thời gian là 30 phút -->
+    </session-config>
 </web-app>

@@ -43,8 +43,7 @@ public class DBConnect {
         }
         return con;
     }
-
-    public static boolean signupUser(String name, String pass, String email, String phone, Connection con) {
+    public static boolean signupUser(String name, String pass, String email, String phone, String realname, Connection con) {
         try {
 
             String selectMaxIdSql = "SELECT MAX(CAST(customerID AS INT)) AS maxID FROM Customer";
@@ -60,7 +59,7 @@ public class DBConnect {
             // Chèn khách hàng mới
             PreparedStatement insertStmt = con.prepareStatement(insertSql);
             insertStmt.setString(1, newCustomerId);
-            insertStmt.setString(2, " ");
+            insertStmt.setString(2, realname);
             insertStmt.setString(3, phone);
             insertStmt.setString(4, email);
             insertStmt.setString(5, " ");
@@ -126,7 +125,6 @@ public class DBConnect {
         }
         return customerID;
     }
-
     public static boolean addCartDetail(Product p, String username, int quantity, Connection con) {
         try {
           
@@ -156,7 +154,6 @@ public class DBConnect {
         }
         return false;
     }
-
     public static String getCartID(String username, Connection con) {
         String cartID = "";
         try {
@@ -177,7 +174,6 @@ public class DBConnect {
         System.out.println("Con cac:"+cartID);
         return cartID;
     }
-
     public static ArrayList<CartDetail> getCart(String username, Connection con) {
         try {
             arrCart.clear();
@@ -208,7 +204,6 @@ public class DBConnect {
         }
         return arrCart;
     }
-
     public static ArrayList<User> getUser(Connection con) {
         try {
             String sql = "SELECT * FROM [User]";
@@ -228,7 +223,6 @@ public class DBConnect {
         }
         return arrUser;
     }
-
     public static ArrayList<Product> getProduct(Connection con) {
         try {
             String sql = "SELECT * FROM Product";
@@ -256,7 +250,6 @@ public class DBConnect {
         }
         return arrProduct;
     }
-    
     public static Product getProductbyID(String id, Connection con){
         try {
             String sql = "SELECT * FROM Product WHERE ProductID = ?";
@@ -284,7 +277,6 @@ public class DBConnect {
         return null;
 
     }
-    
     public void updateQuantityCartDetail(String cartID, String productID, int quantity, Connection con) {
     try{
         String query = "UPDATE CartDetail SET Quantity = ? WHERE CartID = ? AND ProductID = ?";
@@ -298,8 +290,6 @@ public class DBConnect {
             e.printStackTrace();
         }
     }
-
-    // Phương thức xóa cartDetail
     public void deleteCartDetail(String cartID, String productID, Connection con) {
         try{
         String query = "DELETE FROM CartDetail WHERE CartID = ? AND ProductID = ?";
@@ -312,7 +302,6 @@ public class DBConnect {
             e.printStackTrace();
         }
     }
-    
     public CartDetail getCartDetail(String cartID, String productID, Connection conn) {
     CartDetail cartDetail = null;
      try {
@@ -410,7 +399,6 @@ public class DBConnect {
 
         return arrProduct;
     }
-    
     public static void addProduct( String name, String description, 
                            BigDecimal price, int quantity, String categoryID, 
                            BigDecimal costPrice, String type) {
@@ -501,7 +489,81 @@ public class DBConnect {
 
         return categoryID;
     }
-    public static void main(String[] args) {
+    public static Customer getCustomerDetailsByUsername(String username) {
+        String query = "SELECT c.CustomerName, c.Phone, c.Address, c.Email " +
+                       "FROM [User] u " +
+                       "JOIN Customer c ON u.CustomerID = c.CustomerID " +
+                       "WHERE u.Username = ?";
+        
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                System.out.println("TIm thay 1 thang");
+                Customer customer = new Customer();
+                customer.setCustomerName(rs.getString("CustomerName"));
+                customer.setPhone(rs.getString("Phone"));
+                customer.setEmail(rs.getString("Email"));
+                customer.setAddress(rs.getString("Address"));
+                return customer;
+            }
         }
+        catch (Exception e){
+            System.out.println("Loi me roi");
+      
+        } // Trả về null nếu không tìm thấy
+        return null;
+        
+    }
+    public static boolean updateCustomer(String username, String customerName, String email, String phone, String address){
+        
+        try (Connection connection = getConnection()) {
+        // Bước 1: Lấy customerID dựa trên username
+        String customerID = null;
+        String customerIDSQL = "SELECT customerID FROM [User] WHERE username = ?";
+        try (PreparedStatement customerIDStatement = connection.prepareStatement(customerIDSQL)) {
+            customerIDStatement.setString(1, username);
+            try (ResultSet rs = customerIDStatement.executeQuery()) {
+                if (rs.next()) {
+                    customerID = rs.getString("customerID");
+                }
+            }
+        }
+
+        // Kiểm tra nếu customerID được tìm thấy
+        if (customerID != null) {
+            // Bước 2: Cập nhật thông tin trong bảng Customer
+            String updateSQL = "UPDATE Customer SET CustomerName = ?, Email = ?, Phone = ?, Address = ? WHERE customerID = ?";
+            try (PreparedStatement updateStatement = connection.prepareStatement(updateSQL)) {
+                updateStatement.setString(1, customerName);
+                updateStatement.setString(2, email);
+                updateStatement.setString(3, phone);
+                updateStatement.setString(4, address);
+                updateStatement.setString(5, customerID); // Sử dụng customerID để xác định bản ghi cần cập nhật
+
+                // Thực hiện cập nhật
+                int rowsAffected = updateStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Cập nhật thành công
+                    return true;
+                } else {
+                    // Không tìm thấy bản ghi
+                    return false;
+                }
+            }
+        } else {
+            // Không tìm thấy customerID tương ứng với username
+            return false;
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+    }
+//    public static void main(String[] args) {
+//        System.out.println(updateCustomer("huan", "Nguyễn Văn Huân", "huan@fpt.vn", "0345997792", "12/9 cách mạng"));
+//        }
 }
 

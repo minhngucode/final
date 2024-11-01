@@ -52,9 +52,9 @@ public class Signup extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-    private boolean signtodb(String name, String pass, String email, String phone){
+    private boolean signtodb(String name, String pass, String email, String phone, String realname){
         
-        if (DAO.signupUser(name, encryptPassword(pass), email, phone, DAO.getConnection())) 
+        if (DAO.signupUser(name, encryptPassword(pass), email, phone,realname, DAO.getConnection())) 
         {
             return true;
         }
@@ -105,11 +105,12 @@ public class Signup extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String realname = (String) request.getParameter("name");
         String name = (String) request.getParameter("username");
          String pass = (String)request.getParameter("password");
          String mail = (String)request.getParameter("email");
          String phone = (String)request.getParameter("phone");
-         if (signtodb(name, pass, mail, phone)) 
+         if (signtodb(name, pass, mail, phone, realname)) 
          {
              Cookie cname=new Cookie("_noname",name);
            Cookie cpass=new Cookie("_nopass",encryptPassword(pass));    
