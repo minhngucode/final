@@ -97,7 +97,7 @@ public class admin extends HttpServlet {
 
         // Xử lý upload hình ảnh
         Part filePart = request.getPart("image"); // Nhận file ảnh
-            String uploadPath = "D:\\PRJ\\final\\Marine_Reef\\web\\images\\coral-image";
+            String uploadPath = "D:\\CN4\\PRJ301\\test_coral\\Marine_Reef\\web\\images\\coral-image";
         // Tạo thư mục nếu chưa tồn tại
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
