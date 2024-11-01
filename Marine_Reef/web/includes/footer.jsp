@@ -29,7 +29,12 @@
                         </a>
                     </li>
                 </ul>
+                <ul>
+                                <img style="margin-left: 40% " alt="bocongthuong"  width="50%" src="./images/banner/dathongbao.jpg" />
+                </ul>
             </div>
+
+
         </div>
 
         <!-- Copyright Section -->
