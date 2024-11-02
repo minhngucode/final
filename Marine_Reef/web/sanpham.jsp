@@ -49,10 +49,15 @@
     }
 </style>
 <div class="container" style="margin-top: 20px;">
+    <% 
+        if (request.getAttribute("role")!=null){
+        String role = (String) request.getAttribute("role");
+        if (role.equals("admin")) 
+    { %>
     <button class="btn btn-primary">
         <a href="admin" class="text-decoration-none text-white" >Thêm Sản Phẩm</a>
     </button>
-
+    <%} }%>
     <h1 class="my-4">Lọc danh sách sản phẩm</h1>
 
     <!-- Filter and Search Form -->

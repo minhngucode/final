@@ -37,22 +37,7 @@ public class admin extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet admin</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet admin at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+   
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -96,22 +81,19 @@ public class admin extends HttpServlet {
         BigDecimal costPrice = new BigDecimal(request.getParameter("costprice"));
 
         // Xử lý upload hình ảnh
-        Part filePart = request.getPart("image"); // Nhận file ảnh
+        Part filePart = request.getPart("image");  //Lấy đối tượng ảnh upload lên
+        //tạo địa chỉ để lưu
             String uploadPath = "D:\\CN4\\PRJ301\\test_coral\\Marine_Reef\\web\\images\\coral-image";
-        // Tạo thư mục nếu chưa tồn tại
+        //tạo 1 đối tượng file để kiểm tra xem đường dẫn đã có chưa nếu chưa có thì tạo ra đường dẫn để lưu
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
-
-        // Tạo productID
+        //này là tạo id để gắn cho ảnh
         String productID = DAO.generateProductID(DAO.getConnection(),categoryID ); // Tạo productID
-
-        // Đổi tên file ảnh thành productID
-        String fileExtension = getFileExtension(filePart.getSubmittedFileName()); // Lấy đuôi file
+        //tạo tên mới để lưu ảnh theo id 
         String newFileName = productID + ".jpg" ; // Đổi tên file
-
-        // Lưu file ảnh
+        //lưu cái filePart(là cái ảnh) vào cái đường dẫn với cái tên mới
         filePart.write(uploadPath + File.separator + newFileName);
 
         // Kết nối tới cơ sở dữ liệu và thêm sản phẩm
@@ -119,7 +101,6 @@ public class admin extends HttpServlet {
         
     }
 
-    // Phương thức lấy đuôi file
   
 
     

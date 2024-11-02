@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -51,6 +52,12 @@ public class ProductList extends HttpServlet {
         listtype = DAO.getDistinctTypes(DAO.getConnection());
         request.setAttribute("productList", arr);
         request.setAttribute("listtype", listtype);
+        HttpSession session = request.getSession(false);
+           if (session!=null){
+               if (session.getAttribute("username")!=null)
+            request.setAttribute("role", DAO.getRole((String) session.getAttribute("username")));
+           }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("sanpham.jsp");
         dispatcher.forward(request, response);
     }
@@ -102,9 +109,14 @@ public class ProductList extends HttpServlet {
 
                 request.setAttribute("productList", arr);
                 request.setAttribute("listtype", listtype);
+                HttpSession session = request.getSession(false);
+           if (session!=null){
+               if (session.getAttribute("username")!=null)
+            request.setAttribute("role", DAO.getRole((String) session.getAttribute("username")));
+           }
                 // Forward lại trang JSP để hiển thị
                 request.getRequestDispatcher("sanpham.jsp").forward(request, response);
-
+                
             }
         }
     }
