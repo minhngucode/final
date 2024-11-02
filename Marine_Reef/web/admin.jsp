@@ -1,50 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<jsp:include page="includes/begintag.jsp"/>
+<jsp:include page="includes/header.jsp"/>
+
 <%
     ArrayList<String> categoryList = (ArrayList<String>) request.getAttribute("categoryList");
     ArrayList<String> typeList = (ArrayList<String>) request.getAttribute("typeList");
 %>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Thêm Sản Phẩm</title>
-    <style>
-        .form-container {
-            max-width: 400px; /* Kích thước tối đa của form */
-            height: 80vh; /* Chiều cao 80% chiều cao màn hình */
-            margin: 20px; /* Khoảng cách xung quanh */
-            overflow-y: auto; /* Cuộn dọc khi nội dung vượt quá chiều cao */
-            padding: 20px; /* Khoảng cách bên trong */
-            border: 1px solid #ccc; /* Đường viền cho form */
-            border-radius: 5px; /* Bo góc cho form */
-            background-color: #f8f9fa; /* Màu nền nhẹ cho form */
-            position: absolute; /* Đặt vị trí tuyệt đối */
-            top: 10%; /* Cách mép trên 10% */
-            left: 0; /* Đặt sát lề bên trái */
-        }
-        .form-container h2 {
-            font-size: 1.5rem; /* Kích thước tiêu đề nhỏ hơn */
-        }
-        .form-group {
-            margin-bottom: 0.5rem; /* Khoảng cách giữa các trường */
-        }
-        .form-group label {
-            width: 30%; /* Độ rộng của label */
-            margin-right: 10px; /* Khoảng cách giữa label và input */
-            text-align: right; /* Canh phải cho label */
-        }
-        .form-row {
-            display: flex; /* Sử dụng Flexbox để sắp xếp các label và ô input */
-            align-items: center; /* Căn giữa dọc */
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
+
+<div class="container">
         <div class="form-container">
             <h2>Thêm Sản Phẩm</h2>
             <form action="admin" method="post" enctype="multipart/form-data">
@@ -93,5 +58,6 @@
             <a href="ProductList" class="btn btn-secondary mt-3">Quay lại</a>
         </div>
     </div>
-</body>
-</html>
+
+<jsp:include page="includes/footer.jsp"/>
+<jsp:include page="includes/endtag.jsp"/>

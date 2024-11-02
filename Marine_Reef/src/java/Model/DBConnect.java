@@ -25,13 +25,13 @@ public class DBConnect {
     public static Connection getConnection() {
         Connection con = null;
         String dbUser = "sa";
-        String dbPassword = "admin";
+        String dbPassword = "minh280504";
         String port = "1433";
         String IP = "127.0.0.1";
-        String ServerName = "minipele";
+        String ServerName = "MINHDC";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String dbURL = "jdbc:sqlserver://minipele;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
+        String dbURL = "jdbc:sqlserver://MINHDC;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
 
         try {
             Class.forName(driverClass);
@@ -64,11 +64,12 @@ public class DBConnect {
             insertStmt.setString(4, email);
             insertStmt.setString(5, " ");
             insertStmt.executeUpdate();
-            String sql = "INSERT INTO [User] (Username, Password, CustomerID) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO [User] (Username, Password, CustomerID, role) VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, pass);
             pstmt.setString(3, newCustomerId);
+            pstmt.setString(4, "view");
             pstmt.executeUpdate();
 
             String selectMaxCartSql = "SELECT MAX(CAST(CartID AS INT)) AS maxID FROM Cart";
