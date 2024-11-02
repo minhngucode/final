@@ -102,7 +102,7 @@
         <nav style="padding-top: 20px;">
             <ul>
                 <li><a href="gioithieu.jsp">GIỚI THIỆU</a></li>
-                <li><a href="#">XÂY DỰNG BỂ</a></li>
+                <li><a href="TankBuild">XÂY DỰNG BỂ</a></li>
                 <li class="dropdown">
                     <a href="ProductList">SẢN PHẨM</a>
                     <ul class="dropdown-menu">

@@ -10,7 +10,7 @@
 %>
 
 <div class="container">
-        <div class="form-container">
+    <div class="form-container" style="margin: 30px auto">
             <h2>Thêm Sản Phẩm</h2>
             <form action="admin" method="post" enctype="multipart/form-data">
                 <div class="form-row">
@@ -49,7 +49,7 @@
                     <label for="costprice">Giá Thành:</label>
                     <input type="number" id="costprice" name="costprice" class="form-control" step="0.01" required>
                 </div>
-                <div class="form-row">
+                <div class="form-row" style="margin: 10px auto">
                     <label for="image">Ảnh:</label>
                     <input type="file" id="image" name="image" class="form-control-file" accept="image/*" required>
                 </div>

@@ -55,7 +55,9 @@
     <table class="table table-bordered table-hover">
         <thead class="xeon-blue">
             <tr>
-                <th>Select</th>
+                <th>
+                    <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)" />
+                </th>
                 <th>Product Image</th>
                 <th>Product Name</th>
                 <th class="text-center">Quantity</th>
@@ -105,7 +107,6 @@
                 </form>
             </td>
         </tr>
-
 
             <%
                 } // Kết thúc vòng lặp
@@ -189,25 +190,33 @@
 
     function updateQuantity(cartID, productID, delta) {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "CartServlet", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        // Xử lý khi server trả về kết quả
+        xhr.open('POST', 'CartServlet', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    // Cập nhật lại số lượng và giá
-                    document.getElementById('quantity_' + productID).innerText = response.newQuantity;
-                    document.getElementById('productTotal_' + productID).innerText = formatVND(response.productTotal);
-                    document.getElementById('hidden_quantity_' + productID).value = response.newQuantity;
-                    document.getElementById('totalPrice').innerText = formatVND(response.totalPrice);
-                }
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                document.getElementById('quantity_' + productID).innerText = response.quantity;
+                document.getElementById('productTotal_' + productID).innerText = formatVND(response.total);
+                updateTotalPrice();
             }
         };
+        xhr.send('action=update&cartID=' + cartID + '&productID=' + productID + '&quantity=' + delta);
+    }
 
-        // Gửi yêu cầu đến servlet với cartID, productID và delta (tăng/giảm)
-        xhr.send("action=updateQuantity&cartID=" + cartID + "&productID=" + productID + "&delta=" + delta);
+    function updateTotalPrice() {
+        let total = 0;
+        const productTotals = document.querySelectorAll('td[id^="productTotal_"]');
+        productTotals.forEach(function (td) {
+            const amount = parseFloat(td.innerText.replace(/[^\d.-]/g, ''));
+            if (!isNaN(amount)) total += amount;
+        });
+        document.getElementById('totalPrice').innerText = formatVND(total);
+    }
+
+    function toggleSelectAll(source) {
+        const checkboxes = document.querySelectorAll('.selectProduct');
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = source.checked;
+        });
     }
 </script>
-<jsp:include page="includes/endtag.jsp"/>

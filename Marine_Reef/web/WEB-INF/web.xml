@@ -48,6 +48,10 @@
         <servlet-name>UserInfo</servlet-name>
         <servlet-class>Controller.UserInfo</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TankBuild</servlet-name>
+        <servlet-class>Controller.TankBuild</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -102,6 +106,10 @@
     <servlet-mapping>
         <servlet-name>UserInfo</servlet-name>
         <url-pattern>/UserInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TankBuild</servlet-name>
+        <url-pattern>/TankBuild</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>120</session-timeout>

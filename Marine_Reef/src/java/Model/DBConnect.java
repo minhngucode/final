@@ -346,8 +346,8 @@ public class DBConnect {
 
         return types;
     }
-    public ArrayList<Product> getFilteredProducts(String productType, String searchName, BigDecimal minPrice, BigDecimal maxPrice, Connection con) {
-        arrProduct.clear();
+    public ArrayList<Product> getFilteredProducts(String productType, String searchName, BigDecimal minPrice, BigDecimal maxPrice) {
+        ArrayList<Product> temp = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM Product WHERE 1=1");
 
         // Điều kiện lọc
@@ -364,7 +364,7 @@ public class DBConnect {
             sql.append(" AND Price <= ?");
         }
         try{
-             PreparedStatement pstmt = con.prepareStatement(sql.toString());
+             PreparedStatement pstmt = getConnection().prepareStatement(sql.toString());
             int index = 1;
 
             // Thêm giá trị vào các điều kiện lọc
@@ -392,13 +392,13 @@ public class DBConnect {
                 product.setCostprice(rs.getBigDecimal("Costprice"));
                 product.setQuantityInStock(rs.getInt("QuantityInStock"));
                 product.setCategoryID(rs.getString("CategoryID"));
-                arrProduct.add(product);
+                temp.add(product);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return arrProduct;
+        return temp;
     }
     public static void addProduct( String name, String description, 
                            BigDecimal price, int quantity, String categoryID, 
