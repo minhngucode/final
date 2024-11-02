@@ -104,7 +104,7 @@ public class ProductList extends HttpServlet {
                 BigDecimal minPrice = request.getParameter("minPrice") != null && !request.getParameter("minPrice").isEmpty() ? new BigDecimal(request.getParameter("minPrice")) : null;
                 BigDecimal maxPrice = request.getParameter("maxPrice") != null && !request.getParameter("maxPrice").isEmpty() ? new BigDecimal(request.getParameter("maxPrice")) : null;
 
-                arr = DAO.getFilteredProducts(productType, searchName, minPrice, maxPrice, DAO.getConnection());
+                arr = DAO.getFilteredProducts(productType, searchName, minPrice, maxPrice);
                 listtype = DAO.getDistinctTypes(DAO.getConnection());
 
                 request.setAttribute("productList", arr);
