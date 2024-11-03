@@ -134,6 +134,7 @@ header .auth-buttons li form button b:hover{
 }
 .hero .nut{
     display: flex;
+    gap: 20px;
 }
 .section {
     padding: 40px 20px;

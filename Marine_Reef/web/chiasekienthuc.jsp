@@ -3,15 +3,23 @@
 <jsp:include page="includes/header.jsp"/>
 
 <!-- Chia sẻ kiến thức -->
+<style>
+    .blue-text{
+        color: #0689B7;
+    }
+    strong:hover{
+        color: #0689B7; /* Màu xanh khi hover */
+    }
+</style>
 <div class="about-container">
     <div class="text-center">
-        <h1 class="about-title">Chia Sẻ Kiến Thức Từ Marine & Reef</h1>
+        <h1 class="about-title blue-text">Chia Sẻ Kiến Thức Từ Marine & Reef</h1>
         <p class="about-text">
-            Chào mừng bạn đến với <b>Chia Sẻ Kiến Thức</b> của Marine & Reef! Chúng tôi không chỉ đơn thuần cung cấp các sản phẩm chất lượng cao cho bể san hô và sinh vật biển, mà còn mong muốn chia sẻ những kiến thức quý báu giúp bạn nuôi dưỡng và duy trì một hệ sinh thái bể san hô lý tưởng.
+            Chào mừng bạn đến với  <strong>Chia Sẻ Kiến Thức </strong> của Marine & Reef! Chúng tôi không chỉ đơn thuần cung cấp các sản phẩm chất lượng cao cho bể san hô và sinh vật biển, mà còn mong muốn chia sẻ những kiến thức quý báu giúp bạn nuôi dưỡng và duy trì một hệ sinh thái bể san hô lý tưởng.
         </p>
     </div>
 
-    <h2 class="about-subtitle">1. Kiến Thức Về San Hô</h2>
+    <h2 class="about-subtitle blue-text">1. Kiến Thức Về San Hô</h2>
     <p class="about-text"> 
         <strong>Phân loại san hô:</strong> San hô là một trong những sinh vật biển đa dạng và đẹp mắt nhất, có nhiều loại khác nhau, mỗi loại đều có đặc điểm và yêu cầu môi trường sống riêng. Có thể chia san hô thành hai loại chính: san hô cứng (SPS và LPS) và san hô mềm. 
 
@@ -33,7 +41,7 @@
     </p>
 
 
-    <h2 class="about-subtitle">2. Hướng Dẫn Thiết Lập Bể San Hô</h2>
+    <h2 class="about-subtitle blue-text">2. Hướng Dẫn Thiết Lập Bể San Hô</h2>
     <p class="about-text"> 
         <strong>Thiết lập bể từ đầu:</strong> Đối với những ai mới bắt đầu, việc thiết lập một bể san hô có thể là một thách thức, nhưng chúng tôi sẽ cung cấp hướng dẫn chi tiết để bạn có thể tự tin bắt đầu. Đầu tiên, bạn cần chọn kích thước bể phù hợp với không gian của bạn. Bể lớn hơn thường giúp duy trì ổn định hơn về chất lượng nước, nhưng cần có không gian đủ rộng để bố trí bể cùng các thiết bị đi kèm.<br><br>
 
@@ -50,7 +58,7 @@
     </p>
 
 
-    <h2 class="about-subtitle">3. Tạo Dòng Chảy Hoàn Hảo</h2>
+    <h2 class="about-subtitle blue-text">3. Tạo Dòng Chảy Hoàn Hảo</h2>
     <p class="about-text"> 
         <strong>Máy bơm và Skimmer:</strong> Dòng chảy là yếu tố thiết yếu giúp duy trì chất lượng nước trong bể san hô. Việc thiết lập một hệ thống dòng chảy phù hợp không chỉ giúp duy trì oxy hòa tan trong nước mà còn hỗ trợ quá trình quang hợp của san hô. Chúng tôi sẽ hướng dẫn bạn cách chọn máy bơm nước và máy tạo dòng chảy phù hợp với kích thước và loại bể của bạn. Một máy bơm công suất lớn hơn có thể tạo ra dòng chảy mạnh, trong khi máy bơm nhỏ hơn lại thích hợp cho các loại san hô nhạy cảm hơn.
     </p>
@@ -58,7 +66,7 @@
         Ngoài ra, việc sử dụng máy tách protein (Skimmer) là điều cần thiết để loại bỏ các cặn bẩn và chất hữu cơ trong nước, giúp bảo vệ sức khỏe của san hô và các sinh vật khác trong bể. Chúng tôi sẽ cung cấp hướng dẫn chi tiết về cách lắp đặt, điều chỉnh và bảo trì skimmer, đảm bảo rằng hệ thống lọc hoạt động hiệu quả và giữ nước luôn trong sạch.
     </p>
 
-    <h2 class="about-subtitle">4. Thức Ăn Và Dinh Dưỡng Cho San Hô</h2>
+    <h2 class="about-subtitle blue-text">4. Thức Ăn Và Dinh Dưỡng Cho San Hô</h2>
     <p class="about-text"> 
         <strong>Chế độ ăn uống:</strong> Chế độ ăn uống đa dạng và giàu dinh dưỡng là rất quan trọng đối với sự phát triển của san hô và các sinh vật trong bể. Chúng tôi sẽ gợi ý các loại thức ăn giàu dưỡng chất, bao gồm thức ăn dạng viên, thức ăn đông lạnh và thức ăn dạng bột, phù hợp cho san hô, cá biển và các sinh vật sống khác. Mỗi loại thức ăn có thể cung cấp các vitamin và khoáng chất khác nhau, giúp san hô phát triển khỏe mạnh và có màu sắc rực rỡ.
     </p>
@@ -66,7 +74,7 @@
         <strong>Bổ sung khoáng chất:</strong> Việc bổ sung khoáng chất và vi sinh là rất cần thiết để duy trì sự cân bằng trong bể san hô. Chúng tôi sẽ cung cấp thông tin về các loại khoáng chất cần thiết cho san hô như canxi, magiê, và strontium, cũng như cách cung cấp chúng một cách hiệu quả. Bạn cũng sẽ tìm hiểu về các sản phẩm bổ sung vi sinh giúp cải thiện chất lượng nước và hỗ trợ sự phát triển của san hô.
     </p>
 
-    <h2 class="about-subtitle">5. Giải Quyết Vấn Đề Thường Gặp</h2>
+    <h2 class="about-subtitle blue-text">5. Giải Quyết Vấn Đề Thường Gặp</h2>
     <p class="about-text"> 
         <strong>Xử lý bệnh tật:</strong> Dấu hiệu nhận biết bệnh ở san hô là rất quan trọng để xử lý kịp thời. Chúng tôi sẽ hướng dẫn chi tiết về các triệu chứng phổ biến như mất màu, tách polyp, và phát triển nấm, giúp bạn nhận diện sớm và có biện pháp can thiệp phù hợp. Việc phát hiện sớm sẽ giúp bảo vệ san hô và các sinh vật khác trong bể, giảm thiểu tổn thất.
     </p>
@@ -74,22 +82,22 @@
         <strong>Kiểm soát tảo:</strong> Tảo có thể gây hại cho bể san hô nếu không được kiểm soát. Chúng tôi sẽ chia sẻ các biện pháp hiệu quả để kiểm soát tảo, bao gồm cách điều chỉnh chế độ ánh sáng, sử dụng máy tách protein, và áp dụng các sản phẩm chống tảo tự nhiên. Những mẹo này sẽ giúp giữ cho bể luôn sạch sẽ và đẹp mắt, đồng thời tạo môi trường sống lý tưởng cho san hô phát triển.
     </p>
 
-    <h2 class="about-subtitle">6. Cập Nhật Xu Hướng Mới Nhất</h2>
+    <h2 class="about-subtitle blue-text">6. Cập Nhật Xu Hướng Mới Nhất</h2>
     <p class="about-text"> 
         <strong>Bài viết và nghiên cứu mới:</strong> Chúng tôi sẽ thường xuyên cập nhật các bài viết mới về các nghiên cứu, công nghệ và xu hướng mới nhất trong lĩnh vực nuôi san hô và sinh vật biển. Điều này sẽ giúp bạn luôn cập nhật và áp dụng những phương pháp tốt nhất cho bể của mình. Bạn sẽ được giới thiệu các công nghệ mới trong hệ thống lọc, phương pháp chăm sóc và các sản phẩm hỗ trợ nuôi san hô.
     </p>
 
-    <h2 class="about-subtitle">7. Hỗ Trợ Cộng Đồng</h2>
+    <h2 class="about-subtitle blue-text">7. Hỗ Trợ Cộng Đồng</h2>
     <p class="about-text"> 
         <strong>Diễn đàn và Q&A:</strong> Chúng tôi khuyến khích bạn tham gia vào cộng đồng của Marine & Reef. Tại đây, bạn có thể đặt câu hỏi, chia sẻ kinh nghiệm và tìm hiểu thêm từ những người đam mê nuôi san hô khác. Chúng tôi sẽ tổ chức các buổi Q&A trực tuyến để giải đáp các thắc mắc của bạn, tạo cơ hội cho bạn kết nối với những người có cùng sở thích và học hỏi từ họ.
     </p>
 
     <div class="text-center">
         <p class="about-text">
-            Tại sao nên theo dõi <b>Chia Sẻ Kiến Thức</b> từ Marine & Reef? Bởi vì Marine & Reef không chỉ là nơi cung cấp sản phẩm mà còn là người bạn đồng hành đáng tin cậy trên hành trình xây dựng và chăm sóc bể san hô của bạn. Với đội ngũ chuyên gia giàu kinh nghiệm, chúng tôi luôn sẵn sàng chia sẻ những kiến thức bổ ích, giúp bạn tự tin hơn trong việc quản lý và duy trì hệ sinh thái dưới nước.
+            Tại sao nên theo dõi <strong>Chia Sẻ Kiến Thức </strong> từ Marine & Reef? Bởi vì Marine & Reef không chỉ là nơi cung cấp sản phẩm mà còn là người bạn đồng hành đáng tin cậy trên hành trình xây dựng và chăm sóc bể san hô của bạn. Với đội ngũ chuyên gia giàu kinh nghiệm, chúng tôi luôn sẵn sàng chia sẻ những kiến thức bổ ích, giúp bạn tự tin hơn trong việc quản lý và duy trì hệ sinh thái dưới nước.
         </p>
         <p class="about-text">
-            Hãy ghé thăm mục <b>Chia Sẻ Kiến Thức thường</b> xuyên để cập nhật những bài viết mới nhất và khám phá thêm nhiều bí quyết hữu ích!
+            Hãy ghé thăm mục <strong>Chia Sẻ Kiến Thức thường </strong> xuyên để cập nhật những bài viết mới nhất và khám phá thêm nhiều bí quyết hữu ích!
         </p>
     </div>
 
