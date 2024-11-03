@@ -106,7 +106,7 @@
         <nav>
             <ul>
                 <li><a href="gioithieu.jsp">GIỚI THIỆU</a></li>
-                <li><a href="#">XÂY DỰNG BỂ</a></li>
+                <li><a href="TankBuild">XÂY DỰNG BỂ</a></li>
                 <li class="dropdown">
                     <a href="ProductList">SẢN PHẨM</a>
                     <ul class="dropdown-menu">
@@ -230,5 +230,13 @@
             <%}%>
         </div>
     </div>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger
+        intent="WELCOME"
+        chat-title="AI_ChatBox"
+        agent-id="62fad29f-f955-42f2-84c0-ebf4ed9ce050"
+        language-code="vi"
+    ></df-messenger>
+
 </header>
 

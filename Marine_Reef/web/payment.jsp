@@ -4,8 +4,6 @@
 <%@ page import="java.util.Locale" %>
 <%@ page import="Model.DBConnect" %>
 <%@ page import="Model.CartDetail" %>
-<%@ page import="Model.Customer" %>
-
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Model.Product" %>
 <jsp:include page="includes/begintag.jsp"/>
@@ -43,12 +41,17 @@
     DBConnect DAO = new DBConnect();
     ArrayList<CartDetail> cartDetails = (ArrayList<CartDetail>) request.getAttribute("selectedCartDetails");
     BigDecimal totalPrice = BigDecimal.ZERO;
+    
+    if (cartDetails == null) {
+        // Giả sử bạn đã có phương thức để lấy danh sách giỏ hàng từ cơ sở dữ liệu
+        request.getSession().setAttribute("selectedCartDetails", cartDetails); // Lưu vào session
+    }
 
     // Lấy thông tin địa chỉ và người dùng
-    String address =(String) request.getAttribute("address");
-    String name =(String) request.getAttribute("name");
-    String phone =(String) request.getAttribute("phone");
-    System.out.println(address+" ; "+name+" ; "+phone);
+    String address = (String) request.getAttribute("address");
+    String name = (String) request.getAttribute("name");
+    String phone = (String) request.getAttribute("phone");
+    System.out.println(address + " ; " + name + " ; " + phone);
     if (cartDetails != null && !cartDetails.isEmpty()) {
 %>
 <div class="container mt-5" style="margin-bottom: 80px">
@@ -95,10 +98,10 @@
         </tbody>
     </table>
 
-    <!-- Shipping Address Display -->
-    <div class="container mt-5">
-        <h4 class="text-center mb-4 xeon-blue">Thông tin người nhận</h4>
-        <form id="shippingForm">
+    <!-- Shipping Address and Payment Options -->
+    <form action="PaymentServlet" method="POST">
+        <div class="container mt-5">
+            <h4 class="text-center mb-4 xeon-blue">Thông tin người nhận</h4>
             <div class="mb-3">
                 <label for="name" class="form-label">Tên</label>
                 <input type="text" class="form-control" id="name" name="name" value="<%= name != null ? name : "" %>" required>
@@ -111,14 +114,19 @@
                 <label for="address" class="form-label">Địa chỉ giao hàng</label>
                 <input type="text" class="form-control" id="address" name="address" value="<%= address != null ? address : "" %>" required placeholder="Nhập địa chỉ giao hàng">
             </div>
-        </form>
-    </div>
+             <div class="mb-3">
+                <label for="discount" class="form-label">Discount Code</label>
+                <input type="text" class="form-control" id="discount" name="discount" >
+            </div>
+        </div>
 
-    <!-- Buttons for Payment and Continue Shopping -->
-    <div class="text-right">
-        <button type="button" class="btn btn-cart text-decoration-none" onclick="submitSelectedProducts()">Payment</button>
-        <a href="ProductList"><button type="button" class="btn btn-cart text-decoration-none">Continue Shopping</button></a>
-    </div>
+        <!-- Payment Buttons with Hidden Actions -->
+        <div class="text-right">
+            <button type="submit" class="btn btn-cart" name="action" value="shipcod">Ship COD</button>
+            <button type="submit" class="btn btn-cart" name="action" value="banktransfer">Chuyển khoản ngân hàng</button>
+            <a href="ProductList" class="btn btn-cart text-decoration-none">Continue Shopping</a>
+        </div>
+    </form>
 </div>
 
 <%

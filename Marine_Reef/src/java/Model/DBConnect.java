@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -62,11 +63,12 @@ public class DBConnect {
             insertStmt.setString(4, email);
             insertStmt.setString(5, " ");
             insertStmt.executeUpdate();
-            String sql = "INSERT INTO [User] (Username, Password, CustomerID) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO [User] (Username, Password, CustomerID, role) VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, pass);
             pstmt.setString(3, newCustomerId);
+            pstmt.setString(4, "view");
             pstmt.executeUpdate();
 
             String selectMaxCartSql = "SELECT MAX(CAST(CartID AS INT)) AS maxID FROM Cart";
@@ -343,8 +345,8 @@ public class DBConnect {
 
         return types;
     }
-    public ArrayList<Product> getFilteredProducts(String productType, String searchName, BigDecimal minPrice, BigDecimal maxPrice, Connection con) {
-        arrProduct.clear();
+    public ArrayList<Product> getFilteredProducts(String productType, String searchName, BigDecimal minPrice, BigDecimal maxPrice) {
+        ArrayList<Product> temp = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM Product WHERE 1=1");
 
         // Điều kiện lọc
@@ -361,7 +363,7 @@ public class DBConnect {
             sql.append(" AND Price <= ?");
         }
         try{
-             PreparedStatement pstmt = con.prepareStatement(sql.toString());
+             PreparedStatement pstmt = getConnection().prepareStatement(sql.toString());
             int index = 1;
 
             // Thêm giá trị vào các điều kiện lọc
@@ -389,13 +391,13 @@ public class DBConnect {
                 product.setCostprice(rs.getBigDecimal("Costprice"));
                 product.setQuantityInStock(rs.getInt("QuantityInStock"));
                 product.setCategoryID(rs.getString("CategoryID"));
-                arrProduct.add(product);
+                temp.add(product);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return arrProduct;
+        return temp;
     }
     public static void addProduct( String name, String description, 
                            BigDecimal price, int quantity, String categoryID, 
@@ -560,8 +562,93 @@ public class DBConnect {
         return false;
     }
     }
-//    public static void main(String[] args) {
-//        System.out.println(updateCustomer("huan", "Nguyễn Văn Huân", "huan@fpt.vn", "0345997792", "12/9 cách mạng"));
-//        }
+   public void addOrder(String orderID, double totalAmount, String customerID, String status) {
+    String insertSql = "INSERT INTO Orders (OrderID, OrderDate, TotalAmount, CustomerID, status) VALUES (?, ?, ?, ?, ?)";
+
+    try (
+        PreparedStatement insertStmt = getConnection().prepareStatement(insertSql)
+    ) {
+        // Get the maximum OrderID
+      
+        
+        // Set the parameters for the INSERT statement
+        insertStmt.setString(1, orderID);
+        insertStmt.setTimestamp(2, new java.sql.Timestamp(new Date().getTime()));
+        insertStmt.setBigDecimal(3, BigDecimal.valueOf(totalAmount));
+        insertStmt.setString(4, customerID);
+        insertStmt.setString(5, status);
+
+        // Execute the insert
+        insertStmt.executeUpdate();
+        System.out.println("Order added successfully with OrderID: " + orderID);
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("Failed to add order: " + e.getMessage());
+    }
+}
+   public String newOrderID(){
+       int newOrderId = 1;
+       try {String selectMaxIdSql = "SELECT MAX(CAST(OrderID AS INT)) FROM Orders";
+        PreparedStatement selectMaxIdStmt = getConnection().prepareStatement(selectMaxIdSql);
+        ResultSet rs = selectMaxIdStmt.executeQuery();
+        if (rs.next()) {
+            newOrderId = rs.getInt(1) + 1;
+        }
+       }
+       catch (Exception e){
+           
+       }
+       return String.valueOf(newOrderId);
+   }
+   public void addOrderDetail( String orderID, String productID, int quantity, double unitPrice) {
+        // Câu lệnh SQL để chèn dữ liệu vào bảng OrderDetail
+        String query = "INSERT INTO OrderDetail (OrderID, ProductID, Quantity, UnitPrice) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement statement = getConnection().prepareStatement(query)) {
+            // Thiết lập các tham số cho PreparedStatement
+            statement.setString(1, orderID);
+            statement.setString(2, productID);
+            statement.setInt(3, quantity);
+            statement.setDouble(4, unitPrice);
+
+            // Thực thi câu lệnh SQL
+            int rowsAffected = statement.executeUpdate();
+
+            // Kiểm tra kết quả
+            if (rowsAffected > 0) {
+                System.out.println("Thêm dữ liệu vào OrderDetail thành công.");
+            } else {
+                System.out.println("Không có dữ liệu nào được thêm vào OrderDetail.");
+            }
+        } catch (Exception e) {
+            // Xử lý ngoại lệ và in thông báo lỗi
+            System.out.println("Lỗi khi thêm dữ liệu vào OrderDetail: " + e.getMessage());
+        }
+    }
+   public static double getDiscountPercent( String discountCode, String username) {
+        double discountPercent = 0.0;
+
+        String query = "SELECT DiscountPercent FROM DiscountPair WHERE DiscountCode = ? AND username = ?";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(query)) {
+            stmt.setString(1, discountCode);
+            stmt.setString(2, username);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    discountPercent = rs.getDouble("DiscountPercent");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return discountPercent;
+    }
+  
+    public static void main(String[] args) {
+        System.out.println(getDiscountPercent("HAPPYNEWYEAR","huan"));
+        }
 }
 
