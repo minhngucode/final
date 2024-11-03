@@ -1,5 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <style>
+    header{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
     .dropdown {
         position: relative;
     }
@@ -231,6 +237,6 @@
         chat-title="AI_ChatBox"
         agent-id="62fad29f-f955-42f2-84c0-ebf4ed9ce050"
         language-code="vi"
-    ></df-messenger>
+        ></df-messenger>
 
 </header>

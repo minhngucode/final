@@ -74,7 +74,7 @@
 
     <h2 class="contact-subtitle">Thông Tin Liên Lạc</h2>
     <p><strong>Địa chỉ:</strong> Đại Học FPT, Khu đô thị FPT, P.Hòa Hải
-Q.Ngũ Hành Sơn, TP.Đà Nẵng</p>
+        Q.Ngũ Hành Sơn, TP.Đà Nẵng</p>
     <p><strong>Số điện thoại:</strong> 0345 678 JQK</p>
     <p><strong>Email:</strong> anonymous@fpt.edu.vn</p>
 
@@ -96,7 +96,15 @@ Q.Ngũ Hành Sơn, TP.Đà Nẵng</p>
     </form>
 
     <h2 class="contact-subtitle">Bản Đồ</h2>
-    <iframe src="images/coral-image/map.jpg" style="width:100%; height:400px;" frameborder="0" allowfullscreen></iframe>
+<div style="position: relative; display: inline-block; width: 100%;">
+    <a href="https://earth.google.com/web/search/%c4%90%e1%ba%a1i+h%e1%bb%8dc+FPT+%c4%90%c3%a0+N%e1%ba%b5ng,+Khu+%c4%91%c3%b4+th%e1%bb%8b+FPT+City,+H%c3%b2a+H%e1%ba%a3i,+Ng%c5%a9+H%c3%a0nh+S%c6%a1n,+%c4%90%c3%a0+N%e1%ba%b5ng/@15.96888573,108.26089073,4.33707477a,810.7563465d,35y,0h,0t,0r/data=CtABGqEBEpoBCiUweDMxNDIxMTY5NDk4NDA1OTk6MHgzNjViMzU1ODBmNTJlOGQ1GW4cDNAR8C9AIeZTbHGyEFtAKl_EkOG6oWkgaOG7jWMgRlBUIMSQw6AgTuG6tW5nLCBLaHUgxJHDtCB0aOG7iyBGUFQgQ2l0eSwgSMOyYSBI4bqjaSwgTmfFqSBIw6BuaCBTxqFuLCDEkMOgIE7hurVuZxgCIAEiJgokCUyVTd3H8i9AEYY10F7t7C9AGT0KBVdpEVtAIQroFWzMD1tAQgIIAUICCABKDQj___________8BEAA" 
+       target="_blank" title="địa chỉ Marine & Reef shop" style="display: block;">
+        <iframe src="images/coral-image/map.jpg" style="width:100%; height:400px; border: 0;" frameborder="0" allowfullscreen></iframe>
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></div>
+    </a>
+</div>
+
+
 </div>
 
 <jsp:include page="includes/footer.jsp"/>

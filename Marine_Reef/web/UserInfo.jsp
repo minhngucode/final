@@ -8,18 +8,26 @@
     System.out.println(cus);
     String username = (String) request.getAttribute("username");
     // Nếu không có thông tin người dùng, chuyển hướng đến trang đăng nhập
-    if (username.isEmpty() || cus==null) {
+    if (username == null || username.isEmpty() || cus == null) {
         response.sendRedirect("LoginServlet");
         return;
     }
 %>
-<div class="container">
+<link rel="stylesheet" href="css/userinfo.css">
+<div class="infor_form">
     <h1>Thông Tin Người Dùng</h1>
-    <form action="UserInfo" method="Post">
+    <%-- Hiển thị thông báo thành công nếu có --%>
+    <% String successMessage = (String) request.getAttribute("successMessage"); %>
+    <% if (successMessage != null) { %>
+        <div class="alert alert-success">
+            <%= successMessage %>
+        </div>
+    <% } %>
+    <form action="UserInfo" method="POST">
         <div class="user-info">
             <div>
                 <label for="customerName"><strong>Họ và Tên:</strong></label>
-                <input type="text" id="customerName" name="customerName" value="<%= cus.getCustomerName()%>" required />
+                <input type="text" id="customerName" name="customerName" value="<%= cus.getCustomerName() %>" required />
             </div>
             <div>
                 <label for="username"><strong>Tên đăng nhập:</strong></label>
