@@ -52,6 +52,10 @@
         <servlet-name>TankBuild</servlet-name>
         <servlet-class>Controller.TankBuild</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Order</servlet-name>
+        <servlet-class>Controller.Order</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -110,6 +114,10 @@
     <servlet-mapping>
         <servlet-name>TankBuild</servlet-name>
         <url-pattern>/TankBuild</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Order</servlet-name>
+        <url-pattern>/Order</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>120</session-timeout>
