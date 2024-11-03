@@ -1,8 +1,10 @@
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: #f5f5f5; /* Nền màu nhạt để tạo cảm giác thanh lịch */
+    color: #333; /* Màu chữ chính là màu tối */
 }
 header {
     background-color: #000;
@@ -15,12 +17,13 @@ header .container {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0;
 }
 header .logo img {
-    height: 50px;
+    height: 70px;
 }
 header nav ul {
+    margin-bottom: 0;
     list-style: none;
     display: flex;
     gap: 20px;
@@ -40,6 +43,63 @@ header .contact-info {
 }
 header .contact-info i {
     color: #ffcc00;
+}
+header nav ul li a{
+    font-size: 13px;
+}
+header nav ul li a:hover{
+    color: #0689B7;
+}
+header .auth-buttons {
+    gap: 10px;
+    display: flex;
+    list-style: none;
+    color: white;
+    justify-content: flex-end;
+    align-items: center;
+}
+header .auth-buttons li a{
+    color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    width: 90px;
+    height: 30px;
+    text-align: center;
+
+}
+header .auth-buttons li form button b{
+    color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    width: 90px;
+    height: 30px;
+    text-align: center;
+    font-weight: 400;
+}
+#ttng{
+    color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    width: 160px;
+    height: 30px;
+    text-align: center;
+    font-weight: 400;
+}
+header .auth-buttons li a:hover {
+    color: #0689B7;
+    background-color: white;
+    border-radius: 5px;
+}
+header .auth-buttons li form button b:hover{
+    color: #0689B7;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#ttng:hover{
+    color: #0689B7;
+    background-color: white;
+    border-radius: 5px;
 }
 .hero {
     position: relative;
@@ -65,12 +125,15 @@ header .contact-info i {
     margin: 10px 0;
 }
 .hero .btn {
-    background-color: #ffcc00;
-    color: #000;
-    padding: 10px 20px;
+    background-color: white;
+    color: #0689B7;
+    padding: 10px 30px;
     text-decoration: none;
     font-weight: 700;
     margin-top: 20px;
+}
+.hero .nut{
+    display: flex;
 }
 .section {
     padding: 40px 20px;
@@ -107,14 +170,14 @@ header .contact-info i {
     font-size: 1rem;
     color: #666;
 }
-.footer {
+.footer .foot{
     background-color: #f8f8f8;
     padding: 40px 20px;
     text-align: center;
 }
 .footer .container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0;
 }
 .footer .logo img {
     height: 100px;

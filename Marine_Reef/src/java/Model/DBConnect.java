@@ -32,8 +32,8 @@ public class DBConnect {
         String ServerName = "MINHDC";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String dbURL = "jdbc:sqlserver://MINHDC;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
-
+        String dbURL = "jdbc:sqlserver://" + ServerName + ";databaseName=" + DBName + ";encrypt=false;trustServerCertificate=false;loginTimeout=30";
+        
         try {
             Class.forName(driverClass);
             //DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());

@@ -83,7 +83,7 @@ public class admin extends HttpServlet {
         // Xử lý upload hình ảnh
         Part filePart = request.getPart("image");  //Lấy đối tượng ảnh upload lên
         //tạo địa chỉ để lưu
-            String uploadPath = "D:\\CN4\\PRJ301\\test_coral\\Marine_Reef\\web\\images\\coral-image";
+            String uploadPath = "D:\\CN4\\PRJ\\Web\\final\\Marine_Reef\\web\\images\\coral-image";
         //tạo 1 đối tượng file để kiểm tra xem đường dẫn đã có chưa nếu chưa có thì tạo ra đường dẫn để lưu
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {

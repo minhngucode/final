@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="section">
-    <h2>CHIA SẺ KIẾN THỨC</h2>
+    <a href="chiasekienthuc.jsp"><h2>CHIA SẺ KIẾN THỨC</h2></a>
     <div class="knowledge-share">
         <div class="knowledge-item">
             <img alt="Các thông số nước dành cho bể san hô" height="200" src="https://storage.googleapis.com/a1aa/image/9Mw8faQnCRQFGqB23a4Ex2h6X4YuFrsyBPzhfRq6ZxeUteWOB.jpg" width="200"/>

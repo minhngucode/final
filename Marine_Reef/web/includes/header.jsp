@@ -96,16 +96,17 @@
     .submenu li p:hover {
         color: #0689B7; /* Thay đổi màu chữ khi hover vào menu con */
     }
+
 </style>
 
 <header>
-    <div class="container justify-content">
+    <div class="container">
         <div class="logo">
             <a href="index.jsp">
-                <img alt="Marine and Reef Logo" height="50" src="./images/logo/logo.jpg" width="100"/>
+                <img alt="Marine and Reef Logo" src="./images/logo/logo.jpg" />
             </a>
         </div>
-        <nav style="padding-top: 20px;">
+        <nav>
             <ul>
                 <li><a href="gioithieu.jsp">GIỚI THIỆU</a></li>
                 <li><a href="TankBuild">XÂY DỰNG BỂ</a></li>
@@ -201,35 +202,36 @@
                         </li>
                     </ul>
                 </li>
-
                 <li><a href="dichvu.jsp">DỊCH VỤ</a></li>
                 <li><a href="chiasekienthuc.jsp">CHIA SẺ KIẾN THỨC</a></li>
                 <li><a href="lienhe.jsp">LIÊN HỆ</a></li>
-                    <%
-                        ServletContext context = application;
-                        String lg = (String) context.getAttribute("lg");
-                        if (lg == null) {%>
-                <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;"><a href="LoginServlet">LOGIN</a></li>
-                <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;"><a href="Signup">SIGNUP</a></li>
-                    <%} else {%>
-                <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;">
-                    <form action="Control?action=logout" method="POST" style="display: inline;">
-                        <button type="submit" class="login-button" style="border: none; background: none; padding: 0; color: inherit; cursor: pointer;"><b>LOGOUT</b></button>
-                    </form>
-                </li>
-                <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 20px 5px 20px; border-radius: 5px;">
-                    <form action="CartServlet" method="GET" style="display: inline;">
-                        <button type="submit" class="login-button" style="border: none; background: none; padding: 0; color: inherit; cursor: pointer;"><b>Cart</b></button>
-                    </form>
-                </li>
-                <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; padding: 5px 10px; border-radius: 5px;">
-                    <a href="UserInfo" style="color: white;">
-                        <i class="fas fa-user"></i> Thông tin người dùng
-                    </a>
-                </li>
-                <%}%>
             </ul>
         </nav>
+        <div class="auth-buttons">
+            <%
+                ServletContext context = application;
+                String lg = (String) context.getAttribute("lg");
+                if (lg == null) {%>
+                <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;"><a style="text-decoration: none" href="LoginServlet">Đăng nhập</a></li>
+                <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;"><a style="text-decoration: none" href="Signup">Đăng ký</a></li>
+                <%} else {%>
+            <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
+                <form action="Control?action=logout" method="POST" style="display: inline;">
+                    <button type="submit" class="login-button" style="border: none; background: none;"><b>Đăng xuất</b></button>
+                </form>
+            </li>
+            <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
+                <form action="CartServlet" method="GET" style="display: inline;">
+                    <button type="submit" class="login-button" style="border: none; background: none;"><b>Giỏ hàng</b></button>
+                </form>
+            </li>
+            <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
+                <a style="text-decoration: none" id="ttng" href="UserInfo">
+                    <i class="fas fa-user"></i> Thông tin người dùng
+                </a>
+            </li>
+            <%}%>
+        </div>
     </div>
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger
@@ -240,3 +242,4 @@
         ></df-messenger>
 
 </header>
+

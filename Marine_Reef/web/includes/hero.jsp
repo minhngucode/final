@@ -6,11 +6,15 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="hero">
-    <h1>XÂY DỰNG CẤU HÌNH BỂ SAN HÔ</h1>
+    <h2>XÂY DỰNG CẤU HÌNH BỂ SAN HÔ</h2>
     <ul>
         <li>Hàng trăm mẫu Layout lựa chọn</li>
         <li>Chọn các món đồ thiết kế</li>
         <li>Giảm giá khủng khi đăng ký online</li>
     </ul>
-    <a class="btn" href="#">XEM TIẾP</a>
+    <div class="nut">
+        <a class="btn" href="gioithieu.jsp">THÔNG TIN</a>
+        <a class="btn" href="ProductList">MUA SẮM NGAY</a>
+    </div>
+    
 </div>
