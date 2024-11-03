@@ -62,6 +62,8 @@
         color: #333;
         width: 100%; /* Đảm bảo input chiếm hết chiều rộng */
         box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
+        outline: none; /* Loại bỏ viền mặc định của trình duyệt */
+        border: 2px solid #0689B7; /* Thêm viền tuỳ chỉnh với màu mong muốn */
     }
 
     input[readonly] {

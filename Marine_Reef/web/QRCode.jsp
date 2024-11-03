@@ -1,10 +1,8 @@
 <%@page import="java.math.BigDecimal"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.net.URLEncoder" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Thông tin chuyển khoản QR Code</title>
+<jsp:include page="includes/begintag.jsp"/>
+<jsp:include page="includes/header.jsp"/>
     <style>
         .container {
             display: flex;
@@ -28,9 +26,7 @@
             margin-bottom: 10px;
         }
     </style>
-</head>
-<body>
-    <h1>Chuyển khoản qua mã QR</h1>
+    <h1 style="padding-top: 20px;">Chuyển khoản qua mã QR</h1>
     <%
         String bankAccountNumber = "5660324643"; // Số tài khoản nhận
         String bankName = "BIDV";
@@ -52,8 +48,8 @@
             </ul>
         </div>
         <div class="right">
-            <img src="images/qr/Banking.png" alt="QR Code để chuyển khoản">
+            <img src="images/qr/Banking.png" alt="QR Code để chuyển khoản" style="width: 50%">
         </div>
     </div>
-</body>
-</html>
+<jsp:include page="includes/footer.jsp"/>
+<jsp:include page="includes/endtag.jsp"/> 
