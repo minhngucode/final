@@ -120,7 +120,7 @@
     </table>
 
     <div class="text-right">
-        <button type="button" class="btn btn-cart text-decoration-none" onclick="submitSelectedProducts()">Proceed to Payment</button>
+        <button type="button" class="btn btn-cart text-decoration-none" onclick="submitSelectedProducts('')">Thanh Toán</button>
         <a href="ProductList"><button type="button" class="btn btn-cart text-decoration-none">Continue Shopping</button></a>
     </div>
 
@@ -150,13 +150,13 @@
         const form = document.createElement('form');
         form.method = 'GET';
         form.action = 'PaymentServlet';
-
+    
         // Thêm các productID, cartID và số lượng đã chọn vào form
         selectedProducts.forEach(function (product) {
             const productID = product.value;
             const cartID = product.getAttribute('data-cartid');
             const quantity = document.getElementById('hidden_quantity_' + productID).value;
-
+            
             // Thêm productID
             const inputProductID = document.createElement('input');
             inputProductID.type = 'hidden';
