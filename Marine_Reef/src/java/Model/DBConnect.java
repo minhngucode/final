@@ -25,14 +25,12 @@ public class DBConnect {
     public static Connection getConnection() {
         Connection con = null;
         String dbUser = "sa";
-        String dbPassword = "admin";
-        String port = "1433";
-        String IP = "127.0.0.1";
-        String ServerName = "minipele";
+        String dbPassword = "123";
+        String ServerName = "MSI\\MSSQL__SERVER";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        String dbURL = "jdbc:sqlserver://minipele;databaseName=SalesWebsite;encrypt=false;trustServerCertificate=false;loginTimeout=30";
-
+        String dbURL = "jdbc:sqlserver://" + ServerName + ";databaseName=" + DBName + ";encrypt=false;trustServerCertificate=false;loginTimeout=30";
+        
         try {
             Class.forName(driverClass);
             //DriverManager.registerDriver(new com.microsoft.sqlserver.jdbc.SQLServerDriver());
