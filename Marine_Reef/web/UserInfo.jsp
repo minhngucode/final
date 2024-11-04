@@ -63,11 +63,17 @@
         width: 100%; /* Đảm bảo input chiếm hết chiều rộng */
         box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
         outline: none; /* Loại bỏ viền mặc định của trình duyệt */
-        border: 2px solid #0689B7; /* Thêm viền tuỳ chỉnh với màu mong muốn */
     }
 
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+        border-color: #0689B7; /* Giữ màu xanh khi input focus */
+        box-shadow: 0 0 5px rgba(6, 137, 183, 0.5); /* Ánh sáng nhẹ khi nhấn vào */
+    }
+    
     input[readonly] {
         background-color: #e9ecef; /* Màu nền cho input readonly */
+        
     }
 
     /* Nút Cập Nhật và Đăng Xuất */
@@ -87,6 +93,7 @@
 
     .btn:hover {
         background-color: #055f7d; /* Đổi màu nhẹ khi hover */
+        
     }
 
     .actions {
