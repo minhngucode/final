@@ -14,12 +14,6 @@
     }
 %>
 <style>
-    /* Đặt nền tổng thể */
-    body {
-        background-color: #f5f5f5; /* Nền màu nhạt để tạo cảm giác thanh lịch */
-        font-family: Arial, sans-serif;
-        color: #333; /* Màu chữ chính là màu tối */
-    }
 
     /* Thẻ card bao quanh form */
     .card {
