@@ -53,11 +53,81 @@
                     <label for="image">Ảnh:</label>
                     <input type="file" id="image" name="image" class="form-control-file" accept="image/*" required>
                 </div>
+                <input type="hidden" name="action" value="addProduct">
+
                 <button type="submit" class="btn btn-primary">Thêm</button>
             </form>
             <a href="ProductList" class="btn btn-secondary mt-3">Quay lại</a>
         </div>
     </div>
+<div class="container">
+    <form action="admin" method="get" class="form-inline mb-3">
+        <label for="filterStatus">Lọc theo trạng thái:</label>
+        <select name="filterStatus" id="filterStatus" class="form-control ml-2">
+            <option value="">Tất cả</option>
+            <option value="Đang xử lý">Đang xử lý</option>
+            <option value="Chờ Thanh Toán">Chờ Thanh Toán</option>
+            <option value="Đang vận chuyển">Đang vận chuyển</option>
+            <!-- Thêm các trạng thái khác nếu cần -->
+        </select>
+        
+        <label for="customerName" class="ml-4">Tìm theo tên khách hàng:</label>
+        <input type="text" id="customerName" name="customerName" class="form-control ml-2" placeholder="Nhập tên khách hàng">
+        
+        <button type="submit" class="btn btn-primary ml-2">Lọc</button>
+    </form>
+    <div class="order-status-container" style="margin: 30px auto">
+        <h2>Quản Lý Trạng Thái Đơn Hàng</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Đơn Hàng ID</th>
+                    <th>Tên Khách Hàng </th>
+                    <th>ngày Order </th>
+
+                    <th>Trạng Thái Hiện Tại</th>
+                    <th>Cập Nhật Trạng Thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${orderList}" var="order">
+                    <tr>
+                        <td>${order.orderId}</td>
+                        <td>${order.cusname}</td>
+                        <td>${order.orderDate}</td>
+                        <td><strong>${order.status}</strong></td>
+                        <td>
+                            <form action="admin" method="post">
+                                <input type="hidden" name="orderId" value="${order.orderId}">
+                                <input type="hidden" name="action" value="updateStatus">
+
+                                <button type="submit" name="newstatus" value="Đang xử lý" class="btn btn-warning">Đang xử lý</button>
+                                <button type="submit" name="newstatus" value="Chờ Thanh Toán" class="btn btn-info">Chờ Thanh Toán</button>
+                                <button type="submit" name="newstatus" value="Đang vận chuyển" class="btn btn-success">Đang vận chuyển</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container">
+    <c:if test="${param.success != null}">
+        <c:choose>
+            <c:when test="${param.success == 'true'}">
+                <div class="alert alert-success" role="alert">
+                    Cập nhật trạng thái đơn hàng thành công!
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="alert alert-danger" role="alert">
+                    Đã xảy ra lỗi. Vui lòng thử lại.
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </c:if>
+</div>
 
 <jsp:include page="includes/footer.jsp"/>
 <jsp:include page="includes/endtag.jsp"/>

@@ -651,7 +651,7 @@ public class DBConnect {
 
             while (resultSet.next()) {
                 String orderId = resultSet.getString("OrderID");
-                Date orderDate = resultSet.getDate("OrderDate");
+                Date orderDate = resultSet.getTimestamp("OrderDate");
                 BigDecimal totalAmount = resultSet.getBigDecimal("TotalAmount");
                 String customerId = resultSet.getString("CustomerID");
                 String status = resultSet.getString("status");
@@ -703,6 +703,89 @@ public class DBConnect {
         }
     }
     }
+   public ArrayList<Order> getAllOrdersSortedByDate() {
+    ArrayList<Order> orderList = new ArrayList<>();
+    String sql = "SELECT o.*, c.CustomerName FROM Orders o JOIN Customer c ON o.CustomerID = c.CustomerID ORDER BY o.OrderDate DESC"; // Sắp xếp theo ngày đặt hàng, mới nhất đầu tiên
+    try (Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        
+        while (rs.next()) {
+            Order order = new Order();
+            order.setOrderId(rs.getString("OrderID"));
+            order.setOrderDate(rs.getTimestamp("OrderDate"));
+            order.setTotalAmount(rs.getBigDecimal("TotalAmount"));
+            order.setCustomerId(rs.getString("CustomerID"));
+            order.setCusname(rs.getString("CustomerName")); // Lấy tên khách hàng
+            order.setStatus(rs.getString("status"));
+            orderList.add(order);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return orderList;
+}
+    public ArrayList<Order> getOrdersByCustomerNameAndStatus(String customerName, String status) {
+    ArrayList<Order> orderList = new ArrayList<>();
+    StringBuilder sql = new StringBuilder("SELECT o.*, c.CustomerName FROM Orders o JOIN Customer c ON o.CustomerID = c.CustomerID WHERE 1=1");
+    
+    // Kiểm tra và thêm điều kiện tìm kiếm theo tên khách hàng nếu có
+    if (customerName != null && !customerName.isEmpty()) {
+        sql.append(" AND c.CustomerName LIKE ?");
+    }
+    
+    // Kiểm tra và thêm điều kiện lọc theo trạng thái nếu có
+    if (status != null && !status.isEmpty()) {
+        sql.append(" AND o.status LIKE ?");
+    }
+    
+    try (Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+        
+        int paramIndex = 1;
+        
+        // Gán tham số cho câu lệnh SQL
+        if (customerName != null && !customerName.isEmpty()) {
+            ps.setString(paramIndex++, "%" + customerName + "%");
+        }
+        if (status != null && !status.isEmpty()) {
+            ps.setString(paramIndex++, "%" + status + "%");
+        }
+        
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getString("OrderID"));
+                order.setOrderDate(rs.getTimestamp("OrderDate"));
+                order.setTotalAmount(rs.getBigDecimal("TotalAmount"));
+                order.setCustomerId(rs.getString("CustomerID"));
+                order.setCusname(rs.getString("CustomerName")); // Lấy tên khách hàng
+                order.setStatus(rs.getString("status"));
+                orderList.add(order);
+            }
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return orderList;
+}
+    public boolean updateOrderStatusInDatabase(String orderId, String newStatus) {
+    String updateSQL = "UPDATE dbo.Orders SET status = ? WHERE OrderID = ?";
+    try (PreparedStatement preparedStatement = getConnection().prepareStatement(updateSQL)) {
+        // Đặt các tham số cho câu lệnh SQL
+        preparedStatement.setString(1, newStatus);
+        preparedStatement.setString(2, orderId);
+        
+        // Thực thi câu lệnh cập nhật
+        int rowsAffected = preparedStatement.executeUpdate();
+        
+        // Kiểm tra xem có dòng nào được cập nhật không
+        return rowsAffected > 0;
+    } catch (Exception e) {
+        e.printStackTrace(); // In lỗi ra console để debug
+        return false; // Trả về false nếu có lỗi xảy ra
+    }
+}
     public static void main(String[] args) {
         System.out.println(getDiscountPercent("HAPPYNEWYEAR","huan"));
         }
