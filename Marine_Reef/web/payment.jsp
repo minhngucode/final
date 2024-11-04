@@ -124,7 +124,7 @@
         <div class="text-right">
             <button type="submit" class="btn btn-cart" name="action" value="shipcod">Ship COD</button>
             <button type="submit" class="btn btn-cart" name="action" value="banktransfer">Chuyển khoản ngân hàng</button>
-            <a href="ProductList" class="btn btn-cart text-decoration-none">Continue Shopping</a>
+            <a href="ProductList" class="btn btn-cart text-decoration-none">Continueb Shopping</a>
         </div>
     </form>
 </div>

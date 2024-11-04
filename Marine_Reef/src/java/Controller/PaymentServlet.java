@@ -68,7 +68,6 @@ public class PaymentServlet extends HttpServlet {
         }
         if (count == 2) {
 
-            System.out.println("Do ost da toi");
             String[] selectedProducts = request.getParameterValues("selectedProduct");
             String[] selectedCartIDs = request.getParameterValues("selectedCartID");
             String[] selectedQuantities = request.getParameterValues("selectedQuantity");
@@ -145,7 +144,7 @@ public class PaymentServlet extends HttpServlet {
             // Kiểm tra action để xác định status
             if ("shipcod".equals(action)) {
                 status = "Đang xử lý";
-            } else if ("banking".equals(action)) {
+            } else if ("banktransfer".equals(action)) {
                 status = "Chờ thanh toán";
             }
 
@@ -165,9 +164,12 @@ public class PaymentServlet extends HttpServlet {
             DAO.addOrder(orderID, totalAmount.doubleValue(), DAO.getCustomerID(username, DAO.getConnection()), status);
 
             // Thêm các chi tiết đơn hàng vào bảng OrderDetails
+            String cartID = DAO.getCartID(username, DAO.getConnection());
             for (CartDetail detail : cartDetails) {
                 Product product = DAO.getProductbyID(detail.getProductID(), DAO.getConnection());
+                
                 DAO.addOrderDetail(orderID, detail.getProductID(), detail.getQuantity(), product.getPrice().multiply(new BigDecimal(detail.getQuantity())).multiply(discountMultiplier).doubleValue());  // null cho discountCode nếu không có mã giảm giá
+                DAO.deleteCartDetail(cartID, detail.getProductID(), DAO.getConnection());
             }
 
             // Xóa giỏ hàng sau khi thêm vào database thành công
