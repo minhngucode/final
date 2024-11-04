@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="jakarta.servlet.http.Cookie" %>
 <style>
     header{
         position: fixed;
@@ -213,9 +214,21 @@
         </nav>
         <div class="auth-buttons">
             <%
-                ServletContext context = application;
-                String lg = (String) context.getAttribute("lg");
-                if (lg == null) {%>
+                Cookie[] cookies = request.getCookies();
+        int count = 0;
+        String username = "";
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("_noname")) {
+                    username = c.getValue();
+                    count++;
+                }
+                if (c.getName().equals("_nopass")) {
+                    count++;
+                }
+            }
+        }
+        if (count != 2) {%>
                 <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;"><a style="text-decoration: none" href="LoginServlet">Đăng nhập</a></li>
                 <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;"><a style="text-decoration: none" href="Signup">Đăng ký</a></li>
                 <%} else {%>
