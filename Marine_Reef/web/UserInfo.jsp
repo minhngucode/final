@@ -123,9 +123,6 @@
 
         <div class="actions">
             <button type="submit" class="btn">Cập Nhật Thông Tin</button>
-            <form action="Control?action=logout" method="POST" style="display: inline;">
-                <button type="submit" class="btn">Đăng Xuất</button>
-            </form>
         </div>
     </form>
 </div>

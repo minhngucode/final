@@ -68,7 +68,6 @@ public class PaymentServlet extends HttpServlet {
         }
         if (count == 2) {
 
-            System.out.println("Do ost da toi");
             String[] selectedProducts = request.getParameterValues("selectedProduct");
             String[] selectedCartIDs = request.getParameterValues("selectedCartID");
             String[] selectedQuantities = request.getParameterValues("selectedQuantity");

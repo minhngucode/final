@@ -115,7 +115,7 @@
                 <input type="text" class="form-control" id="address" name="address" value="<%= address != null ? address : "" %>" required placeholder="Nhập địa chỉ giao hàng">
             </div>
              <div class="mb-3">
-                <label for="discount" class="form-label">Discount Code</label>
+                <label for="discount" class="form-label">Mã giảm giá</label>
                 <input type="text" class="form-control" id="discount" name="discount" >
             </div>
         </div>
@@ -124,7 +124,7 @@
         <div class="text-right">
             <button type="submit" class="btn btn-cart" name="action" value="shipcod">Ship COD</button>
             <button type="submit" class="btn btn-cart" name="action" value="banktransfer">Chuyển khoản ngân hàng</button>
-            <a href="ProductList" class="btn btn-cart text-decoration-none">Continue Shopping</a>
+            <a href="ProductList" class="btn btn-cart text-decoration-none">Tiếp tục mua sắm</a>
         </div>
     </form>
 </div>
