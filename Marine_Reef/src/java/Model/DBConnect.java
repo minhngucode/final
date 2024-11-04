@@ -788,6 +788,80 @@ public class DBConnect {
         return false; // Trả về false nếu có lỗi xảy ra
     }
 }
+    public boolean addShip(String orderId, String customerId, String name, String address, String phone) {
+    String insertSQL = "INSERT INTO Shipping (OrderID, CustomerID, Name, Address, Phone) VALUES (?, ?, ?, ?, ?)";
+    
+    try (PreparedStatement preparedStatement = getConnection().prepareStatement(insertSQL)) {
+        // Gán giá trị cho các tham số trong câu lệnh SQL
+        preparedStatement.setString(1, orderId);
+        preparedStatement.setString(2, customerId);
+        preparedStatement.setString(3, name);
+        preparedStatement.setString(4, address);
+        preparedStatement.setString(5, phone);
+        
+        // Thực thi câu lệnh SQL
+        int rowsAffected = preparedStatement.executeUpdate();
+        
+        // Kiểm tra xem có bao nhiêu dòng bị ảnh hưởng
+        return rowsAffected > 0; // Trả về true nếu thêm thành công, ngược lại trả về false
+    } catch (Exception e) {
+        e.printStackTrace(); // In lỗi ra console để kiểm tra
+        return false; // Trả về false nếu có lỗi xảy ra
+    }
+    }
+    public TransInfo getShippingByOrderId(String orderId) {
+    String query = "SELECT OrderID, CustomerID, Name, Address, Phone FROM Shipping WHERE OrderID = ?";
+    TransInfo shipping = null;
+
+    try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        // Gán giá trị cho tham số trong câu lệnh SQL
+        preparedStatement.setString(1, orderId);
+        
+        // Thực thi câu lệnh truy vấn
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        // Kiểm tra và lấy thông tin từ ResultSet
+        if (resultSet.next()) {
+            shipping = new TransInfo();
+            shipping.setOrderId(resultSet.getString("OrderID"));
+            shipping.setCustomerId(resultSet.getString("CustomerID"));
+            shipping.setName(resultSet.getString("Name"));
+            shipping.setAddress(resultSet.getString("Address"));
+            shipping.setPhone(resultSet.getString("Phone"));
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); // In lỗi ra console để kiểm tra
+    }
+
+    return shipping; // Trả về đối tượng Shipping hoặc null nếu không tìm thấy
+    
+}   
+    public ArrayList<OrderDetail> getOrderDetail(String orderId) {
+    String query = "SELECT OrderID, ProductID, Quantity, UnitPrice FROM OrderDetail WHERE OrderID = ?";
+    ArrayList<OrderDetail> orderDetailList = new ArrayList<>();
+
+    try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        // Gán giá trị cho tham số trong câu lệnh SQL
+        preparedStatement.setString(1, orderId);
+        
+        // Thực thi câu lệnh truy vấn
+        ResultSet resultSet = preparedStatement.executeQuery();
+        
+        // Duyệt qua kết quả và thêm vào danh sách
+        while (resultSet.next()) {
+            OrderDetail detail = new OrderDetail();
+            detail.setOrderID(resultSet.getString("OrderID"));
+            detail.setProductID(resultSet.getString("ProductID"));
+            detail.setQuantity(resultSet.getInt("Quantity"));
+            detail.setUnitPrice(resultSet.getDouble("UnitPrice"));
+            orderDetailList.add(detail);
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); // In lỗi ra console để kiểm tra
+    }
+
+    return orderDetailList; // Trả về danh sách chi tiết đơn hàng hoặc danh sách rỗng nếu không có kết quả
+}
     public static void main(String[] args) {
         System.out.println(getDiscountPercent("HAPPYNEWYEAR","huan"));
         }

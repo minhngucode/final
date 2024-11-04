@@ -175,11 +175,11 @@ public class PaymentServlet extends HttpServlet {
             // Xóa giỏ hàng sau khi thêm vào database thành công
             request.setAttribute("username", username);
             request.setAttribute("orderID", orderID);
-                        request.setAttribute("total", totalAmount);
-
+              request.setAttribute("total", totalAmount);
+              DAO.addShip(orderID,  DAO.getCustomerID(username, DAO.getConnection()) , name ,address, phone);
+           
             if (action.equals("shipcod")){
             // Điều hướng đến trang xác nhận
-            
             RequestDispatcher dispatcher = request.getRequestDispatcher("success.jsp");
         dispatcher.forward(request, response);}
             else{

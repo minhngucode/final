@@ -9,27 +9,22 @@ package Model;
  * @author
  */
 public class OrderDetail {
-   private String orderDetailID;
     private String orderID;
     private String productID;
     private int quantity;
     private double unitPrice;
 
-    public OrderDetail(String orderDetailID, String orderID, String productID, int quantity, double unitPrice) {
-        this.orderDetailID = orderDetailID;
+    public OrderDetail(String orderID, String productID, int quantity, double unitPrice) {
         this.orderID = orderID;
         this.productID = productID;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
     }
 
-    public String getOrderDetailID() {
-        return orderDetailID;
+    public OrderDetail() {
     }
+    
 
-    public void setOrderDetailID(String orderDetailID) {
-        this.orderDetailID = orderDetailID;
-    }
 
     public String getOrderID() {
         return orderID;

@@ -91,8 +91,12 @@
             </thead>
             <tbody>
                 <c:forEach items="${orderList}" var="order">
-                    <tr>
-                        <td>${order.orderId}</td>
+                    <tr><td>
+                        <form action="Trans" method="get">
+                        <input type="hidden" name="orderId" value="${order.orderId}">
+                        <button type="submit" class="btn btn-link">${order.orderId}</button>
+                        </form>
+                        </td>
                         <td>${order.cusname}</td>
                         <td>${order.orderDate}</td>
                         <td><strong>${order.status}</strong></td>

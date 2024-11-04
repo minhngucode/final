@@ -56,6 +56,14 @@
         <servlet-name>OrderManagement</servlet-name>
         <servlet-class>Controller.OrderManagement</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Trans</servlet-name>
+        <servlet-class>Controller.Trans</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewOrder</servlet-name>
+        <servlet-class>Controller.ViewOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -118,6 +126,14 @@
     <servlet-mapping>
         <servlet-name>OrderManagement</servlet-name>
         <url-pattern>/OrderManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Trans</servlet-name>
+        <url-pattern>/Trans</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOrder</servlet-name>
+        <url-pattern>/ViewOrder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>120</session-timeout>

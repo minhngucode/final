@@ -77,8 +77,12 @@
             <th>Hủy đơn</th>
         </tr>
         <c:forEach var="order" items="${orders}">
-            <tr>
-                <td>${order.orderId}</td>
+            <tr><td>
+                        <form action="ViewOrder" method="get">
+                        <input type="hidden" name="orderId" value="${order.orderId}">
+                        <button type="submit" class="btn btn-link">${order.orderId}</button>
+                        </form>
+                 </td>
                 <td>${order.orderDate}</td>
                 <td>${order.totalAmount}</td>
                 <td>${order.status}</td>
