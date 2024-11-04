@@ -9,13 +9,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <style>
-    /* Đặt nền tổng thể */
-    body {
-        background-color: #f5f5f5; /* Nền màu nhạt để tạo cảm giác thanh lịch */
-        font-family: Arial, sans-serif;
-        color: #333; /* Màu chữ chính là màu tối */
-    }
-
     /* Thẻ card bao quanh form */
     .form_xaydung {
         max-width: 1200px;
@@ -60,22 +53,24 @@
         outline: none;
     }
 
-    /* Nút Xây dựng bể cá */
-    button {
-        background-color: #0689B7; /* Màu nền cho nút */
-        border: none;
-        font-size: 18px;
-        font-weight: bold;
-        color: #fff; /* Màu chữ nút */
-        padding: 10px 20px;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
-        display: block; /* Đặt chế độ hiển thị là block để có thể căn giữa */
-        margin: 20px auto 0; /* Căn giữa nút và khoảng cách trên */
+    /* Chỉnh CSS cho nút "Xây dựng bể cá" */
+    .buttonConfirm {
+        background-color: #0689B7; /* Màu xanh cho nút */
+        color: #fff; /* Màu chữ trắng */
+        border: none; /* Không có viền */
+        font-size: 18px; /* Kích thước chữ */
+        font-weight: bold; /* Chữ đậm */
+        padding: 12px 24px; /* Khoảng đệm trong nút */
+        border-radius: 6px; /* Bo tròn các góc */
+        cursor: pointer; /* Con trỏ chuột khi hover vào */
+        display: block; /* Đặt nút là block để căn giữa */
+        margin: 20px auto; /* Căn giữa và cách các phần tử xung quanh */
+        transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
     }
 
-    button:hover {
-        background-color: #055f7d; /* Đổi màu nhẹ khi hover */
+    /* Hiệu ứng khi hover */
+    .buttonConfirm:hover {
+        background-color: #055f7d; /* Màu đậm hơn khi hover */
     }
 
 
@@ -136,7 +131,7 @@
     }
 </script>
 <div style="margin: 0px 50px; text-align: left">
-    
+
     <form class="form_xaydung" action="TankBuild" method="post">
         <h2>Xây dựng bể cá của bạn</h2>
         <input type="hidden" name="lightDetails" id="lightDetails">
@@ -215,7 +210,8 @@
             </c:forEach>
         </select>
 
-        <button type="submit" style="margin-top: 20px">Xây dựng bể cá</button>
+        <button class="buttonConfirm" type="submit" style="margin-top: 20px">Xây dựng bể cá</button>
+
     </form>
 </div>
 <jsp:include page="includes/footer.jsp"/>
