@@ -51,7 +51,7 @@
 %>
 
 <div class="container mt-5" style="margin-bottom: 80px">
-    <h2 class="text-center mb-4 xeon-blue p-3 rounded">Giỏ hàng</h2>
+    <h2 class="text-center mb-4 xeon-blue p-3 rounded" style="color: #0689B7">Giỏ hàng</h2>
     <table class="table table-bordered table-hover">
         <thead class="xeon-blue">
             <tr>

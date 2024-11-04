@@ -1,7 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <style>
-    .login-button{
-        padding: 0;
+    header{
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
     }
     .dropdown {
         position: relative;
@@ -92,6 +95,10 @@
 
     .submenu li p:hover {
         color: #0689B7; /* Thay đổi màu chữ khi hover vào menu con */
+    }
+    
+    .login-button{
+        padding: 0;
     }
 
 </style>
@@ -236,7 +243,7 @@
         chat-title="AI_ChatBox"
         agent-id="62fad29f-f955-42f2-84c0-ebf4ed9ce050"
         language-code="vi"
-    ></df-messenger>
+        ></df-messenger>
 
 </header>
 

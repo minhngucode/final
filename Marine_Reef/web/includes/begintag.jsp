@@ -17,4 +17,4 @@
         <link rel="stylesheet" href="./css/bootstrap.css">
         <link rel="icon" type="image/png" href="./images/logo/favicon.png">
     </head>
-    <body>
+    <body style="padding-top: 80px">

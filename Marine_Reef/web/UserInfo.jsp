@@ -8,7 +8,7 @@
     System.out.println(cus);
     String username = (String) request.getAttribute("username");
     // Nếu không có thông tin người dùng, chuyển hướng đến trang đăng nhập
-    if (username.isEmpty() || cus == null) {
+    if (username == null || username.isEmpty() || cus == null) {
         response.sendRedirect("LoginServlet");
         return;
     }
