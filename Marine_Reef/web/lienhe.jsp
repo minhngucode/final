@@ -14,14 +14,14 @@
 
     .contact-title {
         font-size: 2.5rem;
-        color: #333;
+        color: #0689B7;
         text-align: center;
         margin-bottom: 20px;
     }
 
     .contact-subtitle {
         font-size: 1.8rem;
-        color: #007bff;
+        color: #0689B7;
         margin-top: 30px;
     }
 
@@ -40,18 +40,22 @@
 
     .contact-form label {
         font-size: 1.1rem;
-        color: #333;
+        color: #0689B7;
     }
 
     .contact-form input, .contact-form textarea {
         padding: 10px;
-        border: 1px solid #ccc;
+        border: 1px solid #0689B7;
         border-radius: 4px;
         font-size: 1rem;
+        outline: none;
     }
-
+    .contact-form input:focus, .contact-form textarea:focus {
+        border-color: #0689B7; /* Giữ màu xanh khi input focus */
+        box-shadow: 0 0 5px rgba(6, 137, 183, 0.5); /* Ánh sáng nhẹ khi nhấn vào */
+    }
     .contact-form button {
-        background-color: #007bff;
+        background-color: #0689B7;
         color: #fff;
         padding: 10px;
         border: none;
@@ -61,7 +65,7 @@
     }
 
     .contact-form button:hover {
-        background-color: #0056b3;
+        background-color: #055f7d;
     }
 
 </style>

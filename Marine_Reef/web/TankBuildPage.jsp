@@ -9,59 +9,75 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <style>
-
-
-    h2 {
-        color: #005f7f; /* Màu tiêu đề xanh đậm hơn */
-        text-align: center; /* Căn giữa tiêu đề */
-        margin: 20px 0; /* Khoảng cách trên và dưới tiêu đề */
+    /* Đặt nền tổng thể */
+    body {
+        background-color: #f5f5f5; /* Nền màu nhạt để tạo cảm giác thanh lịch */
+        font-family: Arial, sans-serif;
+        color: #333; /* Màu chữ chính là màu tối */
     }
 
-    form_xaydung {
-
-        max-width: 600px; /* Chiều rộng tối đa của form */
-        margin: 20px 20px; /* Căn giữa form */
-        padding: 20px 20px; /* Đệm trong form */
-        border-radius: 8px; /* Bo tròn các góc */
-        background-color: rgba(255, 255, 255, 0.8); /* Màu nền trắng có độ trong suốt */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+    /* Thẻ card bao quanh form */
+    .form_xaydung {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 40px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
+    /* Phần tiêu đề */
+    .form_xaydung h2 {
+        color: #0689B7; /* Màu xanh cho tiêu đề */
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px; /* Khoảng cách dưới tiêu đề */
+    }
+
+    /* Căn chỉnh cho từng trường trong form */
     label {
-        display: block; /* Hiển thị label như block */
-        margin: 10px 0 5px; /* Khoảng cách giữa label và input */
-        font-weight: bold; /* Chữ in đậm */
-        color: #003366; /* Màu chữ label xanh đại dương */
+        font-weight: 600; /* Đậm chữ */
+        color: #0689B7; /* Màu xanh cho label */
+        margin: 10px 0  ; /* Khoảng cách trên label */
     }
 
-    input[type="number"], select {
-        width: 100%; /* Chiều rộng 100% cho input và select */
-        padding: 10px; /* Đệm trong input và select */
-        border-radius: 5px; /* Bo tròn các góc */
-        border: 1px solid #0077cc; /* Đường viền màu xanh dương */
-        background-color: #e6f2ff; /* Màu nền cho input và select */
-        color: #003366; /* Màu chữ xanh đại dương */
+    /* Trường input và select */
+    select,
+    input[type="number"] {
+        border: 1px solid #0689B7; /* Giữ viền màu xanh */
+        border-radius: 4px;
+        padding: 5px;
+        font-size: 16px;
+        color: #333;
+        width: 100%; /* Chiều rộng 100% */
         margin-bottom: 20px; /* Khoảng cách giữa các trường */
     }
 
-    input[type="number"]:focus, select:focus {
-        outline: none; /* Xóa viền khi input và select được chọn */
-        border-color: #005f7f; /* Đổi màu viền khi focus */
-        background-color: #cce5ff; /* Đổi màu nền khi focus */
+    select:focus,
+    input[type="number"]:focus {
+        border-color: #0689B7; /* Giữ màu xanh khi input focus */
+        box-shadow: 0 0 5px rgba(6, 137, 183, 0.5); /* Ánh sáng nhẹ khi nhấn vào */
+        outline: none;
     }
 
+    /* Nút Xây dựng bể cá */
     button {
-        background-color: #0077cc; /* Nền nút màu xanh dương */
-        color: white; /* Chữ màu trắng */
-        border: none; /* Không có viền */
-        padding: 10px 15px; /* Padding cho nút */
-        border-radius: 5px; /* Bo góc cho nút */
-        cursor: pointer; /* Con trỏ chuột khi di chuột qua */
+        background-color: #0689B7; /* Màu nền cho nút */
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff; /* Màu chữ nút */
+        padding: 10px 20px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        display: block; /* Đặt chế độ hiển thị là block để có thể căn giữa */
+        margin: 20px auto 0; /* Căn giữa nút và khoảng cách trên */
     }
 
     button:hover {
-        background-color: #005f7f; /* Thay đổi màu nút khi hover */
+        background-color: #055f7d; /* Đổi màu nhẹ khi hover */
     }
+
 
     .select2-selection__rendered img {
         width: 30px; /* Kích thước ảnh trong dropdown */
@@ -119,9 +135,10 @@
         }
     }
 </script>
-<div style="margin: 40px 200px; text-align: left">
-    <h2>Xây dựng bể cá của bạn</h2>
+<div style="margin: 0px 50px; text-align: left">
+    
     <form class="form_xaydung" action="TankBuild" method="post">
+        <h2>Xây dựng bể cá của bạn</h2>
         <input type="hidden" name="lightDetails" id="lightDetails">
         <input type="hidden" name="tankDetails" id="tankDetails">
         <input type="hidden" name="pumpDetails" id="pumpDetails">
@@ -140,6 +157,7 @@
         </select>
 
         <label for="tankDimensions">Kích thước hồ kính (Dài x Rộng x Cao):</label>
+        <br>
         <label for="tankLength">Dài (cm):</label>
         <input type="number" id="tankLength" name="tankLength" required>
         <label for="tankWidth">Rộng (cm):</label>
