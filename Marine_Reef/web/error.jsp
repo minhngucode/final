@@ -12,10 +12,10 @@
             text-align: center;
             border: 1px solid #dc3545;
             border-radius: 5px;
-            padding: 20px;
+            padding: 40px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 200px 30%;
+            margin: 150px 30%;
         }
         .error-container h1 {
             color: #dc3545;

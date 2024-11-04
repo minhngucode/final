@@ -100,6 +100,7 @@
     
     .login-button{
         padding: 0;
+        margin: 0;
     }
 
 </style>
@@ -234,12 +235,12 @@
                 <%} else {%>
             <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
                 <form action="Control?action=logout" method="POST" style="display: inline;">
-                    <button type="submit" class="login-button" style="border: none; background: none;"><b>Đăng xuất</b></button>
+                    <button type="submit" class="login-button" style="border: none; background: none;"><b style="font-size: 12px;">Đăng xuất</b></button>
                 </form>
             </li>
             <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
                 <form action="CartServlet" method="GET" style="display: inline;">
-                    <button type="submit" class="login-button" style="border: none; background: none;"><b>Giỏ hàng</b></button>
+                    <button type="submit" class="login-button" style="border: none; background: none;"><b style="font-size: 12px;">Giỏ hàng</b></button>
                 </form>
             </li>
             <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
@@ -249,7 +250,7 @@
             </li>
             <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
                 <form action="OrderManagement" method="GET" style="display: inline;">
-                    <button type="submit" class="login-button" style="border: none; background: none; white-space: nowrap;"><b>Xem đơn hàng</b></button>
+                    <button type="submit" class="login-button" style="border: none; background: none; white-space: nowrap;"><b id="xdh">Xem đơn hàng</b></button>
                 </form>
             </li>
             <%}%>

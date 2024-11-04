@@ -11,7 +11,22 @@
 <jsp:include page="includes/header.jsp"/>
 
 <style>
-    .card-img-top {
+    .form-control {
+        border: 1px solid #0689B7; /* Giữ viền màu xanh */
+        border-radius: 4px;
+        padding: 10px;
+        font-size: 16px;
+        color: #333;
+        width: 100%; /* Đảm bảo input chiếm hết chiều rộng */
+        box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều rộng */
+        outline: none; /* Loại bỏ viền mặc định của trình duyệt */
+    }
+
+    .form-control:focus {
+        border-color: #0689B7; /* Giữ màu xanh khi input focus */
+        box-shadow: 0 0 5px rgba(6, 137, 183, 0.5); /* Ánh sáng nhẹ khi nhấn vào */
+    }
+    .card {
         width: 100%;
         height: 150px;
         object-fit: contain;
@@ -19,9 +34,11 @@
         display: block; /* Đảm bảo ảnh được hiển thị như một block element */
         margin-left: auto; /* Căn trái */
         margin-right: auto; /* Căn phải */
+        display: flex;
+        flex-direction: column;
     }
 
-    .card-img-top:hover {
+    .card:hover {
         transform: scale(1.1); /* Phóng to ảnh khi hover */
     }
 
@@ -31,6 +48,7 @@
         border: none; /* Bỏ viền mặc định */
         color: white; /* Màu chữ mặc định */
         border-radius: 5px; /* Đường viền mềm mại */
+        margin-top: auto;
     }
 
     .btn-primary:hover {
@@ -46,19 +64,20 @@
         padding: 0; /* Bỏ padding */
         border: none; /* Bỏ viền */
         background: transparent; /* Nền trong suốt */
+
     }
 </style>
-<div class="container" style="margin-top: 20px;">
-    <% 
-        if (request.getAttribute("role")!=null){
-        String role = (String) request.getAttribute("role");
-        if (role.equals("admin")) 
-    { %>
+<div class="container" style="margin-top: 40px;">
+    <%
+        if (request.getAttribute("role") != null) {
+            String role = (String) request.getAttribute("role");
+            if (role.equals("admin")) { %>
     <button class="btn btn-primary">
         <a href="admin" class="text-decoration-none text-white" >Quản Lý</a>
     </button>
-    <%} }%>
-    <h1 class="my-4">Lọc danh sách sản phẩm</h1>
+    <%}
+        }%>
+    <h2 class="my-4" style="color: #0689B7">Lọc danh sách sản phẩm</h2>
 
     <!-- Filter and Search Form -->
     <form action="ProductList" method="post" class="mb-4">
@@ -94,14 +113,14 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-12 text-right">
-                <button type="submit" class="btn btn-primary">Lọc</button>
+                <button type="submit" class="btn btn-primary" style="padding: 7px 20px;">Lọc</button>
             </div>
         </div>
     </form>
 </div>
 
 <div class="container">
-    <h1 class="my-4">Danh sách sản phẩm</h1>
+    <h2 class="my-4" style="color: #0689B7">Danh sách sản phẩm</h2>
     <div class="row">
         <%
             if (products != null) {
