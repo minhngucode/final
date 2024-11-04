@@ -14,12 +14,6 @@
     }
 %>
 <style>
-    /* Đặt nền tổng thể */
-    body {
-        background-color: #f5f5f5; /* Nền màu nhạt để tạo cảm giác thanh lịch */
-        font-family: Arial, sans-serif;
-        color: #333; /* Màu chữ chính là màu tối */
-    }
 
     /* Thẻ card bao quanh form */
     .card {
@@ -130,9 +124,6 @@
 
         <div class="actions">
             <button type="submit" class="btn">Cập Nhật Thông Tin</button>
-            <form action="Control?action=logout" method="POST" style="display: inline;">
-                <button type="submit" class="btn">Đăng Xuất</button>
-            </form>
         </div>
     </form>
 </div>

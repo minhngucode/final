@@ -4,19 +4,24 @@
  */
 package Controller;
 
+import Model.DBConnect;
+import Model.Order;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.Cookie;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
  * @author
  */
-public class Order extends HttpServlet {
-
+public class OrderManagement extends HttpServlet {
+    DBConnect DAO = new DBConnect();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -26,7 +31,7 @@ public class Order extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -40,6 +45,27 @@ public class Order extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Cookie[] cookies = request.getCookies();
+        int count = 0;
+        String username = "";
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("_noname")) {
+                    username = c.getValue();
+                    System.out.println("username=" + username);
+                    count++;
+                }
+                if (c.getName().equals("_nopass")) {
+                    count++;
+                }
+            }
+        }
+        if (count == 2) {
+            ArrayList<Order> orders = DAO.getOrdersByUsername(username);
+        request.setAttribute("orders", orders);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderManage.jsp");
+        dispatcher.forward(request, response);
+        }
     }
 
     /**
@@ -53,6 +79,11 @@ public class Order extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String orderId = request.getParameter("orderId");
+        if (orderId != null) {
+            DAO.deleteOrderFromDatabase(orderId);
+        }
+        response.sendRedirect("OrderManagement");
     }
 
     /**

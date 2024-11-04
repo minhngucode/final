@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="jakarta.servlet.http.Cookie" %>
 <style>
     header{
         position: fixed;
@@ -214,9 +215,21 @@
         </nav>
         <div class="auth-buttons">
             <%
-                ServletContext context = application;
-                String lg = (String) context.getAttribute("lg");
-                if (lg == null) {%>
+                Cookie[] cookies = request.getCookies();
+        int count = 0;
+        String username = "";
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("_noname")) {
+                    username = c.getValue();
+                    count++;
+                }
+                if (c.getName().equals("_nopass")) {
+                    count++;
+                }
+            }
+        }
+        if (count != 2) {%>
                 <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;"><a style="text-decoration: none" href="LoginServlet">Đăng nhập</a></li>
                 <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;"><a style="text-decoration: none" href="Signup">Đăng ký</a></li>
                 <%} else {%>
@@ -235,6 +248,11 @@
                     <i class="fas fa-user"></i> Thông tin người dùng
                 </a>
             </li>
+            <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
+                <form action="OrderManagement" method="GET" style="display: inline;">
+                    <button type="submit" class="login-button" style="border: none; background: none; white-space: nowrap;"><b>Xem đơn hàng</b></button>
+                </form>
+            </li>
             <%}%>
         </div>
     </div>
@@ -247,4 +265,3 @@
         ></df-messenger>
 
 </header>
-

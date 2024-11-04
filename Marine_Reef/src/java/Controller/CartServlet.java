@@ -135,6 +135,9 @@ public class CartServlet extends HttpServlet {
                 // Tính toán lại tổng giá giỏ hàng
                 ArrayList<CartDetail> cartDetails = DAO.getCart(username, DAO.getConnection());
                 BigDecimal totalPrice = BigDecimal.ZERO;
+                BigDecimal productTotal = BigDecimal.ZERO;
+                Product x = DAO.getProductbyID(productID, DAO.getConnection());
+                productTotal = productTotal.add(x.getPrice().multiply(new BigDecimal(newQuantity)));
                 for (CartDetail detail : cartDetails) {
                     Product product = DAO.getProductbyID(detail.getProductID(), DAO.getConnection());
                     totalPrice = totalPrice.add(product.getPrice().multiply(new BigDecimal(detail.getQuantity())));
@@ -143,8 +146,7 @@ public class CartServlet extends HttpServlet {
                 // Trả về kết quả JSON
                 response.setContentType("application/json");
                 PrintWriter out = response.getWriter();
-                    Product product = DAO.getProductbyID(productID, DAO.getConnection());
-                out.print("{\"success\": true, \"newQuantity\": " + newQuantity + ", \"totalPrice\": " + totalPrice + ", \"productTotal\": " + product.getPrice().multiply(new BigDecimal(newQuantity))+ "}" );
+                out.print("{\"success\": true, \"newQuantity\": " + newQuantity + ", \"totalPrice\": " + totalPrice+ ", \"productTotal\": " + productTotal  + "}");
                 out.flush();
             }
                 case "remove"->{

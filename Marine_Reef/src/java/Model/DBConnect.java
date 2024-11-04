@@ -130,8 +130,6 @@ public class DBConnect {
           
             String cartID = getCartID(username, con);
             // Lấy customerID cao nhất
-          
-            System.out.println("Da den day");
             String cartSql = "MERGE INTO CartDetail AS target " +
                          "USING (VALUES (?, ?, ?)) AS source (CartID, ProductID, Quantity) " +
                          "ON (target.CartID = source.CartID AND target.ProductID = source.ProductID) " +
@@ -145,12 +143,10 @@ public class DBConnect {
             stmt.setString(1, cartID);
             stmt.setString(2, p.getProductID());
             stmt.setInt(3, quantity);
-            System.out.println(stmt);
             stmt.executeUpdate();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Loi add cartdetail");
         }
         return false;
     }
@@ -158,8 +154,6 @@ public class DBConnect {
         String cartID = "";
         try {
             String cusID = getCustomerID(username, con);
-                        System.out.println("CusID:"+cusID);
-
             String sql = "SELECT CartID FROM Cart WHERE CustomerID = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, cusID);
@@ -168,10 +162,8 @@ public class DBConnect {
                 cartID = resultSet.getString("CartID");
             }
         } catch (Exception e) {
-            System.out.println("Loi get cartID");
             e.printStackTrace();
         }
-        System.out.println("Con cac:"+cartID);
         return cartID;
     }
     public static ArrayList<CartDetail> getCart(String username, Connection con) {
@@ -646,7 +638,71 @@ public class DBConnect {
 
         return discountPercent;
     }
-  
+     public ArrayList<Order> getOrdersByUsername(String username) {
+        ArrayList<Order> orders = new ArrayList<>();
+        String query = "SELECT o.OrderID, o.OrderDate, o.TotalAmount, o.CustomerID, o.status " +
+                       "FROM orders o " +
+                       "JOIN [user] u ON o.CustomerID = u.CustomerID " +
+                       "WHERE u.Username = ?";
+
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String orderId = resultSet.getString("OrderID");
+                Date orderDate = resultSet.getDate("OrderDate");
+                BigDecimal totalAmount = resultSet.getBigDecimal("TotalAmount");
+                String customerId = resultSet.getString("CustomerID");
+                String status = resultSet.getString("status");
+
+                Order order = new Order(orderId, orderDate, totalAmount, customerId, status);
+                orders.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+     public void deleteOrderFromDatabase(String orderId) {
+    String deleteOrderDetailsQuery = "DELETE FROM OrderDetail WHERE OrderID = ?";
+    String deleteOrderQuery = "DELETE FROM orders WHERE OrderID = ?";
+    Connection con = getConnection();
+    try {
+        // Bắt đầu transaction
+        con.setAutoCommit(false);
+
+        // Xóa các bản ghi trong bảng OrderDetail
+        try (PreparedStatement deleteOrderDetailsStmt = con.prepareStatement(deleteOrderDetailsQuery)) {
+            deleteOrderDetailsStmt.setString(1, orderId);
+            deleteOrderDetailsStmt.executeUpdate();
+        }
+
+        // Xóa bản ghi trong bảng orders
+        try (PreparedStatement deleteOrderStmt = con.prepareStatement(deleteOrderQuery)) {
+            deleteOrderStmt.setString(1, orderId);
+            deleteOrderStmt.executeUpdate();
+        }
+
+        // Commit transaction
+        con.commit();
+    } catch (Exception e) {
+        try {
+            // Rollback transaction nếu có lỗi
+            con.rollback();
+        } catch (Exception rollbackEx) {
+            rollbackEx.printStackTrace();
+        }
+        e.printStackTrace();
+    } finally {
+        try {
+            // Đặt lại AutoCommit về true
+            con.setAutoCommit(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    }
     public static void main(String[] args) {
         System.out.println(getDiscountPercent("HAPPYNEWYEAR","huan"));
         }
