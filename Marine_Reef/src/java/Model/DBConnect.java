@@ -26,10 +26,10 @@ public class DBConnect {
     public static Connection getConnection() {
         Connection con = null;
         String dbUser = "sa";
-        String dbPassword = "minh280504";
+        String dbPassword = "admin";
         String port = "1433";
         String IP = "127.0.0.1";
-        String ServerName = "MINHDC";
+        String ServerName = "minipele";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String dbURL = "jdbc:sqlserver://" + ServerName + ";databaseName=" + DBName + ";encrypt=false;trustServerCertificate=false;loginTimeout=30";
@@ -653,7 +653,7 @@ public class DBConnect {
 
             while (resultSet.next()) {
                 String orderId = resultSet.getString("OrderID");
-                Date orderDate = resultSet.getDate("OrderDate");
+                Date orderDate = resultSet.getTimestamp("OrderDate");
                 BigDecimal totalAmount = resultSet.getBigDecimal("TotalAmount");
                 String customerId = resultSet.getString("CustomerID");
                 String status = resultSet.getString("status");
