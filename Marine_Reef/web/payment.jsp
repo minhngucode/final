@@ -59,11 +59,11 @@
     <table class="table table-bordered table-hover">
         <thead class="xeon-blue">
         <tr>
-            <th>Product Image</th>
-            <th>Product Name</th>
-            <th class="text-center">Quantity</th>
-            <th class="text-center">Price</th>
-            <th class="text-center">Total</th>
+            <th>Ảnh sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th class="text-center">Số lượng</th>
+            <th class="text-center">Giá</th>
+            <th class="text-center">Tổng</th>
         </tr>
         </thead>
         <tbody>
@@ -92,7 +92,7 @@
         %>
 
         <tr class="xeon-blue">
-            <td colspan="4" class="text-right"><strong>Total Price:</strong></td>
+            <td colspan="4" class="text-right"><strong>Tổng giá:</strong></td>
             <td colspan="2" class="text-center"><strong id="totalPrice"><%= currencyVN.format(totalPrice) %></strong></td>
         </tr>
         </tbody>
