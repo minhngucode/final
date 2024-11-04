@@ -26,10 +26,8 @@ public class DBConnect {
     public static Connection getConnection() {
         Connection con = null;
         String dbUser = "sa";
-        String dbPassword = "minh280504";
-        String port = "1433";
-        String IP = "127.0.0.1";
-        String ServerName = "MINHDC";
+        String dbPassword = "123";
+        String ServerName = "MSI\\MSSQL__SERVER";
         String DBName = "SalesWebsite";
         String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
         String dbURL = "jdbc:sqlserver://" + ServerName + ";databaseName=" + DBName + ";encrypt=false;trustServerCertificate=false;loginTimeout=30";
