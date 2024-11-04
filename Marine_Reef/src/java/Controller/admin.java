@@ -5,6 +5,7 @@
 package Controller;
 
 import Model.DBConnect;
+import Model.Order;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -55,6 +56,20 @@ public class admin extends HttpServlet {
         arrDistinctCategoryName = DAO.getDistinctCategoryName(DAO.getConnection());
          request.setAttribute("categoryList", arrDistinctCategoryName);
         request.setAttribute("typeList", arrDistinctTypes);
+         String customerName = request.getParameter("customerName");
+         String status = request.getParameter("filterStatus");
+    ArrayList<Order> orderList;
+    
+    if ((customerName != null && !customerName.isEmpty()) || (status != null && !status.isEmpty())) {
+        // Lọc đơn hàng theo tiêu chí được nhập
+        orderList = DAO.getOrdersByCustomerNameAndStatus(customerName, status);
+    } else {
+        // Lấy tất cả đơn hàng nếu không có điều kiện lọc
+        orderList = DAO.getAllOrdersSortedByDate();
+    }
+    // Đưa danh sách đơn hàng vào request scope
+    request.setAttribute("orderList", orderList);
+    
         RequestDispatcher dispatcher = request.getRequestDispatcher("admin.jsp");
         dispatcher.forward(request, response);
     }
@@ -70,7 +85,10 @@ public class admin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println(request.getParameter("price"));
+        String action = request.getParameter("action");
+        switch (action){
+            case "addProduct" ->{
+                System.out.println(request.getParameter("price"));
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         BigDecimal price = new BigDecimal(request.getParameter("price"));
@@ -98,6 +116,30 @@ public class admin extends HttpServlet {
 
         // Kết nối tới cơ sở dữ liệu và thêm sản phẩm
         DAO.addProduct(name, description, price, quantity, categoryID, costPrice, type);
+            }
+            case "updateStatus" ->{
+                String orderId = request.getParameter("orderId");
+        String newStatus = request.getParameter("newstatus");
+
+        // Kiểm tra thông tin đầu vào
+        if (orderId != null && newStatus != null) {
+            // Gọi phương thức để cập nhật trạng thái đơn hàng trong cơ sở dữ liệu
+            boolean isUpdated = DAO.updateOrderStatusInDatabase(orderId, newStatus);
+
+            if (isUpdated) {
+                // Chuyển hướng về trang hiển thị đơn hàng nếu cập nhật thành công
+                doGet(request, response);
+                } else {
+                // Hiển thị thông báo lỗi nếu cập nhật thất bại
+                response.sendRedirect("admin.jsp?success=false");
+            }
+        } else {
+            // Hiển thị thông báo lỗi nếu thông tin đầu vào không hợp lệ
+            response.sendRedirect("admin.jsp?success=false");
+        }
+            }
+        }
+        
         
     }
 

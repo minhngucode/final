@@ -55,7 +55,7 @@
         if (role.equals("admin")) 
     { %>
     <button class="btn btn-primary">
-        <a href="admin" class="text-decoration-none text-white" >Thêm Sản Phẩm</a>
+        <a href="admin" class="text-decoration-none text-white" >Quản Lý</a>
     </button>
     <%} }%>
     <h1 class="my-4">Lọc danh sách sản phẩm</h1>

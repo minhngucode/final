@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.DBConnect;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -23,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
  * @author
  */
 public class RoleFilter implements Filter {
-    
+    DBConnect DAO = new DBConnect();   
     private static final boolean debug = true;
 
     // The filter configuration object we are associated with.  If
@@ -104,13 +106,35 @@ public class RoleFilter implements Filter {
             log("RoleFilter:doFilter()");
         }
         
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
+     
+       HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpSession session = httpRequest.getSession(false);
 
+        Cookie[] cookies = httpRequest.getCookies();
+        String name = null;
+        String passcode = null;
+        int count=0;
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals("_noname")) {
+                    name = c.getValue();
+                    count++;
+                }
+                if (c.getName().equals("_nopass")) {
+                    passcode = c.getValue();
+                    count++;
+                }
+            }
+        }
         // Kiểm tra session và quyền hạn
-        if (session != null && "admin".equals(session.getAttribute("role"))) {
+        if (count==2){
+            if (DAO.getRole(name)!=null && DAO.getRole(name).equals("admin"))
             chain.doFilter(request, response);
+            else {
+            // Nếu không có quyền, chuyển hướng đến trang lỗi hoặc đăng nhập
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/error.jsp");
+            }
         } else {
             // Nếu không có quyền, chuyển hướng đến trang lỗi hoặc đăng nhập
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/error.jsp");

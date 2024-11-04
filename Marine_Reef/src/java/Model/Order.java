@@ -14,6 +14,7 @@ import java.util.Date;
 public class Order {
     private String orderId;
     private Date orderDate;
+    private String cusname;
     private BigDecimal totalAmount;
     private String customerId;
     private String status;
@@ -31,6 +32,14 @@ public class Order {
         this.status = status;
     }
 
+    public String getCusname() {
+        return cusname;
+    }
+
+    public void setCusname(String Cusname) {
+        this.cusname = Cusname;
+    }
+    
     // Getter và Setter cho orderId
     public String getOrderId() {
         return orderId;
