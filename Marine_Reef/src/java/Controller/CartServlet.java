@@ -172,7 +172,7 @@ public class CartServlet extends HttpServlet {
             }
             
         }
-        else 
+        else    
                         response.sendRedirect("LoginServlet");
 
     }
