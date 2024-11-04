@@ -102,41 +102,7 @@ header .auth-buttons li form button b:hover{
     background-color: white;
     border-radius: 5px;
 }
-.hero {
-    position: relative;
-    background-image: url('../images/banner/banner.jpg');
-    background-size: cover;
-    height: 600px;
-    color: #fff;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.hero h1 {
-    font-size: 3rem;
-    margin: 0;
-}
-.hero ul {
-    list-style: none;
-    padding: 0;
-}
-.hero ul li {
-    margin: 10px 0;
-}
-.hero .btn {
-    background-color: white;
-    color: #0689B7;
-    padding: 10px 30px;
-    text-decoration: none;
-    font-weight: 700;
-    margin-top: 20px;
-}
-.hero .nut{
-    display: flex;
-    gap: 20px;
-}
+
 .section {
     padding: 40px 20px;
     max-width: 1200px;
