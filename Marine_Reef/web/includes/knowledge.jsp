@@ -5,6 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<style>
+    .knowledge-item {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .knowledge-item:hover {
+        transform: translateY(-5px); /* Hiệu ứng nổi */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+    }
+</style>
 <div class="section">
     <a href="chiasekienthuc.jsp"><h2>CHIA SẺ KIẾN THỨC</h2></a>
     <div class="knowledge-share">

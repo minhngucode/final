@@ -250,7 +250,7 @@
             </li>
             <li style="font-size: 12px; text-decoration: none; background-color: #0689B7; border-radius: 5px;">
                 <form action="OrderManagement" method="GET" style="display: inline;">
-                    <button type="submit" class="login-button" style="border: none; background: none; white-space: nowrap;"><b>Xem đơn hàng</b></button>
+                    <button type="submit" class="login-button" style="border: none; background: none; white-space: nowrap;"><b id="xdh">Xem đơn hàng</b></button>
                 </form>
             </li>
             <%}%>
